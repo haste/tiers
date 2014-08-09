@@ -99,7 +99,7 @@
 
 				// Update the tick groups.
 				var tick = g.selectAll("g.tick")
-				.data(x1.ticks(8), function(d) {
+				.data(x1.ticks(5), function(d) {
 					return this.textContent || format(d);
 				});
 
