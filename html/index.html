@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tiers" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+
+		<title>tie.rs - Ingress Agent Profile</title>
+
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+		<link href="css/app.min.css" rel="stylesheet">
+		<link href="css/bullet.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">tie.rs</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Profile</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Upload</a></li>
+						<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">haste <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container -->
+		</nav>
+
+		<div class="stripe">
+			<div class="container">
+				<h2>Badge progress</h2>
+				<div class="well">
+				</div>
+				<button>Update</button>
+			</div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="vendor/d3/d3.min.js" charset="utf-8"></script>
+		<script src="js/app.min.js" charset="utf-8"></script>
+		<script>
+			var margin = {top: 5, right: 40, bottom: 20, left: 120},
+				 width = 1100 - margin.left - margin.right,
+				 height = 50 - margin.top - margin.bottom;
+
+			var chart = d3.bullet()
+				.width(width)
+				.height(height);
+
+			d3.json("bullets2.json", function(error, data) {
+				var svg = d3.select(".well").selectAll("svg")
+					.data(data)
+					.enter().append("svg")
+					.attr("class", "bullet")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+					.call(chart);
+
+				var title = svg.append("g")
+					.style("text-anchor", "end")
+					.attr("transform", "translate(-6," + height / 1.5 + ")");
+
+				title.append("text")
+					.attr("class", "title")
+					.text(function(d) { return d.title; });
+
+				title.append("text")
+					.attr("class", "subtitle")
+					.attr("dy", "1em")
+					.text(function(d) { return d.subtitle; });
+
+				d3.selectAll("button").on("click", function() {
+					d3.json("bullets.json", function(error, data) {
+						svg.data(data).call(chart.duration(1000))
+					})
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,154 @@
+[
+	{
+		"title": "Explorer",
+		"ranges": [
+			100,
+			1000,
+			2000,
+			10000
+		],
+		"measures": [
+			2849
+		],
+		"markers": [
+			2849
+		]
+	},
+	{
+		"title": "Seer",
+		"ranges": [
+			10,
+			50
+		],
+		"measures": [
+			15
+		],
+		"markers": [
+			15
+		]
+	},
+	{
+		"title": "Hacker",
+		"subtitle": "",
+		"ranges": [
+			2000,
+			10000,
+			30000,
+			100000
+		],
+		"measures": [
+			31752
+		],
+		"markers": [
+			31752
+		]
+	},
+	{
+		"title": "Builder",
+		"subtitle": "",
+		"ranges": [
+			2000,
+			10000,
+			30000
+		],
+		"measures": [
+			28190
+		],
+		"markers": [
+			28190
+		]
+	},
+	{
+		"title": "Connector",
+		"subtitle": "",
+		"ranges": [
+			50,
+			1000,
+			5000
+		],
+		"measures": [
+			2739
+		],
+		"markers": [
+			2739
+		]
+	},
+	{
+		"title": "Mind Controller",
+		"subtitle": "",
+		"ranges": [
+			100,
+			500,
+			2000
+		],
+		"measures": [
+			1079
+		],
+		"markers": [
+			1079
+		]
+	},
+	{
+		"title": "Liberator",
+		"subtitle": "",
+		"ranges": [
+			200,
+			2000,
+			8000
+		],
+		"measures": [
+			3432
+		],
+		"markers": [
+			3432
+		]
+	},
+	{
+		"title": "Pioneer",
+		"subtitle": "",
+		"ranges": [
+			20,
+			200,
+			1000,
+			5000
+		],
+		"measures": [
+			1154
+		],
+		"markers": [
+			1154
+		]
+	},
+	{
+		"title": "Purifier",
+		"subtitle": "",
+		"ranges": [
+			2000,
+			10000,
+			30000
+		],
+		"measures": [
+			23799
+		],
+		"markers": [
+			23799
+		]
+	},
+	{
+		"title": "Guardian",
+		"subtitle": "",
+		"ranges": [
+			3,
+			10,
+			20,
+			90,
+			150
+		],
+		"measures": [
+			109
+		],
+		"markers": [
+			109
+		]
+	}
+]
