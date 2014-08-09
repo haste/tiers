@@ -10,7 +10,6 @@
 		reverse = false,
 		duration = 0,
 		ranges = bulletRanges,
-		markers = bulletMarkers,
 		measures = bulletMeasures,
 		width = 380,
 		height = 30,
@@ -20,13 +19,12 @@
 		function bullet(g) {
 			g.each(function(d, i) {
 				var rangez = ranges.call(this, d, i).slice().sort(d3.descending),
-					markerz = markers.call(this, d, i).slice().sort(d3.descending),
 					measurez = measures.call(this, d, i).slice().sort(d3.descending),
 					g = d3.select(this);
 
 				// Compute the new x-scale.
 				var x1 = d3.scale.linear()
-					.domain([0, Math.max(rangez[0], markerz[0], measurez[0])])
+					.domain([0, Math.max(rangez[0], measurez[0])])
 					.range(reverse ? [width, 0] : [0, width]);
 
 				// Retrieve the old x-scale, if this is an update.
@@ -95,28 +93,6 @@
 					.attr("height", height / 3)
 					.attr("x", reverse ? x1 : 0)
 					.attr("y", height / 3);
-
-				// Update the marker lines.
-				var marker = g.selectAll("line.marker")
-					.data(markerz);
-
-				marker.enter().append("line")
-					.attr("class", "marker")
-					.attr("x1", x0)
-					.attr("x2", x0)
-					.attr("y1", height / 6)
-					.attr("y2", height * 5 / 6)
-					.transition()
-					.duration(duration)
-					.attr("x1", x1)
-					.attr("x2", x1);
-
-				marker.transition()
-					.duration(duration)
-					.attr("x1", x1)
-					.attr("x2", x1)
-					.attr("y1", height / 6)
-					.attr("y2", height * 5 / 6);
 
 				// Compute the tick format.
 				var format = tickFormat || x1.tickFormat(8);
@@ -187,13 +163,6 @@
 			return bullet;
 		};
 
-		// markers (previous, goal)
-		bullet.markers = function(x) {
-			if (!arguments.length) return markers;
-			markers = x;
-			return bullet;
-		};
-
 		// measures (actual, forecast)
 		bullet.measures = function(x) {
 			if (!arguments.length) return measures;
@@ -230,10 +199,6 @@
 
 	function bulletRanges(d) {
 		return d.ranges;
-	}
-
-	function bulletMarkers(d) {
-		return d.markers;
 	}
 
 	function bulletMeasures(d) {
