@@ -3,8 +3,8 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"io/ioutil"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -25,12 +25,11 @@ var CookieStore *sessions.CookieStore
 var Config configFormat
 
 type User struct {
-	Id int
-	Email string
-	Password string
+	Id          int
+	Email       string
+	Password    string
 	Valid_email bool
 }
-
 
 func init() {
 	var err error
