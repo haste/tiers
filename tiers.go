@@ -2,21 +2,22 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 
 	"tiers/conf"
+	"tiers/page"
+	"tiers/session"
 
 	"code.google.com/p/go.crypto/bcrypt"
 
 	_ "github.com/Go-SQL-Driver/MySQL"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/sessions"
 )
 
 var templates *template.Template
-var CookieStore *sessions.CookieStore
 
 type User struct {
 	Id          int
@@ -35,22 +36,15 @@ func init() {
 	}
 }
 
-func setSession(w http.ResponseWriter, r *http.Request, userId int) {
-	session, _ := CookieStore.Get(r, "tiers")
-	session.Values["user"] = userId
-	session.Save(r, w)
-}
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	session, _ := CookieStore.Get(r, "tiers")
+	fmt.Fprintf(w, "Helo frend!")
+	session, _ := session.Get(r, "tiers")
 
 	if userid, ok := session.Values["user"]; ok {
 		log.Println(userid)
 	} else {
 		log.Println("No cookie")
 	}
-
-	templates.ExecuteTemplate(w, "base.html", "")
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +67,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		log.Print("Invalid password! ")
 	}
 
-	setSession(w, r, u.Id)
+	session.Set(w, r, u.Id)
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -101,13 +95,12 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	CookieStore = sessions.NewCookieStore([]byte(conf.Config.CookieSecret))
-
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/login", LoginHandler)
 	r.HandleFunc("/register", RegisterHandler)
+	r.HandleFunc("/badges", page.BadgesHandler)
 
 	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("static/css/"))))
 	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts/"))))
@@ -115,5 +108,5 @@ func main() {
 	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(http.Dir("static/vendor/"))))
 
 	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServeTLS("localhost:45633", conf.Config.Cert, conf.Config.Key, nil))
 }

@@ -9,6 +9,8 @@ import (
 type config struct {
 	Database     string `json:"database"`
 	CookieSecret string `json:"cookie-secret"`
+	Cert         string `json:"cert"`
+	Key          string `json:"key"`
 }
 
 var Config config
