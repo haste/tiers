@@ -2,11 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
+
+	"tiers/conf"
 
 	"code.google.com/p/go.crypto/bcrypt"
 
@@ -15,14 +15,8 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-type configFormat struct {
-	Database     string `json:"database"`
-	CookieSecret string `json:"cookie-secret"`
-}
-
 var templates *template.Template
 var CookieStore *sessions.CookieStore
-var Config configFormat
 
 type User struct {
 	Id          int
@@ -45,7 +39,6 @@ func setSession(w http.ResponseWriter, r *http.Request, userId int) {
 	session, _ := CookieStore.Get(r, "tiers")
 	session.Values["user"] = userId
 	session.Save(r, w)
-
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +58,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	u := User{}
 
-	var db, _ = sql.Open("mysql", Config.Database)
+	var db, _ = sql.Open("mysql", conf.Config.Database)
 	defer db.Close()
 
 	row := db.QueryRow(`
@@ -86,7 +79,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	username, password := r.FormValue("username"), r.FormValue("password")
 
-	var db, _ = sql.Open("mysql", Config.Database)
+	var db, _ = sql.Open("mysql", conf.Config.Database)
 	defer db.Close()
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -107,24 +100,14 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	log.Print(result, err)
 }
 
-func BadgeHandler(w http.ResponseWriter, r *http.Request) {
-}
-
 func main() {
-	configBody, _ := ioutil.ReadFile("config.json")
-	err := json.Unmarshal(configBody, &Config)
-	if err != nil {
-		log.Fatal("Config error: %s\n", err)
-	}
-
-	CookieStore = sessions.NewCookieStore([]byte(Config.CookieSecret))
+	CookieStore = sessions.NewCookieStore([]byte(conf.Config.CookieSecret))
 
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/login", LoginHandler)
 	r.HandleFunc("/register", RegisterHandler)
-	r.HandleFunc("/badges", BadgeHandler)
 
 	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("static/css/"))))
 	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts/"))))
