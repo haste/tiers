@@ -1,0 +1,7 @@
+{
+	"database": "",
+	"database": "",
+	"cookie-secret": "",
+	"cert": "localhost-cert.pem",
+	"key": "localhost-key.pem"
+}
