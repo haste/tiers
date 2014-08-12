@@ -2,8 +2,8 @@ package profile
 
 type Badge struct {
 	Rank     int
+	Ranks    []uint
 	Current  uint
-	Required uint
 }
 
 type Badges struct {
@@ -20,6 +20,12 @@ type Badges struct {
 	Recharger      Badge
 }
 
+type BadgeProgress struct {
+	Title    string `json:"title"`
+	Ranges   []uint `json:"ranges"`
+	Measures []uint `json:"measures"`
+}
+
 var BadgeRanks = map[string][]uint{
 	"Connector":       {50, 1000, 5000, 25000, 100000},
 	"Builder":         {2000, 10000, 30000, 100000, 200000},
@@ -34,45 +40,113 @@ var BadgeRanks = map[string][]uint{
 	"Recharger":       {100000, 1000000, 3000000, 10000000, 25000000},
 }
 
-func incBadgeRank(b *Badge, current uint, reqs []uint) {
+// The order is defined by the agent profile.
+var BadgeOrder = []string{
+	"Explorer",
+	"Seer",
+	"Hacker",
+	"Builder",
+	"Connector",
+	"Mind Controller",
+	"Liberator",
+	"Pioneer",
+	"Purifier",
+	"Guardian",
+}
+
+func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
 	for i := 0; i < len(reqs); i++ {
 		req := reqs[i]
-		if current <= req {
+		b.Ranks = append(b.Ranks, req)
+
+		if current >= req {
+			switch i {
+			case 0:
+				p.Bronze++
+			case 1:
+				p.Silver++
+			case 2:
+				p.Gold++
+			case 3:
+				p.Platinum++
+			case 4:
+				p.Onyx++
+			}
+		} else {
 			b.Rank = i
 			b.Current = current
-			b.Required = req
 
 			break
 		}
 	}
 }
 
-func countBadges(p Profile, b *Badges) {
+func HandleBadges(p *Profile) {
 	for k, v := range BadgeRanks {
 		switch k {
 		case "Connector":
-			incBadgeRank(&b.Connector, p.LinksCreated, v)
+			incBadgeRank(p, &p.Badges.Connector, p.LinksCreated, v)
 		case "Builder":
-			incBadgeRank(&b.Builder, p.ResonatorsDeployed, v)
+			incBadgeRank(p, &p.Badges.Builder, p.ResonatorsDeployed, v)
 		case "Explorer":
-			incBadgeRank(&b.Explorer, p.UniquePortalsVisited, v)
+			incBadgeRank(p, &p.Badges.Explorer, p.UniquePortalsVisited, v)
 		case "Guardian":
-			incBadgeRank(&b.Guardian, p.MaxTimePortalHeld, v)
+			incBadgeRank(p, &p.Badges.Guardian, p.MaxTimePortalHeld, v)
 		case "Hacker":
-			incBadgeRank(&b.Hacker, p.Hacks, v)
+			incBadgeRank(p, &p.Badges.Hacker, p.Hacks, v)
 		case "Mind Controller":
-			incBadgeRank(&b.MindController, p.ControlFieldsCreated, v)
+			incBadgeRank(p, &p.Badges.MindController, p.ControlFieldsCreated, v)
 		case "Purifier":
-			incBadgeRank(&b.Purifier, p.ResonatorsDestroyed, v)
+			incBadgeRank(p, &p.Badges.Purifier, p.ResonatorsDestroyed, v)
 		case "Seer":
-			incBadgeRank(&b.Seer, p.PortalsDiscovered, v)
+			incBadgeRank(p, &p.Badges.Seer, p.PortalsDiscovered, v)
 		case "Liberator":
-			incBadgeRank(&b.Liberator, p.PortalsCaptured, v)
+			incBadgeRank(p, &p.Badges.Liberator, p.PortalsCaptured, v)
 		case "Pioneer":
-			incBadgeRank(&b.Pioneer, p.UniquePortalsCaptured, v)
+			incBadgeRank(p, &p.Badges.Pioneer, p.UniquePortalsCaptured, v)
 		case "Recharger":
-			incBadgeRank(&b.Recharger, p.XMRecharged, v)
+			incBadgeRank(p, &p.Badges.Recharger, p.XMRecharged, v)
 		}
 	}
 }
 
+func BuildBadgeProgress(p Profile) []BadgeProgress {
+	var bp []BadgeProgress
+
+	for _,bn := range BadgeOrder {
+		var current Badge
+		switch bn {
+		case "Connector":
+			current = p.Badges.Connector
+		case "Builder":
+			current = p.Badges.Builder
+		case "Explorer":
+			current = p.Badges.Explorer
+		case "Guardian":
+			current = p.Badges.Guardian
+		case "Hacker":
+			current = p.Badges.Hacker
+		case "Mind Controller":
+			current = p.Badges.MindController
+		case "Purifier":
+			current = p.Badges.Purifier
+		case "Seer":
+			current = p.Badges.Seer
+		case "Liberator":
+			current = p.Badges.Liberator
+		case "Pioneer":
+			current = p.Badges.Pioneer
+		case "Recharger":
+			current = p.Badges.Recharger
+		}
+
+		bp = append(bp, BadgeProgress{
+			Title: bn,
+			Ranges: current.Ranks,
+			Measures: []uint{current.Current},
+		})
+	}
+
+	return bp
+
+}
