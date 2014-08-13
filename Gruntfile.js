@@ -29,8 +29,6 @@ module.exports = function(grunt) {
 				files: [{
 					'static/js/app.min.js': [
 						'vendor/bootstrap/dist/js/bootstrap.js',
-						'vendor/angular/angular.js',
-						'vendor/angular-route/angular-route.js',
 						'static/js/app.js',
 						'static/js/services.js',
 						'static/js/controllers.js',
