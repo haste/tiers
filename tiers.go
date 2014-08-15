@@ -26,29 +26,32 @@ type User struct {
 	Valid_email bool
 }
 
-func init() {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if templates, err = template.New("").ParseFiles(
-		"templates/base.html",
+		"templates/header.html",
+		"templates/footer.html",
+		"templates/nav.html",
+		"templates/index-unauthed.html",
 	); err != nil {
 		log.Fatal(err)
 	}
-}
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Helo frend!")
 	session, _ := session.Get(r, "tiers")
 
 	if userid, ok := session.Values["user"]; ok {
-		log.Println(userid)
+		log.Println("Logged in!")
 	} else {
+		templates.ExecuteTemplate(w, "index-unauthed", userid)
 		log.Println("No cookie")
 	}
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	username, password := r.FormValue("username"), r.FormValue("password")
+	username, password := r.PostFormValue("email"), r.PostFormValue("password")
+
+	fmt.Println(username, password)
 
 	u := User{}
 
