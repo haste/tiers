@@ -11,6 +11,7 @@ type config struct {
 	CookieSecret string `json:"cookie-secret"`
 	Cert         string `json:"cert"`
 	Key          string `json:"key"`
+	Cache        string `json:"cache"`
 }
 
 var Config config

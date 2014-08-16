@@ -105,6 +105,9 @@ func main() {
 	r.HandleFunc("/register", RegisterHandler)
 	r.HandleFunc("/badges", page.BadgesHandler)
 
+	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
+	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
+
 	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("static/css/"))))
 	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts/"))))
 	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("static/js/"))))
