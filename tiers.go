@@ -27,6 +27,10 @@ type User struct {
 	Valid_email bool
 }
 
+type IndexPage struct {
+	User int
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 
@@ -35,6 +39,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		"templates/footer.html",
 		"templates/nav.html",
 		"templates/index-unauthed.html",
+		"templates/index-authed.html",
 	); err != nil {
 		log.Fatal(err)
 	}
@@ -42,10 +47,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := session.Get(r, "tiers")
 
 	if userid, ok := session.Values["user"]; ok {
-		log.Println("Logged in!")
+		templates.ExecuteTemplate(w, "index-authed", IndexPage{
+			User: userid.(int),
+		})
 	} else {
-		templates.ExecuteTemplate(w, "index-unauthed", userid)
-		log.Println("No cookie")
+		templates.ExecuteTemplate(w, "index-unauthed", nil)
 	}
 }
 
