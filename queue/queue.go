@@ -147,7 +147,7 @@ func ProcessQueue() {
 			p := buildProfile(res)
 
 			// Handle errors
-			_, err := db.Exec(`
+			_, err = db.Exec(`
 			INSERT INTO tiers_profiles (user_id, timestamp, agent, level, ap, unique_portals_visited, portals_discovered,
 			xm_collected, hacks, resonators_deployed, links_created, control_fields_created, mind_units_captured,
 			longest_link_ever_created, largest_control_field, xm_recharged, portals_captured, unique_portals_captured,

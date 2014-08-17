@@ -1,24 +1,40 @@
 package page
 
 import (
-	"fmt"
 	"encoding/json"
 	"log"
 	"net/http"
 
-	"tiers/user"
+	"html/template"
 	"tiers/profile"
 	"tiers/session"
+	"tiers/user"
 )
 
+type BadgePage struct {
+	User         int
+	Measurements template.JS
+}
+
 func BadgesHandler(w http.ResponseWriter, r *http.Request) {
-	s, _ := session.Get(r, "tiers")
+	session, _ := session.Get(r, "tiers")
+	userid, ok := session.Values["user"]
 
-	uid := s.Values["user"].(int)
+	if !ok {
+		return
+	}
 
-	log.Println(uid)
+	var err error
+	if templates, err = template.New("").ParseFiles(
+		"templates/header.html",
+		"templates/footer.html",
+		"templates/nav.html",
+		"templates/badges.html",
+	); err != nil {
+		log.Fatal(err)
+	}
 
-	p := user.GetNewestProfile(uid)
+	p := user.GetNewestProfile(userid.(int))
 
 	profile.HandleBadges(&p)
 
@@ -30,5 +46,10 @@ func BadgesHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	fmt.Fprintf(w, "%s",  v)
+	page := &BadgePage{
+		User:         userid.(int),
+		Measurements: template.JS(v),
+	}
+
+	templates.ExecuteTemplate(w, "badges", page)
 }
