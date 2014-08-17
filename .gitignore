@@ -1,6 +1,6 @@
 node_modules
 static/vendor
 
-.cache
+cache
 config.json
 tiers
