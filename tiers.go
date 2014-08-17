@@ -9,6 +9,7 @@ import (
 
 	"tiers/conf"
 	"tiers/page"
+	"tiers/queue"
 	"tiers/session"
 
 	"code.google.com/p/go.crypto/bcrypt"
@@ -114,5 +115,9 @@ func main() {
 	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(http.Dir("static/vendor/"))))
 
 	http.Handle("/", r)
+
+	go queue.ProcessQueue()
+	queue.Queue <- true
+
 	log.Fatal(http.ListenAndServeTLS("localhost:45633", conf.Config.Cert, conf.Config.Key, nil))
 }
