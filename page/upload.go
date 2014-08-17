@@ -16,6 +16,10 @@ import (
 	"time"
 )
 
+type UploadPage struct {
+	User int
+}
+
 var templates *template.Template
 
 func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
@@ -36,7 +40,9 @@ func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	templates.ExecuteTemplate(w, "upload", userid)
+	templates.ExecuteTemplate(w, "upload", UploadPage{
+		User: userid.(int),
+	})
 }
 
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
