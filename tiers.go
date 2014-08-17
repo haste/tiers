@@ -80,37 +80,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session.Set(w, r, u.Id)
 }
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	username, password := r.FormValue("username"), r.FormValue("password")
-
-	var db, _ = sql.Open("mysql", conf.Config.Database)
-	defer db.Close()
-
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-
-	if nil != err {
-		log.Fatal(err)
-	}
-
-	result, err := db.Exec(`
-		INSERT INTO tiers_users (email, password, valid_email)
-		VALUES(?, ?, 1)
-		`,
-		username, hash,
-	)
-
-	log.Printf("%s", hash)
-
-	log.Print(result, err)
-}
-
 func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/login", LoginHandler)
-	r.HandleFunc("/register", RegisterHandler)
 	r.HandleFunc("/badges", page.BadgesHandler)
+
+	r.HandleFunc("/register", page.RegisterViewHandler).Methods("GET")
+	r.HandleFunc("/register", page.RegisterHandler).Methods("POST")
 
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
