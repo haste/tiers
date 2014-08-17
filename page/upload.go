@@ -40,7 +40,12 @@ func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
-	var userid = 1
+	session, _ := session.Get(r, "tiers")
+	userid, ok := session.Values["user"]
+
+	if !ok {
+		return
+	}
 
 	reader, err := r.MultipartReader()
 	if err != nil {
