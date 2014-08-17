@@ -1,9 +1,9 @@
 package profile
 
 type Badge struct {
-	Rank     int
-	Ranks    []uint
-	Current  uint
+	Rank    int
+	Ranks   []uint
+	Current uint
 }
 
 type Badges struct {
@@ -35,7 +35,7 @@ var BadgeRanks = map[string][]uint{
 	"Mind Controller": {100, 500, 2000, 10000, 40000},
 	"Purifier":        {2000, 10000, 30000, 100000, 300000},
 	"Seer":            {10, 50, 200, 500, 5000},
-	"Liberator":       {200, 2000, 8000, 15000, 40000},
+	"Liberator":       {200, 2000, 5000, 15000, 40000},
 	"Pioneer":         {20, 200, 1000, 5000, 20000},
 	"Recharger":       {100000, 1000000, 3000000, 10000000, 25000000},
 }
@@ -113,7 +113,7 @@ func HandleBadges(p *Profile) {
 func BuildBadgeProgress(p Profile) []BadgeProgress {
 	var bp []BadgeProgress
 
-	for _,bn := range BadgeOrder {
+	for _, bn := range BadgeOrder {
 		var current Badge
 		switch bn {
 		case "Connector":
@@ -141,8 +141,8 @@ func BuildBadgeProgress(p Profile) []BadgeProgress {
 		}
 
 		bp = append(bp, BadgeProgress{
-			Title: bn,
-			Ranges: current.Ranks,
+			Title:    bn,
+			Ranges:   current.Ranks,
 			Measures: []uint{current.Current},
 		})
 	}
