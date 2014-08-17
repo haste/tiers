@@ -58,8 +58,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	username, password := r.PostFormValue("email"), r.PostFormValue("password")
 
-	fmt.Println(username, password)
-
 	u := User{}
 
 	var db, _ = sql.Open("mysql", conf.Config.Database)
@@ -74,10 +72,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 
 	if err != nil {
-		log.Print("Invalid password! ")
+		fmt.Fprintln(w, "Invalid password or username!")
+		return
 	}
 
 	session.Set(w, r, u.Id)
+	http.Redirect(w, r, "/", 302)
 }
 
 func main() {
