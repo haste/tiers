@@ -131,6 +131,7 @@ func ProcessQueue() {
 				"-psm",
 				"4",
 				conf.Config.Cache + file,
+				"ingress",
 			}
 
 			tmpFile, _ := generateTmpFile()
