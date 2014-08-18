@@ -2,9 +2,7 @@ package queue
 
 import (
 	"database/sql"
-	"io/ioutil"
 	"log"
-	"os"
 	"os/exec"
 	"regexp"
 	"strconv"
@@ -86,16 +84,6 @@ func buildProfile(res string) profile.Profile {
 	return p
 }
 
-func generateTmpFile() (fname string, e error) {
-	myTmpDir := "" // TODO: enable to choose optionally
-	f, e := ioutil.TempFile(myTmpDir, "gosseract")
-	if e != nil {
-		return
-	}
-	fname = f.Name()
-	return
-}
-
 func ProcessQueue() {
 	for {
 		<-Queue
@@ -131,21 +119,19 @@ func ProcessQueue() {
 				"-psm",
 				"4",
 				conf.Config.Cache + file,
+				"stdout",
 				"ingress",
 			}
 
-			tmpFile, _ := generateTmpFile()
-			args = append(args, tmpFile)
-
 			cmd := exec.Command("tesseract", args...)
-			cmd.Run()
 
-			fpath := tmpFile + ".txt"
-			out, _ := os.OpenFile(fpath, 1, 1)
-			buffer, _ := ioutil.ReadFile(out.Name())
-			res := string(buffer)
+			res, err := cmd.Output()
 
-			p := buildProfile(res)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			p := buildProfile(string(res))
 
 			// Handle errors
 			_, err = db.Exec(`
