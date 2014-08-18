@@ -28,13 +28,8 @@ module.exports = function(grunt) {
 			build: {
 				files: [{
 					'static/js/app.min.js': [
-						'vendor/bootstrap/dist/js/bootstrap.js',
+						'static/vendor/bootstrap/dist/js/bootstrap.js',
 						'static/js/app.js',
-						'static/js/services.js',
-						'static/js/controllers.js',
-						'static/js/filters.js',
-						'static/js/directives.js',
-
 						'static/js/bullet.js'
 					]
 				}]
@@ -57,11 +52,6 @@ module.exports = function(grunt) {
 			js: {
 				files: [
 					'static/js/app.js',
-					'static/js/services.js"',
-					'static/js/controllers.js',
-					'static/js/filters.js',
-					'static/js/directives.js',
-
 					'static/js/bullet.js'
 				],
 				tasks: ['jshint', 'uglify']
