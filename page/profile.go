@@ -16,19 +16,15 @@ type ProfilePage struct {
 
 func comma(n uint) string {
 	var h []byte
+	var s = strconv.Itoa(int(n))
 
-	for c := 0; n > 0; c++ {
-		i := n % 10
-
-		n -= i
-		n /= 10
-
-		if c == 3 {
-			c = 0
+	for i := len(s) - 1; i >= 0; i-- {
+		o := len(s) - 1 - i
+		if o%3 == 0 && o != 0 {
 			h = append(h, ',')
 		}
 
-		h = strconv.AppendUint(h, uint64(i), 10)
+		h = append(h, s[i])
 	}
 
 	for i, j := 0, len(h)-1; i < j; i, j = i+1, j-1 {
