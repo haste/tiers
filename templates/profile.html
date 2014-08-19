@@ -1,0 +1,159 @@
+{{define "profile"}}{{template "header"}}
+{{template "nav" .}}
+				<h2>Profile</h2>
+
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Display
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<tbody>
+								<tr>
+									<td>Unique Portals Visited</td>
+									<td class="text-right">{{.Data.UniquePortalsVisited | comma}}</td>
+								</tr>
+								<tr>
+									<td>Portals Discovered</td>
+									<td class="text-right">{{.Data.PortalsDiscovered | comma}}</td>
+								</tr>
+							<tr>
+									<td>XM Collected</td>
+									<td class="text-right">{{.Data.XMCollected | comma}} XM</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Building
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<tbody>
+								<tr>
+									<td>Hacks</td>
+									<td class="text-right">{{.Data.Hacks | comma}}</td>
+								</tr>
+								<tr>
+									<td>Resonators Deployed</td>
+									<td class="text-right">{{.Data.ResonatorsDeployed | comma}}</td>
+								</tr>
+								<tr>
+									<td>Links Created</td>
+									<td class="text-right">{{.Data.LinksCreated | comma}}</td>
+								</tr>
+								<tr>
+									<td>Control Fields Created</td>
+									<td class="text-right">{{.Data.ControlFieldsCreated | comma}}</td>
+								</tr>
+								<tr>
+									<td>Mind Units Captured</td>
+									<td class="text-right">{{.Data.MindUnitsCaptured | comma}} MUs</td>
+								</tr>
+								<tr>
+									<td>Longest Link Ever Created</td>
+									<td class="text-right">{{.Data.LongestLinkEverCreated | comma}} km</td>
+								</tr>
+							<tr>
+									<td>Largest Control Field</td>
+									<td class="text-right">{{.Data.LargestControlField | comma}} MUs</td>
+									</tr>
+								<tr>
+									<td>XM Recharged</td>
+									<td class="text-right">{{.Data.XMRecharged | comma}} XM</td>
+								</tr>
+								<tr>
+									<td>Portals Captured</td>
+									<td class="text-right">{{.Data.PortalsCaptured | comma}}</td>
+								</tr>
+								<tr>
+									<td>Unique Portals Captured</td>
+									<td class="text-right">{{.Data.UniquePortalsCaptured | comma}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Combat
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<tbody>
+								<tr>
+									<td>Resonators Destroyed</td>
+									<td class="text-right">{{.Data.ResonatorsDestroyed | comma}}</td>
+								</tr>
+								<tr>
+									<td>Portals Neutralized</td>
+									<td class="text-right">{{.Data.PortalsNeutralized | comma}}</td>
+								</tr>
+								<tr>
+									<td>Enemy Links Destroyed</td>
+									<td class="text-right">{{.Data.EnemyLinksDestroyed | comma}}</td>
+								</tr>
+								<tr>
+									<td>Enemy Control Fields Destroyed</td>
+									<td class="text-right">{{.Data.EnemyControlFieldsDestroyed | comma}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Health
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<tbody>
+								<tr>
+									<td>Distance Walked</td>
+									<td class="text-right">{{.Data.DistanceWalked | comma}} km</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Defense
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<tbody>
+								<tr>
+									<td>Max Time Portal Held</td>
+									<td class="text-right">{{.Data.MaxTimePortalHeld | comma}} days</td>
+								</tr>
+								<tr>
+									<td>Max Time Link Maintained</td>
+									<td class="text-right">{{.Data.MaxTimeLinkMaintained | comma}} days</td>
+								</tr>
+								<tr>
+									<td>Max Link Length x Days</td>
+									<td class="text-right">{{.Data.MaxLinkLengthXDays | comma}} km-days</td>
+								</tr>
+								<tr>
+									<td>Max Time Field Held</td>
+									<td class="text-right">{{.Data.MaxTimeFieldHeld | comma}} days</td>
+								</tr>
+								<tr>
+									<td>Largest Field MUs x Days</td>
+									<td class="text-right">{{.Data.LargestFieldMUsXDays | comma}} MU-days</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+{{template "footer" . }}
+{{end}}

@@ -27,34 +27,6 @@ type User struct {
 	Valid_email bool
 }
 
-type IndexPage struct {
-	User int
-}
-
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	var err error
-
-	if templates, err = template.New("").ParseFiles(
-		"templates/header.html",
-		"templates/footer.html",
-		"templates/nav.html",
-		"templates/index-unauthed.html",
-		"templates/index-authed.html",
-	); err != nil {
-		log.Fatal(err)
-	}
-
-	session, _ := session.Get(r, "tiers")
-
-	if userid, ok := session.Values["user"]; ok {
-		templates.ExecuteTemplate(w, "index-authed", IndexPage{
-			User: userid.(int),
-		})
-	} else {
-		templates.ExecuteTemplate(w, "index-unauthed", nil)
-	}
-}
-
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	username, password := r.PostFormValue("email"), r.PostFormValue("password")
 
@@ -83,7 +55,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", IndexHandler)
+	r.HandleFunc("/", page.ProfileHandler)
 	r.HandleFunc("/login", LoginHandler)
 	r.HandleFunc("/badges", page.BadgesHandler)
 
