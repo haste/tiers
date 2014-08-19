@@ -91,7 +91,6 @@ func ProcessQueue() {
 
 		// XXX: Handle errors.
 		var db, _ = sql.Open("mysql", conf.Config.Database)
-		defer db.Close()
 
 		// XXX: Handle errors.
 		rows, err := db.Query(`
@@ -173,5 +172,7 @@ func ProcessQueue() {
 		}
 
 		log.Println("Queue: Done.")
+
+		db.Close()
 	}
 }
