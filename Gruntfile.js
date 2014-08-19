@@ -40,8 +40,7 @@ module.exports = function(grunt) {
 			combine: {
 				files: {
 					'static/css/app.min.css': [
-						'vendor/bootstrap/dist/css/bootstrap.css',
-						'vendor/nvd3/nv.d3.css',
+						'static/vendor/bootstrap/dist/css/bootstrap.css',
 						'static/css/app.css'
 					]
 				}
