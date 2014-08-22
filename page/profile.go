@@ -38,10 +38,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := session.Get(r, "tiers")
 	userid, ok := session.Values["user"]
 
-	if !ok {
-		return
-	}
-
 	var err error
 
 	if templates, err = template.New("").Funcs(template.FuncMap{
