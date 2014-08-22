@@ -48,7 +48,7 @@ func buildProfile(res string) profile.Profile {
 	var digit = `([0-9l,]+)`
 	var p profile.Profile
 
-	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]+\nLVL")
+	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]+\n*LVL")
 	p.Level = matchNum(res, "LVL ?"+digit)
 	p.AP = matchNum(res, digit+" AP")
 
