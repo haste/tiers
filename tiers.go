@@ -1,18 +1,16 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 
 	"tiers/conf"
+	"tiers/model"
 	"tiers/page"
 	"tiers/queue"
 	"tiers/session"
-
-	"code.google.com/p/go.crypto/bcrypt"
 
 	"github.com/GeertJohan/go.rice"
 	_ "github.com/Go-SQL-Driver/MySQL"
@@ -21,35 +19,25 @@ import (
 
 var templates *template.Template
 
-type User struct {
-	Id          int
-	Email       string
-	Password    string
-	Valid_email bool
-}
-
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	username, password := r.PostFormValue("email"), r.PostFormValue("password")
+	email, password := r.PostFormValue("email"), r.PostFormValue("password")
 
-	u := User{}
-
-	var db, _ = sql.Open("mysql", conf.Config.Database)
-	defer db.Close()
-
-	row := db.QueryRow(`
-		SELECT id, email, password, valid_email FROM tiers_users WHERE email = ?`,
-		username)
-
-	row.Scan(&u.Id, &u.Email, &u.Password, &u.Valid_email)
-
-	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-
-	if err != nil {
-		fmt.Fprintln(w, "Invalid password or username!")
+	u, err := model.SignInUser(email, password)
+	switch {
+	case err == model.ErrUserNotFound:
+		fmt.Fprintln(w, "Invalid username or password.")
 		return
 	}
 
 	session.Set(w, r, u.Id)
+	http.Redirect(w, r, "/", 302)
+}
+
+func LogoutHandle(w http.ResponseWriter, r *http.Request) {
+	session, _ := session.Get(r, "tiers")
+	delete(session.Values, "user")
+	session.Save(r, w)
+
 	http.Redirect(w, r, "/", 302)
 }
 
@@ -58,6 +46,7 @@ func main() {
 
 	r.HandleFunc("/", page.ProfileHandler)
 	r.HandleFunc("/login", LoginHandler)
+	r.HandleFunc("/logout", LogoutHandle)
 	r.HandleFunc("/badges", page.BadgesHandler)
 
 	r.HandleFunc("/register", page.RegisterViewHandler).Methods("GET")

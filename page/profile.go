@@ -3,8 +3,8 @@ package page
 import (
 	"net/http"
 
+	"tiers/model"
 	"tiers/session"
-	"tiers/user"
 )
 
 type ProfilePage struct {
@@ -25,7 +25,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if ok {
-		p := user.GetNewestProfile(userid.(int))
+		p := model.GetNewestProfile(userid.(int))
 
 		templates.ExecuteTemplate(w, "profile", ProfilePage{
 			User: userid.(int),

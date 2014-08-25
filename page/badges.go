@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
+	"tiers/model"
 	"tiers/profile"
 	"tiers/session"
-	"tiers/user"
 )
 
 type BadgePage struct {
@@ -31,7 +31,7 @@ func BadgesHandler(w http.ResponseWriter, r *http.Request) {
 		"badges.html",
 	)
 
-	p := user.GetNewestProfile(userid.(int))
+	p := model.GetNewestProfile(userid.(int))
 
 	profile.HandleBadges(&p)
 

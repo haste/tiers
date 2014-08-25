@@ -1,15 +1,10 @@
 package page
 
 import (
-	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
 	"regexp"
-	"tiers/conf"
 	"tiers/session"
-
-	"code.google.com/p/go.crypto/bcrypt"
 )
 
 func RegisterViewHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,22 +38,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Password can't be empty.")
 		return
 	}
-
-	var db, _ = sql.Open("mysql", conf.Config.Database)
-	defer db.Close()
-
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-
-	if nil != err {
-		log.Fatal(err)
-	}
-
-	db.Exec(`
-		INSERT INTO tiers_users (email, password, valid_email)
-		VALUES(?, ?, 0)
-		`,
-		email, hash,
-	)
 
 	http.Redirect(w, r, "/", 302)
 }

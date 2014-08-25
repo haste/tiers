@@ -29,7 +29,7 @@ func comma(n uint) string {
 }
 
 func loadTemplates(temps ...string) *template.Template {
-	box, err := rice.FindBox("../templates")
+	box, err := rice.FindBox("templates")
 	if err != nil {
 		log.Fatal(err)
 	}
