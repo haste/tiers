@@ -11,6 +11,7 @@ import (
 )
 
 var ErrUserNotFound = errors.New("User not found.")
+var ErrEmailAlreadyUsed = errors.New("E-mail already used.")
 
 type User struct {
 	Id          int
@@ -51,7 +52,21 @@ func SignInUser(email, password string) (*User, error) {
 	return u, nil
 }
 
+func isEmailUsed(email string) bool {
+	_, err := GetUserByMail(email)
+
+	if err == ErrUserNotFound {
+		return false
+	}
+
+	return true
+}
+
 func CreateUser(email, password string) (*User, error) {
+	if isEmailUsed(email) {
+		return nil, ErrEmailAlreadyUsed
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 
 	if nil != err {
