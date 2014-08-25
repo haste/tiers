@@ -44,6 +44,8 @@ func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 
+	rice.MustFindBox("templates")
+
 	r.HandleFunc("/", page.ProfileHandler)
 	r.HandleFunc("/login", LoginHandler)
 	r.HandleFunc("/logout", LogoutHandle)
@@ -55,10 +57,10 @@ func main() {
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
 
-	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(rice.MustFindBox("static/css/").HTTPBox())))
-	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(rice.MustFindBox("static/fonts/").HTTPBox())))
-	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(rice.MustFindBox("static/js/").HTTPBox())))
-	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(rice.MustFindBox("static/vendor/").HTTPBox())))
+	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(rice.MustFindBox("static/css").HTTPBox())))
+	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(rice.MustFindBox("static/fonts").HTTPBox())))
+	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(rice.MustFindBox("static/js").HTTPBox())))
+	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(rice.MustFindBox("static/vendor").HTTPBox())))
 
 	http.Handle("/", r)
 
