@@ -24,7 +24,7 @@ func BadgesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	templates := LoadTemplates(
+	templates := loadTemplates(
 		"header.html",
 		"footer.html",
 		"nav.html",

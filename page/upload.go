@@ -19,7 +19,7 @@ type UploadPage struct {
 }
 
 func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
-	templates := LoadTemplates(
+	templates := loadTemplates(
 		"header.html",
 		"footer.html",
 		"nav.html",

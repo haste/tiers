@@ -16,7 +16,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := session.Get(r, "tiers")
 	userid, ok := session.Values["user"]
 
-	templates := LoadTemplates(
+	templates := loadTemplates(
 		"header.html",
 		"footer.html",
 		"nav.html",

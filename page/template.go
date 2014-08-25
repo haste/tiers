@@ -28,7 +28,7 @@ func comma(n uint) string {
 	return string(h)
 }
 
-func LoadTemplates(temps ...string) *template.Template {
+func loadTemplates(temps ...string) *template.Template {
 	box, err := rice.FindBox("../templates")
 	if err != nil {
 		log.Fatal(err)
