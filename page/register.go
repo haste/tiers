@@ -3,7 +3,6 @@ package page
 import (
 	"database/sql"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"regexp"
@@ -14,16 +13,12 @@ import (
 )
 
 func RegisterViewHandler(w http.ResponseWriter, r *http.Request) {
-	var err error
-
-	if templates, err = template.New("").ParseFiles(
-		"templates/header.html",
-		"templates/footer.html",
-		"templates/nav.html",
-		"templates/register.html",
-	); err != nil {
-		log.Fatal(err)
-	}
+	templates := LoadTemplates(
+		"header.html",
+		"footer.html",
+		"nav.html",
+		"register.html",
+	)
 
 	session, _ := session.Get(r, "tiers")
 

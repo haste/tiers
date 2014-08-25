@@ -2,10 +2,10 @@ package page
 
 import (
 	"encoding/json"
+	"html/template"
 	"log"
 	"net/http"
 
-	"html/template"
 	"tiers/profile"
 	"tiers/session"
 	"tiers/user"
@@ -24,15 +24,12 @@ func BadgesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var err error
-	if templates, err = template.New("").ParseFiles(
-		"templates/header.html",
-		"templates/footer.html",
-		"templates/nav.html",
-		"templates/badges.html",
-	); err != nil {
-		log.Fatal(err)
-	}
+	templates := LoadTemplates(
+		"header.html",
+		"footer.html",
+		"nav.html",
+		"badges.html",
+	)
 
 	p := user.GetNewestProfile(userid.(int))
 

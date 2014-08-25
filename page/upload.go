@@ -3,9 +3,7 @@ package page
 import (
 	"database/sql"
 	"fmt"
-	"html/template"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -20,18 +18,13 @@ type UploadPage struct {
 	User int
 }
 
-var templates *template.Template
-
 func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
-	var err error
-	if templates, err = template.New("").ParseFiles(
-		"templates/header.html",
-		"templates/footer.html",
-		"templates/nav.html",
-		"templates/upload.html",
-	); err != nil {
-		log.Fatal(err)
-	}
+	templates := LoadTemplates(
+		"header.html",
+		"footer.html",
+		"nav.html",
+		"upload.html",
+	)
 
 	session, _ := session.Get(r, "tiers")
 	userid, ok := session.Values["user"]
@@ -107,7 +100,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var numQueue float32
-	db.QueryRow(`SELECT count(id) FROM tiers_queues) WHERE processed = 0`).Scan(&numQueue)
+	db.QueryRow(`SELECT count(id) FROM tiers_queues WHERE processed = 0`).Scan(&numQueue)
 
 	fmt.Fprintf(w, "Your file has been added to the queue and should be processed in %.1f seconds.", numQueue*3.3)
 
