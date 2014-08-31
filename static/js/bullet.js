@@ -115,7 +115,6 @@
 					.attr("text-anchor", "end")
 					.text(function(d) {
 						return d
-						console.log(d)
 					});
 
 				// Update the tick groups.
