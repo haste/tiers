@@ -9,5 +9,13 @@
 .bullet .range.s4 { fill: #555555; }
 
 .bullet .measure.s0 { fill: #00b2e6; }
-.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .title {
+	font-size: 14px;
+	font-weight: bold;
+}
+.bullet .current {
+	font-size: 12px;
+	font-weight: bold;
+	fill: #000;
+}
 .bullet .subtitle { fill: #999; }

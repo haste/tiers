@@ -72,6 +72,9 @@
 				range.exit().remove();
 				range.order();
 
+				// Compute the tick format.
+				var format = tickFormat || x1.tickFormat(8);
+
 				// Update the measure rects.
 				var measure = g.selectAll("rect.measure")
 					.data(measurez);
@@ -79,9 +82,9 @@
 				measure.enter().append("svg:rect")
 					.attr("class", function(d, i) { return "measure s" + i; })
 					.attr("width", w0)
-					.attr("height", height / 3)
+					.attr("height", height / 2)
 					.attr("x", reverse ? x0 : 0)
-					.attr("y", height / 3)
+					.attr("y", height / 4)
 					.transition()
 					.duration(duration)
 					.attr("width", w1)
@@ -90,12 +93,30 @@
 				measure.transition()
 					.duration(duration)
 					.attr("width", w1)
-					.attr("height", height / 3)
+					.attr("height", height / 2)
 					.attr("x", reverse ? x1 : 0)
-					.attr("y", height / 3);
+					.attr("y", height / 4);
 
-				// Compute the tick format.
-				var format = tickFormat || x1.tickFormat(8);
+
+				var data = []
+				for(var i = 0; i < measurez.length; i++) {
+					var c = measurez[i]
+					var r = rangez[0]
+					data.push(format(c) + " / " + format(r))
+				}
+
+				var valueText = g.selectAll("text.current")
+					.data(data)
+
+				valueText.enter().append("text")
+					.attr("class", "current")
+					.attr("x", width - 2)
+					.attr("y", -4)
+					.attr("text-anchor", "end")
+					.text(function(d) {
+						return d
+						console.log(d)
+					});
 
 				// Update the tick groups.
 				var tick = g.selectAll("g.tick")
@@ -113,11 +134,19 @@
 					.attr("y1", height)
 					.attr("y2", height * 7 / 6);
 
-				tickEnter.append("text")
+				var tickText = tickEnter.append("text")
 					.attr("text-anchor", "middle")
 					.attr("dy", "1em")
 					.attr("y", height * 7 / 6)
-					.text(format);
+					.text(format)
+
+				tickText.each(function(d, i) {
+					if(i === 0) {
+						d3.select(this).attr("text-anchor", "start");
+					} else if(i === tickText.size() - 1)
+						d3.select(this).attr("text-anchor", "end");
+					}
+				);
 
 				// Transition the entering ticks to the new scale, x1.
 				tickEnter.transition()
