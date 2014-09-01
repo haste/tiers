@@ -4,6 +4,7 @@ type Badge struct {
 	Rank    int
 	Ranks   []uint
 	Current uint
+	Next    uint
 }
 
 type Badges struct {
@@ -27,17 +28,17 @@ type BadgeProgress struct {
 }
 
 var BadgeRanks = map[string][]uint{
-	"Connector":       {50, 1000, 5000, 25000, 100000},
-	"Builder":         {2000, 10000, 30000, 100000, 200000},
-	"Explorer":        {100, 1000, 2000, 10000, 30000},
-	"Guardian":        {3, 10, 20, 90, 150},
-	"Hacker":          {2000, 10000, 30000, 100000, 200000},
-	"Mind Controller": {100, 500, 2000, 10000, 40000},
-	"Purifier":        {2000, 10000, 30000, 100000, 300000},
-	"Seer":            {10, 50, 200, 500, 5000},
-	"Liberator":       {200, 2000, 5000, 15000, 40000},
-	"Pioneer":         {20, 200, 1000, 5000, 20000},
-	"Recharger":       {100000, 1000000, 3000000, 10000000, 25000000},
+	"Connector":      {50, 1000, 5000, 25000, 100000},
+	"Builder":        {2000, 10000, 30000, 100000, 200000},
+	"Explorer":       {100, 1000, 2000, 10000, 30000},
+	"Guardian":       {3, 10, 20, 90, 150},
+	"Hacker":         {2000, 10000, 30000, 100000, 200000},
+	"MindController": {100, 500, 2000, 10000, 40000},
+	"Purifier":       {2000, 10000, 30000, 100000, 300000},
+	"Seer":           {10, 50, 200, 500, 5000},
+	"Liberator":      {200, 2000, 5000, 15000, 40000},
+	"Pioneer":        {20, 200, 1000, 5000, 20000},
+	"Recharger":      {100000, 1000000, 3000000, 10000000, 25000000},
 }
 
 // The order is defined by the agent profile.
@@ -48,6 +49,7 @@ var BadgeOrder = []string{
 	"Builder",
 	"Connector",
 	"Mind Controller",
+	"Recharger",
 	"Liberator",
 	"Pioneer",
 	"Purifier",
@@ -75,6 +77,7 @@ func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
 		} else {
 			b.Rank = i
 			b.Current = current
+			b.Next = req
 
 			break
 		}
@@ -94,7 +97,7 @@ func HandleBadges(p *Profile) {
 			incBadgeRank(p, &p.Badges.Guardian, p.MaxTimePortalHeld, v)
 		case "Hacker":
 			incBadgeRank(p, &p.Badges.Hacker, p.Hacks, v)
-		case "Mind Controller":
+		case "MindController":
 			incBadgeRank(p, &p.Badges.MindController, p.ControlFieldsCreated, v)
 		case "Purifier":
 			incBadgeRank(p, &p.Badges.Purifier, p.ResonatorsDestroyed, v)
