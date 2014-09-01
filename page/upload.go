@@ -67,17 +67,19 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		var fileName string
+		var t time.Time
 		// profile_20140815_135412_0.png
 		r := regexp.MustCompile("^(ingress|profile)_(\\d+)_(\\d+)_\\d+\\.png$")
-		if r.MatchString(part.FileName()) != true {
-			// XXX: Should probably handle this..
-			continue
+		if r.MatchString(part.FileName()) {
+			m := r.FindStringSubmatch(part.FileName())
+			t, _ = time.ParseInLocation("20060102150405", m[2]+m[3], time.Local)
+
+			fileName = fmt.Sprintf("%d_%s", userid, part.FileName())
+		} else {
+			t = time.Now()
+			fileName = fmt.Sprintf("%d_%s.png", userid, t.Format("20060102_150405"))
 		}
-
-		m := r.FindStringSubmatch(part.FileName())
-		t, _ := time.ParseInLocation("20060102150405", m[2]+m[3], time.Local)
-
-		var fileName = fmt.Sprintf("%d_%s", userid, part.FileName())
 
 		dst, err := os.Create(conf.Config.Cache + fileName)
 		defer dst.Close()
