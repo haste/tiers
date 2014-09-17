@@ -11,11 +11,11 @@
 						<col class="col-md-4">
 					</colgroup>
 					<tbody>
-					{{with .AP.Expected}}
+					{{if .AP.Expected}}
 					<tr>
-						<td>AP {{.Missing}}</td>
-						<td class="text-center">{{.Current | comma}} / <strong>{{.Required | comma}}</strong></td>
-						<td class="text-right">{{.Expected | comma}}</td>
+						<td>AP {{.AP.Missing | comma}}</td>
+						<td class="text-center">{{.AP.Current | comma}} / <strong>{{.AP.Required | comma}}</strong></td>
+						<td class="text-right">{{.AP.Expected}}</td>
 					</tr>
 					{{end}}
 
