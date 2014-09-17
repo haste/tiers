@@ -1,8 +1,8 @@
 package profile
 
 type Profile struct {
-	Id int
-	UserId int
+	Id        int
+	UserId    int
 	Timestamp uint
 
 	Nick  string
@@ -72,7 +72,7 @@ var LevelRequirements = []LevelRequirement{
 	{9, 2400000, 0, 4, 1, 0, 0},
 	{10, 4000000, 0, 5, 2, 0, 0},
 	{11, 6000000, 0, 6, 4, 0, 0},
-	{12, 8400000,  0, 7, 6, 0, 0},
+	{12, 8400000, 0, 7, 6, 0, 0},
 	{13, 12000000, 0, 0, 7, 1, 0},
 	{14, 17000000, 0, 0, 7, 2, 0},
 	{15, 24000000, 0, 0, 7, 3, 0},
@@ -97,4 +97,9 @@ func nextLevel(p *Profile) {
 	if p.Level < 16 {
 		p.NextLevel = LevelRequirements[p.Level]
 	}
+}
+
+func HandleProfile(p *Profile) {
+	HandleBadges(p)
+	nextLevel(p)
 }

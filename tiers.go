@@ -50,6 +50,7 @@ func main() {
 	r.HandleFunc("/login", LoginHandler)
 	r.HandleFunc("/logout", LogoutHandle)
 	r.HandleFunc("/badges", page.BadgesHandler)
+	r.HandleFunc("/progress", page.ProgressHandler)
 
 	r.HandleFunc("/register", page.RegisterViewHandler).Methods("GET")
 	r.HandleFunc("/register", page.RegisterHandler).Methods("POST")

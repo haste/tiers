@@ -1,0 +1,33 @@
+{{define "progress"}}{{template "header"}}
+{{template "nav" .}}
+				<h2>Next level</h2>
+
+				{{if .Warning}}
+				{{else}}
+				<table class="table">
+					<colgroup>
+						<col class="col-md-4">
+						<col class="col-md-4">
+						<col class="col-md-4">
+					</colgroup>
+					<tbody>
+					{{with .AP.Expected}}
+					<tr>
+						<td>AP {{.Missing}}</td>
+						<td class="text-center">{{.Current | comma}} / <strong>{{.Required | comma}}</strong></td>
+						<td class="text-right">{{.Expected | comma}}</td>
+					</tr>
+					{{end}}
+
+					{{range .Badges}}
+					<tr>
+						<td>{{.RankName}} {{.Badge}}</td>
+						<td class="text-center">{{.Current | comma}} / <strong>{{.Required | comma}}</strong></td>
+						<td class="text-right">{{.Expected}}</td>
+					</tr>
+					{{end}}
+					</tbody>
+				</table>
+				{{end}}
+{{template "footer" . }}
+{{end}}

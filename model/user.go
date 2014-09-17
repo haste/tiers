@@ -88,7 +88,7 @@ func CreateUser(email, password string) (*User, error) {
 func GetAllProfiles(user_id int) []profile.Profile {
 	// XXX: Handle errors.
 	rows, _ := db.Query(`
-		SELECT id, user_id, timestamp, agent, level, ap,
+		(SELECT id, user_id, timestamp, agent, level, ap,
 		unique_portals_visited, portals_discovered, xm_collected,
 		hacks, resonators_deployed, links_created, control_fields_created, mind_units_captured,
 		longest_link_ever_created, largest_control_field, xm_recharged, portals_captured,
@@ -99,6 +99,8 @@ func GetAllProfiles(user_id int) []profile.Profile {
 		largest_field_mus_x_days
 		FROM tiers_profiles
 		WHERE user_id = ?
+		ORDER BY timestamp DESC
+		LIMIT 50) ORDER BY timestamp ASC
 		`, user_id)
 
 	var profiles []profile.Profile

@@ -24,6 +24,9 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		"profile.html",
 	)
 
+	// Extra:
+	// Average MU per field.
+
 	if ok {
 		p := model.GetNewestProfile(userid.(int))
 
