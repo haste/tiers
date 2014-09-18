@@ -3,6 +3,7 @@ package queue
 import (
 	"database/sql"
 	"log"
+	"os"
 	"os/exec"
 	"regexp"
 	"strconv"
@@ -108,27 +109,43 @@ func ProcessQueue() {
 
 			var id, user_id, timestamp int
 			var file string
+			var tmpFile string
 			var processed bool
 
 			if err := rows.Scan(&id, &user_id, &timestamp, &file, &processed); err != nil {
 				log.Fatal(err)
 			}
 
-			var args = []string{
-				"-psm",
-				"4",
+			tmpFile = conf.Config.Cache + "tmp_" + file
+
+			convert := exec.Command("convert", []string{
 				conf.Config.Cache + file,
-				"stdout",
-				"ingress",
-			}
+				"-resize",
+				"200%",
+				"-level",
+				"40%",
+				tmpFile,
+			}...)
 
-			cmd := exec.Command("tesseract", args...)
-
-			res, err := cmd.Output()
-
+			err = convert.Run()
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			tesseract := exec.Command("tesseract", []string{
+				"-psm",
+				"4",
+				tmpFile,
+				"stdout",
+				"ingress",
+			}...)
+
+			res, err := tesseract.Output()
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			os.Remove(tmpFile)
 
 			p := buildProfile(string(res))
 
