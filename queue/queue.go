@@ -120,8 +120,6 @@ func ProcessQueue() {
 
 			convert := exec.Command("convert", []string{
 				conf.Config.Cache + file,
-				"-resize",
-				"200%",
 				"-level",
 				"40%",
 				tmpFile,
