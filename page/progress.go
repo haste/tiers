@@ -8,14 +8,13 @@ import (
 	"tiers/model"
 	"tiers/profile"
 	"tiers/session"
-	"time"
 )
 
 type progressAP struct {
 	Current  uint
 	Required uint
 	Missing  uint
-	Expected string
+	Expected uint
 }
 
 type progressBadge struct {
@@ -23,7 +22,7 @@ type progressBadge struct {
 	Badge    string
 	Current  uint
 	Required uint
-	Expected string
+	Expected uint
 }
 
 type ProgressPage struct {
@@ -143,13 +142,13 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 
 	if newestProfile.AP < newestProfile.NextLevel.AP {
 		slope, intercept, _ := lineaRegression(x, y["AP"])
-		ts := int64(((float64(newestProfile.NextLevel.AP) - intercept) / slope)) + 1262304000
+		ts := uint(((float64(newestProfile.NextLevel.AP) - intercept) / slope)) + 1262304000
 
 		viewData.AP = progressAP{
 			newestProfile.AP,
 			newestProfile.NextLevel.AP,
 			newestProfile.NextLevel.AP - newestProfile.AP,
-			time.Unix(ts, 0).Format("2006.01.02 15:04"),
+			ts,
 		}
 	}
 
@@ -195,14 +194,14 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, badge := range badges {
 		slope, intercept, _ := lineaRegression(x, y[badge.Badge])
-		ts := int64(((float64(badge.Required) - intercept) / slope)) + 1262304000
+		ts := uint(((float64(badge.Required) - intercept) / slope)) + 1262304000
 
 		viewData.Badges[badge.Badge] = progressBadge{
 			ranks[badge.Rank],
 			badge.Badge,
 			badge.Current,
 			badge.Required,
-			time.Unix(ts, 0).Format("2006.01.02 15:04"),
+			ts,
 		}
 	}
 

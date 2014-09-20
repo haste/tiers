@@ -1,9 +1,11 @@
 package page
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/GeertJohan/go.rice"
 )
@@ -28,6 +30,42 @@ func comma(n uint) string {
 	return string(h)
 }
 
+func relativeTime(ts uint) string {
+	seconds := ts - uint(time.Now().Unix())
+	minutes := uint(seconds / 60)
+	hours := uint(minutes / 60)
+	days := uint(hours / 24)
+	months := uint(days / 30)
+	years := uint(days / 365)
+
+	switch {
+	case seconds < 45:
+		return "A few seconds"
+	case minutes == 1:
+		return "A minute"
+	case minutes < 45:
+		return fmt.Sprintf("%d minutes", minutes)
+	case hours == 1:
+		return "An hour"
+	case hours < 22:
+		return fmt.Sprintf("%d", hours)
+	case days == 1:
+		return "A day"
+	case days <= 26:
+		return fmt.Sprintf("%d days", days)
+	case months == 1:
+		return "A month"
+	case months <= 11:
+		return fmt.Sprintf("%d months", months)
+	case years == 1:
+		return "A year"
+	case days < 3650:
+		return fmt.Sprintf("%d years", years)
+	default:
+		return "A good while"
+	}
+}
+
 func loadTemplates(temps ...string) *template.Template {
 	box, err := rice.FindBox("templates")
 	if err != nil {
@@ -35,7 +73,8 @@ func loadTemplates(temps ...string) *template.Template {
 	}
 
 	templates := template.New("").Funcs(template.FuncMap{
-		"comma": comma,
+		"comma":    comma,
+		"relative": relativeTime,
 	})
 
 	for _, temp := range temps {

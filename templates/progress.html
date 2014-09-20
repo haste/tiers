@@ -16,7 +16,7 @@
 					<tr>
 						<td>AP {{.AP.Missing | comma}}</td>
 						<td class="text-center">{{.AP.Current | comma}} / <strong>{{.AP.Required | comma}}</strong></td>
-						<td class="text-right">{{.AP.Expected}}</td>
+						<td class="text-right">{{.AP.Expected | relative}}</td>
 					</tr>
 					{{end}}
 
@@ -24,7 +24,7 @@
 					<tr>
 						<td>{{.RankName}} {{.Badge}}</td>
 						<td class="text-center">{{.Current | comma}} / <strong>{{.Required | comma}}</strong></td>
-						<td class="text-right">{{.Expected}}</td>
+						<td class="text-right">{{.Expected | relative}}</td>
 					</tr>
 					{{end}}
 					</tbody>
