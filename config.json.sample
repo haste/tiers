@@ -1,6 +1,7 @@
 {
 	"database": "",
-	"cookie-secret": "",
+	"cookieHashKey": "",
+	"cookieBlockKey": "",
 	"cert": "localhost-cert.pem",
 	"key": "localhost-key.pem",
 	"cache": ""

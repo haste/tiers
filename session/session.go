@@ -11,7 +11,10 @@ import (
 var CookieStore *sessions.CookieStore
 
 func init() {
-	CookieStore = sessions.NewCookieStore([]byte(conf.Config.CookieSecret))
+	CookieStore = sessions.NewCookieStore(
+		conf.Config.CookieHashKey,
+		conf.Config.CookieBlockKey,
+	)
 }
 
 func Set(w http.ResponseWriter, r *http.Request, userId int) {

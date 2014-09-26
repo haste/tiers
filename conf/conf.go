@@ -7,11 +7,12 @@ import (
 )
 
 type config struct {
-	Database     string `json:"database"`
-	CookieSecret string `json:"cookie-secret"`
-	Cert         string `json:"cert"`
-	Key          string `json:"key"`
-	Cache        string `json:"cache"`
+	Database       string `json:"database"`
+	CookieHashKey  []byte `json:"cookieHashKey"`
+	CookieBlockKey []byte `json:"cookieBlockKey`
+	Cert           string `json:"cert"`
+	Key            string `json:"key"`
+	Cache          string `json:"cache"`
 }
 
 var Config config
