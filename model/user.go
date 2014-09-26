@@ -102,6 +102,7 @@ func GetAllProfiles(user_id int) []profile.Profile {
 		ORDER BY timestamp DESC
 		LIMIT 50) ORDER BY timestamp ASC
 		`, user_id)
+	defer rows.Close()
 
 	var profiles []profile.Profile
 	for rows.Next() {
@@ -143,6 +144,7 @@ func GetNewestProfile(user_id int) profile.Profile {
 		ORDER BY timestamp DESC
 		LIMIT 1
 		`, user_id)
+	defer row.Close()
 
 	var p profile.Profile
 

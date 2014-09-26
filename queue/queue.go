@@ -188,6 +188,7 @@ func ProcessQueue() {
 
 		log.Println("Queue: Done.")
 
+		rows.Close()
 		db.Close()
 	}
 }
