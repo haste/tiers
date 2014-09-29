@@ -36,7 +36,7 @@ func relativeTime(ts uint) string {
 	hours := uint(minutes / 60)
 	days := uint(hours / 24)
 	months := uint(days / 30)
-	years := uint(days / 365)
+	years := uint(months / 12)
 
 	switch {
 	case seconds < 45:
