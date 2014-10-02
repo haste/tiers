@@ -41,6 +41,17 @@ a:hover {
 	display: none;
 }
 
+/* Profile */
+h2.profile-header {
+	position: relative;
+}
+
+h2.profile-header small {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
 @media (min-width: 1200px) {
 	.col-signin, .col-info {
 		position: relative;

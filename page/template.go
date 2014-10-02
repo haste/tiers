@@ -31,7 +31,15 @@ func comma(n uint) string {
 }
 
 func relativeTime(ts uint) string {
-	seconds := ts - uint(time.Now().Unix())
+	now := uint(time.Now().Unix())
+
+	var seconds uint
+	if ts > now {
+		seconds = ts - now
+	} else {
+		seconds = now - ts
+	}
+
 	minutes := uint(seconds / 60)
 	hours := uint(minutes / 60)
 	days := uint(hours / 24)
