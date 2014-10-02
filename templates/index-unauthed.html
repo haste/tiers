@@ -1,21 +1,56 @@
 {{define "index-unauthed"}}{{template "header"}}
-{{template "nav"}}
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<h2 class="text-center">Login</h2>
-					<div class="well well-sm">
-						<form role="form" method="post" action="/login">
-							<div class="form-group">
-								<label>Email address</label>
-								<input type="email" class="form-control" name="email" placeholder="Enter email">
-							</div>
-							<div class="form-group">
-								<label>Password</label>
-								<input type="password" class="form-control" name="password" placeholder="Password">
-							</div>
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</form>
-					</div>
+		<div class="landing">
+			<div class="col-signin">
+				<h1 class="text-center">tie.rs</h1>
+
+				<div class="signin-box">
+					<h4>Sign in<span><a class="btn-register" href="#">Register account</a></span></h4>
+					<form role="form" method="post" action="/signin">
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" placeholder="Email">
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="form-control" name="password" placeholder="Password">
+						</div>
+
+						<p class="help-block">
+							<a class="btn-forgot" href="#">Forgotten your password?</a>
+						</p>
+						<button type="Sign in" class="btn btn-lg btn-block btn-info">Sign in</button>
+					</form>
+				</div>
+
+				<div class="signup-box">
+					<h4>Register account<span><a class="btn-signin" href="#">Sign in</a></span></h4>
+					<form role="form" method="post" action="/signup">
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" placeholder="Email">
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="form-control" name="password" placeholder="Password">
+						</div>
+
+						<button type="Sign in" class="btn btn-lg btn-block btn-info">Register account</button>
+					</form>
+				</div>
+
+				<div class="forgot-box">
+					<h4>Reset password<span><a class="btn-signin" href="#">Sign in</a></span></h4>
+					<form role="form" method="post" action="/reset_password">
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" placeholder="Email">
+						</div>
+
+						<button type="Sign in" class="btn btn-lg btn-block btn-info">Reset password</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="container-fluid col-info">
+				<div class="col-sm-12 text-center">
+					<h2>Wibbly wobbly Ingress stats tracking thingy</h2>
 				</div>
 			</div>
 {{template "footer"}}

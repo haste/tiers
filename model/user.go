@@ -2,12 +2,19 @@ package model
 
 import (
 	"database/sql"
+	"encoding/hex"
 	"errors"
 	"log"
+	"net"
+
+	"github.com/gorilla/securecookie"
+
+	"crypto/sha256"
 
 	"code.google.com/p/go.crypto/bcrypt"
 
 	"tiers/profile"
+	"time"
 )
 
 var ErrUserNotFound = errors.New("User not found.")
@@ -83,6 +90,48 @@ func CreateUser(email, password string) (*User, error) {
 	id, _ := res.LastInsertId()
 
 	return &User{int(id), email, string(hash), false}, nil
+}
+
+func SetResetPassword(user_id int, ip net.IP) string {
+	key := securecookie.GenerateRandomKey(32)
+
+	hash := sha256.New()
+	hash.Write(key)
+	token := hex.EncodeToString(hash.Sum(nil))
+	expires := time.Now().Add(time.Hour * 24).Unix()
+
+	db.Exec(`
+	INSERT INTO tiers_reset_password(user_id, expires, ip, token)
+	VALUES(?, ?, INET6_ATON(?), ?)
+	`,
+		user_id, expires, ip.String(), token,
+	)
+
+	return token
+}
+
+func ValidateResetToken(token string) int {
+	var user_id int
+	db.QueryRow(`
+		SELECT user_id FROM tiers_reset_password
+		WHERE token = ?
+	`, token).Scan(&user_id)
+
+	return user_id
+}
+
+func DeleteResetToken(token string) {
+	db.Exec("DELETE FROM tiers_reset_password WHERE token = ?", token)
+}
+
+func SetUserPassword(user_id int, password string) {
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+
+	db.Exec(`
+		UPDATE tiers_users
+		SET password = ?
+		WHERE id = ?
+	`, hash, user_id)
 }
 
 func GetAllProfiles(user_id int) []profile.Profile {

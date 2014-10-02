@@ -1,3 +1,59 @@
-body {
+html, body {
 	font-family: 'Open Sans', sans-serif;
+	height: 100%;
+}
+
+a {
+	color: #009FDA;
+	text-decoration: none;
+}
+a:hover {
+	color: #00BAFF;
+}
+
+.landing {
+	height: 100%;
+}
+
+.col-signin {
+	height: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.col-info {
+	background-color: #333;
+	color: #fff;
+}
+
+.col-signin h4 span {
+	font-weight: 400;
+	font-size: 75%;
+	line-height: 1.7;
+	float: right;
+}
+
+.signin-box, .signup-box, .forgot-box {
+	padding-top: 32px;
+}
+
+.signup-box, .forgot-box {
+	display: none;
+}
+
+@media (min-width: 1200px) {
+	.col-signin, .col-info {
+		position: relative;
+	}
+
+	.col-signin {
+		width: 400px;
+		height: 100%;
+		float: left;
+	}
+
+	.col-info {
+		margin-left: 400px;
+		height: 100%;
+	}
 }

@@ -7,7 +7,9 @@ import (
 )
 
 type config struct {
+	Address        string `json:"address"`
 	Database       string `json:"database"`
+	SMTP           string `json:"smtp"`
 	CookieHashKey  []byte `json:"cookieHashKey"`
 	CookieBlockKey []byte `json:"cookieBlockKey`
 	Cert           string `json:"cert"`

@@ -1,4 +1,6 @@
 {
+	"address": "localhost:8080",
+	"smtp: "",
 	"database": "",
 	"cookieHashKey": "",
 	"cookieBlockKey": "",

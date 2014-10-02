@@ -28,6 +28,7 @@ module.exports = function(grunt) {
 			build: {
 				files: [{
 					'static/js/app.min.js': [
+						'static/vendor/jquery/dist/jquery.js',
 						'static/vendor/bootstrap/dist/js/bootstrap.js',
 						'static/js/app.js',
 						'static/js/bullet.js'

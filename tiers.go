@@ -47,13 +47,15 @@ func main() {
 	rice.MustFindBox("templates")
 
 	r.HandleFunc("/", page.ProfileHandler)
-	r.HandleFunc("/login", LoginHandler)
-	r.HandleFunc("/logout", LogoutHandle)
 	r.HandleFunc("/badges", page.BadgesHandler)
 	r.HandleFunc("/progress", page.ProgressHandler)
 
-	r.HandleFunc("/register", page.RegisterViewHandler).Methods("GET")
-	r.HandleFunc("/register", page.RegisterHandler).Methods("POST")
+	r.HandleFunc("/signin", LoginHandler)
+	r.HandleFunc("/logout", LogoutHandle)
+	r.HandleFunc("/signup", page.SignupHandler).Methods("POST")
+	r.HandleFunc("/reset_password/{token:[a-f0-9]+}", page.ResetPassViewHandler).Methods("GET")
+	r.HandleFunc("/reset_password/{token:[a-f0-9]+}", page.ResetPassHandler).Methods("POST")
+	r.HandleFunc("/reset_password", page.ResetPassMailHandler).Methods("POST")
 
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
@@ -68,5 +70,5 @@ func main() {
 	go queue.ProcessQueue()
 	queue.Queue <- true
 
-	log.Fatal(http.ListenAndServeTLS("localhost:45633", conf.Config.Cert, conf.Config.Key, nil))
+	log.Fatal(http.ListenAndServeTLS(conf.Config.Address, conf.Config.Cert, conf.Config.Key, nil))
 }
