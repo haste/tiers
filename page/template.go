@@ -56,7 +56,7 @@ func relativeTime(ts uint) string {
 	case hours == 1:
 		return "An hour"
 	case hours < 22:
-		return fmt.Sprintf("%d", hours)
+		return fmt.Sprintf("%d hours", hours)
 	case days == 1:
 		return "A day"
 	case days <= 26:
