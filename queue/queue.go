@@ -173,18 +173,21 @@ func ProcessQueue() {
 				log.Fatal(err)
 			}
 
+			processTime := time.Now().Sub(start).Nanoseconds() / 1e6
+
 			// Handle errors
 			_, err = db.Exec(`
 			UPDATE tiers_queues
-			SET processed = 1
+			SET processed = 1,
+			processtime = ?
 			WHERE id = ?
-			`, id)
+			`, processTime, id)
 
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			log.Printf("Queue: Entry processed in %dms: %s L%d %dAP", time.Now().Sub(start).Nanoseconds()/1e6, p.Nick, p.Level, p.AP)
+			log.Printf("Queue: Entry processed in %dms: %s L%d %dAP", processTime, p.Nick, p.Level, p.AP)
 		}
 
 		log.Println("Queue: Done.")
