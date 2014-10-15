@@ -51,37 +51,37 @@ func buildProfile(res string) profile.Profile {
 	var p profile.Profile
 
 	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]+\n*LVL")
-	p.Level = matchNum(res, "LVL ?"+digit)
-	p.AP = matchNum(res, digit+" AP")
+	p.Level = matchNum(res, "LVL\\s*"+digit)
+	p.AP = matchNum(res, digit+"\\s*AP")
 
-	p.UniquePortalsVisited = matchNum(res, "Unique ?Portals ?Visited "+digit)
-	p.PortalsDiscovered = matchNum(res, "Portals ?Discovered "+digit)
-	p.XMCollected = matchNum(res, "XM ?Collected "+digit+" XM")
+	p.UniquePortalsVisited = matchNum(res, "Unique\\s*Portals\\s*Visited\\s*"+digit)
+	p.PortalsDiscovered = matchNum(res, "Portals\\s*Discovered\\s*"+digit)
+	p.XMCollected = matchNum(res, "XM\\s*Collected\\s*"+digit+"\\s*XM")
 
-	p.Hacks = matchNum(res, "Hacks "+digit)
-	p.ResonatorsDeployed = matchNum(res, "Resonators ?Deployed "+digit)
-	p.LinksCreated = matchNum(res, "Links ?Created "+digit)
-	p.ControlFieldsCreated = matchNum(res, "Control ?Fields ?Created "+digit)
-	p.MindUnitsCaptured = matchNum(res, "Mind ?Units ?Captured "+digit)
-	p.LongestLinkEverCreated = matchNum(res, "Longest ?Link ?Ever ?Created "+digit+" km")
-	p.LargestControlField = matchNum(res, "Largest ?Control ?Field "+digit+" MUs")
-	p.XMRecharged = matchNum(res, "XM ?Recharged "+digit+" XM")
-	p.PortalsCaptured = matchNum(res, "Portals ?Captured "+digit)
-	p.UniquePortalsCaptured = matchNum(res, "Unique ?Portals ?Captured "+digit)
+	p.Hacks = matchNum(res, "Hacks\\s*"+digit)
+	p.ResonatorsDeployed = matchNum(res, "Resonators\\s*Deployed\\s*"+digit)
+	p.LinksCreated = matchNum(res, "Links\\s*Created\\s*"+digit)
+	p.ControlFieldsCreated = matchNum(res, "Control\\s*Fields\\s*Created\\s*"+digit)
+	p.MindUnitsCaptured = matchNum(res, "Mind\\s*Units\\s*Captured\\s*"+digit)
+	p.LongestLinkEverCreated = matchNum(res, "Longest\\s*Link\\s*Ever\\s*Created\\s*"+digit+"\\s*km")
+	p.LargestControlField = matchNum(res, "Largest\\s*Control\\s*Field\\s*"+digit+"\\s*MUs")
+	p.XMRecharged = matchNum(res, "XM\\s*Recharged "+digit+"\\s*XM")
+	p.PortalsCaptured = matchNum(res, "Portals\\s*Captured\\s*"+digit)
+	p.UniquePortalsCaptured = matchNum(res, "Unique\\s*Portals\\s*Captured\\s*"+digit)
 
-	p.ResonatorsDestroyed = matchNum(res, "Resonators ?Destroyed "+digit)
-	p.PortalsNeutralized = matchNum(res, "Portals ?Neutralized "+digit)
-	p.EnemyLinksDestroyed = matchNum(res, "Enemy ?Links ?Destroyed "+digit)
-	p.EnemyControlFieldsDestroyed = matchNum(res, "Enemy ?Control ?Fields ?Destroyed "+digit)
+	p.ResonatorsDestroyed = matchNum(res, "Resonators\\s*Destroyed\\s*"+digit)
+	p.PortalsNeutralized = matchNum(res, "Portals\\s*Neutralized\\s*"+digit)
+	p.EnemyLinksDestroyed = matchNum(res, "Enemy\\s*Links\\s*Destroyed\\s*"+digit)
+	p.EnemyControlFieldsDestroyed = matchNum(res, "Enemy\\s*Control\\s*Fields\\s*Destroyed\\s*"+digit)
 
-	p.DistanceWalked = matchNum(res, "Distance ?Walked "+digit)
+	p.DistanceWalked = matchNum(res, "Distance\\s*Walked\\s*"+digit)
 
-	p.MaxTimePortalHeld = matchNum(res, "Max ?Time ?Portal ?Held "+digit+" days")
-	p.MaxTimeLinkMaintained = matchNum(res, "Max ?Time ?Link ?Maintained "+digit+" days")
-	p.MaxLinkLengthXDays = matchNum(res, "Max ?Link ?Length ?x ?Days "+digit+" km-days")
-	p.MaxTimeFieldHeld = matchNum(res, "Max ?Time ?Field ?Held "+digit+" days")
+	p.MaxTimePortalHeld = matchNum(res, "Max\\s*Time\\s*Portal\\s*Held\\s*"+digit+"\\s*days")
+	p.MaxTimeLinkMaintained = matchNum(res, "Max\\s*Time\\s*Link\\s*Maintained\\s*"+digit+"\\s*days")
+	p.MaxLinkLengthXDays = matchNum(res, "Max\\s*Link\\s*Length\\s*x\\s*Days\\s*"+digit+"\\s*km.days")
+	p.MaxTimeFieldHeld = matchNum(res, "Max\\s*Time\\s*Field\\s*Held\\s*"+digit+"\\s*days")
 
-	p.LargestFieldMUsXDays = matchNum(res, "Largest ?Field ?MUs ?x ?Days "+digit+" MU-days")
+	p.LargestFieldMUsXDays = matchNum(res, "Largest\\s*Field\\s*MUs\\s*x\\s*Days\\s*"+digit+"\\s*MU.days")
 
 	return p
 }
