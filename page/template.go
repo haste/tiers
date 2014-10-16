@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"math"
 	"strconv"
 	"time"
 
@@ -30,6 +31,10 @@ func comma(n uint) string {
 	return string(h)
 }
 
+func round(dividend uint, divisor float64) uint {
+	return uint(math.Floor((float64(dividend) / divisor) + .5))
+}
+
 func relativeTime(ts uint) string {
 	now := uint(time.Now().Unix())
 
@@ -40,11 +45,11 @@ func relativeTime(ts uint) string {
 		seconds = now - ts
 	}
 
-	minutes := uint(seconds / 60)
-	hours := uint(minutes / 60)
-	days := uint(hours / 24)
-	months := uint(days / 30)
-	years := uint(months / 12)
+	minutes := round(seconds, 60)
+	hours := round(minutes, 60)
+	days := round(hours, 24)
+	months := round(days, 30)
+	years := round(months, 12)
 
 	switch {
 	case seconds < 45:
