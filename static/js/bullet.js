@@ -87,12 +87,16 @@
 					.attr("y", height / 4)
 					.transition()
 					.duration(duration)
-					.attr("width", w1)
+					.attr("width", function(d) {
+						return w1(d) - 1;
+					})
 					.attr("x", reverse ? x1 : 0);
 
 				measure.transition()
 					.duration(duration)
-					.attr("width", w1)
+					.attr("width", function(d) {
+						return w1(d) - 1;
+					})
 					.attr("height", height / 2)
 					.attr("x", reverse ? x1 : 0)
 					.attr("y", height / 4);
