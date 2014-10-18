@@ -30,6 +30,7 @@ func UploadViewHandler(w http.ResponseWriter, r *http.Request) {
 	userid, ok := session.Values["user"]
 
 	if !ok {
+		http.Redirect(w, r, "/", 302)
 		return
 	}
 
