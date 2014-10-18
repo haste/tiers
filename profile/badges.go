@@ -61,6 +61,10 @@ func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
 		req := reqs[i]
 		b.Ranks = append(b.Ranks, req)
 
+		b.Rank = i
+		b.Current = current
+		b.Next = req
+
 		if current >= req {
 			switch i {
 			case 0:
@@ -77,10 +81,6 @@ func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
 		} else {
 			break
 		}
-
-		b.Rank = i
-		b.Current = current
-		b.Next = req
 	}
 }
 
