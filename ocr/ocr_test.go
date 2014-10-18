@@ -1,8 +1,6 @@
 package ocr
 
 import (
-	"io/ioutil"
-	"os"
 	"testing"
 
 	"tiers/conf"
@@ -182,11 +180,7 @@ var testData = map[string]profile.Profile{
 }
 
 func init() {
-	f, _ := ioutil.TempFile("", "testconfig")
-	defer os.Remove(f.Name())
-	ioutil.WriteFile(f.Name(), []byte(`{"cache": "testdata/"}`), 0644)
-
-	conf.Load(f.Name())
+	conf.Config.Cache = "testdata/"
 }
 
 func validateOCR(t *testing.T, file string, p, e profile.Profile) {
