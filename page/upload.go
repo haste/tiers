@@ -1,11 +1,15 @@
 package page
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"regexp"
 
+	"tiers/conf"
 	"tiers/queue"
 	"tiers/session"
 	"time"
@@ -51,8 +55,8 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// XXX: Handle errors.
-	// var db, _ = sql.Open("mysql", conf.Config.Database)
-	// defer db.Close()
+	var db, _ = sql.Open("mysql", conf.Config.Database)
+	defer db.Close()
 
 	for {
 		part, err := reader.NextPart()
@@ -60,7 +64,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		//if part.FileName() is empty, skip this iteration.
+		// if part.FileName() is empty, skip this iteration.
 		if part.FileName() == "" {
 			continue
 		}
@@ -79,32 +83,29 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			fileName = fmt.Sprintf("%d_%s.png", userid, t.Format("20060102_150405"))
 		}
 
-		fmt.Println(fileName)
+		dst, err := os.Create(conf.Config.Cache + fileName)
+		defer dst.Close()
 
-		/*
-			dst, err := os.Create(conf.Config.Cache + fileName)
-			defer dst.Close()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-
-			if _, err := io.Copy(dst, part); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-		*/
+		if _, err := io.Copy(dst, part); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
 		// XXX: Handle errors...
-		//db.Exec(`
-		//INSERT INTO tiers_queues(user_id, timestamp, file)
-		//VALUES(?, ?, ?)
-		//`, userid, t.Unix(), fileName)
+		db.Exec(`
+			INSERT INTO tiers_queues(user_id, timestamp, file)
+			VALUES(?, ?, ?)
+		`, userid, t.Unix(), fileName)
 	}
 
 	var numQueue float32
-	//db.QueryRow(`SELECT count(id) FROM tiers_queues WHERE processed = 0`).Scan(&numQueue)
+	db.QueryRow(`SELECT count(id) FROM tiers_queues WHERE processed = 0`).Scan(&numQueue)
+
 	queueText := fmt.Sprintf(
 		"Your file has been added to the queue and should be processed within %.1f seconds.",
 		numQueue*6.6,
