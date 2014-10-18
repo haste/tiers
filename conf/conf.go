@@ -19,8 +19,9 @@ type config struct {
 
 var Config config
 
-func init() {
-	file, err := os.Open("config.json")
+func Load(path string) {
+	file, err := os.Open(path)
+
 	if err != nil {
 		log.Fatalf("Error loading config file: %s\n", err)
 	}
