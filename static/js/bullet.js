@@ -101,16 +101,15 @@
 					.attr("x", reverse ? x1 : 0)
 					.attr("y", height / 4);
 
-
-				var data = []
-				for(var i = 0; i < measurez.length; i++) {
-					var c = measurez[i]
-					var r = rangez[0]
-					data.push(format(c) + " / " + format(r))
+				var data = [];
+				for(var j = 0; j < measurez.length; j++) {
+					var c = measurez[j];
+					var r = rangez[0];
+					data.push(format(c) + " / " + format(r));
 				}
 
 				var valueText = g.selectAll("text.current")
-					.data(data)
+					.data(data);
 
 				valueText.enter().append("text")
 					.attr("class", "current")
@@ -118,7 +117,7 @@
 					.attr("y", -4)
 					.attr("text-anchor", "end")
 					.text(function(d) {
-						return d
+						return d;
 					});
 
 				// Update the tick groups.
@@ -141,7 +140,7 @@
 					.attr("text-anchor", "middle")
 					.attr("dy", "1em")
 					.attr("y", height * 7 / 6)
-					.text(format)
+					.text(format);
 
 				tickText.each(function(d, i) {
 					if(i === 0) {
