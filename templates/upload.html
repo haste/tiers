@@ -2,15 +2,23 @@
 {{template "nav" .}}
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<div class="well well-sm">
-						<form role="form" method="post" action="/upload" enctype="multipart/form-data">
+					<div class="well well-sm well-upload">
+						<form role="form" class="form-upload" method="post" action="/upload" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Agent profile screenshot</label>
-								<input type="file" name="profile">
+								<input type="file" name="profile[]" multiple>
 							</div>
 
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
+					</div>
+
+					<div class="progress hide">
+						<div class="progress-bar progress-bar-striped active"  role="progressbar">
+						</div>
+					</div>
+
+					<div class="alert alert-success hide" role="alert">
 					</div>
 				</div>
 			</div>

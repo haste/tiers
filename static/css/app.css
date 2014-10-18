@@ -68,3 +68,9 @@ h2.profile-header small {
 		height: 100%;
 	}
 }
+
+.progress-bar.active, .progress.active .progress-bar {
+	-webkit-animation: progress-bar-stripes 250ms linear infinite;
+	-o-animation: progress-bar-stripes 250ms linear infinite;
+	animation: progress-bar-stripes 250ms linear infinite;
+}

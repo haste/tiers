@@ -2,6 +2,9 @@
 	"globalstrict": true,
 	"globals": {
 		"angular": false,
-		"d3": false
+		"d3": false,
+		"console": false,
+		"FormData": false,
+		"window": false
 	}
 }
