@@ -2,7 +2,6 @@ package ocr
 
 import (
 	"bytes"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -54,7 +53,6 @@ func buildProfile(res []byte) profile.Profile {
 
 	// Remove the menu.
 	res = res[bytes.Index(res, []byte("\n")):]
-	fmt.Printf("'%s'\n", res)
 
 	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\n[^\n]*LVL")
 	p.Level = matchNum(res, "LVL\\s*"+digit)
