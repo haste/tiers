@@ -20,14 +20,15 @@ func GetPendingQueues() *sql.Rows {
 	return rows
 }
 
-func SetQueueProcessed(id int, processTime int64) {
+func SetQueueProcessed(id int, processTime, profileId int64) {
 	// Handle errors
 	_, err := db.Exec(`
 			UPDATE tiers_queues
 			SET processed = 1,
-			processtime = ?
+			processtime = ?,
+			profile_id = ?
 			WHERE id = ?
-			`, processTime, id)
+			`, processTime, profileId, id)
 
 	if err != nil {
 		log.Fatal(err)

@@ -29,10 +29,10 @@ func ProcessQueue() {
 			}
 
 			p := ocr.OCR(file)
-			model.InsertProfile(user_id, timestamp, p)
+			profileId := model.InsertProfile(user_id, timestamp, p)
 
 			processTime := time.Now().Sub(start).Nanoseconds() / 1e6
-			model.SetQueueProcessed(id, processTime)
+			model.SetQueueProcessed(id, processTime, profileId)
 
 			log.Printf("Queue: Entry processed in %dms: %s L%d %dAP", processTime, p.Nick, p.Level, p.AP)
 		}
