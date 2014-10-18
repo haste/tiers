@@ -42,8 +42,6 @@ func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	conf.Load("config.json")
-
 	r := mux.NewRouter()
 
 	rice.MustFindBox("templates")
