@@ -38,14 +38,50 @@ $(".form-upload").submit(function(event) {
 		processData: false,
 		contentType: false,
 
+		statusCode: {
+			413: function() {
+				$(".progress").hide();
+				$(".alert")
+				.hide()
+				.removeClass("alert-success")
+				.removeClass("hide")
+				.addClass("alert-warning")
+				.text("File size(s) exceed total upload limit.");
+			}
+		},
+
 		beforeSend: function() {
-			$(".form-upload").find("button").prop("disabled", true);
+			var files = $(".form-upload input")[0].files;
+			var maxSize = 1024 * 1024 * 10;
+			var totalSize = 0;
+			for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+				var file = files[i];
+				totalSize += file.size;
+			}
+
+			if(totalSize > maxSize) {
+				$(".progress").hide();
+				$(".alert")
+				.hide()
+				.removeClass("alert-success")
+				.removeClass("hide")
+				.addClass("alert-warning")
+				.text("File size(s) exceed total upload limit.")
+				.fadeIn();
+
+				return false;
+			}
+
+			$(".form-upload button").prop("disabled", true);
 			$(".progress").hide().removeClass("hide").fadeIn();
 		},
 
 		success: function(data, textStatus, xhr) {
+			console.log(data, textStatus, xhr);
 			$(".alert")
 			.hide()
+			.addClass("alert-success")
+			.removeClass("alert-warning")
 			.removeClass("hide")
 			.text(data.message)
 			.fadeIn();
