@@ -177,6 +177,40 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      52,
 		LargestFieldMUsXDays:  540,
 	},
+
+	"erebwain_v1620_s4active.png": profile.Profile{
+		Nick:  "erebwain",
+		Level: 14,
+		AP:    19617882,
+
+		UniquePortalsVisited: 2378,
+		PortalsDiscovered:    79,
+		XMCollected:          70070561,
+
+		Hacks:                  45889,
+		ResonatorsDeployed:     40751,
+		LinksCreated:           5259,
+		ControlFieldsCreated:   2670,
+		MindUnitsCaptured:      41709,
+		LongestLinkEverCreated: 361,
+		LargestControlField:    1227,
+		XMRecharged:            16776081,
+		PortalsCaptured:        4245,
+		UniquePortalsCaptured:  1115,
+
+		ResonatorsDestroyed:         31206,
+		PortalsNeutralized:          3704,
+		EnemyLinksDestroyed:         7496,
+		EnemyControlFieldsDestroyed: 3855,
+
+		DistanceWalked: 1730,
+
+		MaxTimePortalHeld:     167,
+		MaxTimeLinkMaintained: 28,
+		MaxLinkLengthXDays:    442,
+		MaxTimeFieldHeld:      27,
+		LargestFieldMUsXDays:  1687,
+	},
 }
 
 func init() {

@@ -54,7 +54,7 @@ func buildProfile(res []byte) profile.Profile {
 	// Remove the menu.
 	res = res[bytes.Index(res, []byte("\n")):]
 
-	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\n[^\n]*LVL")
+	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\n*[^\n]*LVL")
 	p.Level = matchNum(res, "LVL\\s*"+digit)
 	p.AP = matchNum(res, digit+"\\s*A[Pp]")
 
