@@ -6,7 +6,7 @@
 						<form role="form" class="form-upload" method="post" action="/upload" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Agent profile screenshot</label>
-								<input type="file" name="profile[]" multiple>
+								<input type="file" name="profile[]" accept=".png">
 							</div>
 
 							<button type="submit" class="btn btn-primary">Submit</button>
@@ -20,6 +20,11 @@
 
 					<div class="alert hide" role="alert">
 					</div>
+
+					<p>
+						This sadly doesn't work with the stock Android browser on most
+						devices. Use Chrome/Firefox or some other browser for now.
+					</p>
 				</div>
 			</div>
 {{template "footer"}}
