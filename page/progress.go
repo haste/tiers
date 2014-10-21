@@ -118,7 +118,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 
 	profiles := model.GetAllProfiles(viewData.User)
 
-	if len(profiles) == 1 {
+	if len(profiles) <= 1 {
 		viewData.Warning = "Not enough data to generate page. :("
 		templates.ExecuteTemplate(w, "progress", viewData)
 		return
