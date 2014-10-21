@@ -36,6 +36,10 @@ func round(dividend uint, divisor float64) uint {
 }
 
 func relativeTime(ts uint) string {
+	if ts == 0 {
+		return "Never"
+	}
+
 	now := uint(time.Now().Unix())
 
 	var seconds uint
