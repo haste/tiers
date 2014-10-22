@@ -19,6 +19,22 @@
 						</p>
 						<button type="submit" class="btn btn-lg btn-block btn-info">Sign in</button>
 					</form>
+
+					<div class="text-center">or</div>
+
+					<div id="signinButton" class="text-center">
+						<span class="g-signin"
+							data-scope="profile"
+							data-clientid="447339154437-o09jreqv5rujsrtujg4u3rl80c5qcii9.apps.googleusercontent.com"
+							data-redirecturi="postmessage"
+							data-accesstype="offline"
+							data-cookiepolicy="single_host_origin"
+							data-callback="signInCallback"
+							data-height="tall"
+							data-width="wide">
+						</span>
+					</div>
+					<div id="result"></div>
 				</div>
 
 				<div class="signup-box">
@@ -53,5 +69,7 @@
 					<h2>Wibbly wobbly Ingress stats tracking thingy</h2>
 				</div>
 			</div>
+
+			<script src="//apis.google.com/js/client:platform.js?onload=start" async defer></script>
 {{template "footer"}}
 {{end}}

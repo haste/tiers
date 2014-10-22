@@ -26,6 +26,34 @@ $(".btn-forgot").click(function(event) {
 	$(".forgot-box").show();
 });
 
+function signInCallback(authResult) {
+	if (authResult.code) {
+
+		// Hide the sign-in button now that the user is authorized, for example:
+		$('#signinButton').attr('style', 'display: none');
+
+		// Send the code to the server
+		$.ajax({
+			type: 'POST',
+			url: '/gplus',
+			dataType: "json",
+			contentType: 'application/octet-stream; charset=utf-8',
+			success: function(result) {
+				if(result.success === true) {
+					window.location = "/";
+				}
+			},
+			data: authResult.code
+		});
+	} else if (authResult.error) {
+		// There was an error.
+		// Possible error codes:
+		//   "access_denied" - User denied access to your app
+		//   "immediate_failed" - Could not automatially log in the user
+		// console.log('There was an error: ' + authResult['error']);
+	}
+}
+
 // Upload
 $(".form-upload").submit(function(event) {
 	event.preventDefault();

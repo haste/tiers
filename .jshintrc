@@ -5,6 +5,7 @@
 		"d3": false,
 		"console": false,
 		"FormData": false,
-		"window": false
+		"window": false,
+		"gapi": false
 	}
 }

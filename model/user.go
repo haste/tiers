@@ -23,7 +23,9 @@ var ErrEmailAlreadyUsed = errors.New("E-mail already used.")
 type User struct {
 	Id          int
 	Email       string
+	GPlusId     string
 	Password    string
+	AccessToken string
 	Valid_email bool
 }
 
@@ -31,9 +33,45 @@ func GetUserByMail(email string) (*User, error) {
 	u := new(User)
 
 	err := db.QueryRow(`
-		SELECT id, email, password, valid_email FROM tiers_users WHERE email = ?`,
+		SELECT id, email, gplus_id, password, access_token, valid_email FROM tiers_users WHERE email = ?`,
 		email,
-	).Scan(&u.Id, &u.Email, &u.Password, &u.Valid_email)
+	).Scan(&u.Id, &u.Email, &u.GPlusId, &u.Password, &u.AccessToken, &u.Valid_email)
+
+	switch {
+	case err == sql.ErrNoRows:
+		return nil, ErrUserNotFound
+	case err != nil:
+		log.Fatal(err)
+	}
+
+	return u, nil
+}
+
+func GetUserById(id int) (*User, error) {
+	u := new(User)
+
+	err := db.QueryRow(`
+		SELECT id, email, gplus_id, password, access_token, valid_email FROM tiers_users WHERE id = ?`,
+		id,
+	).Scan(&u.Id, &u.Email, &u.GPlusId, &u.Password, &u.AccessToken, &u.Valid_email)
+
+	switch {
+	case err == sql.ErrNoRows:
+		return nil, ErrUserNotFound
+	case err != nil:
+		log.Fatal(err)
+	}
+
+	return u, nil
+}
+
+func GetUserByGPlusId(gplusId string) (*User, error) {
+	u := new(User)
+
+	err := db.QueryRow(`
+		SELECT id, email, gplus_id, password, access_token, valid_email FROM tiers_users WHERE gplus_id = ?`,
+		gplusId,
+	).Scan(&u.Id, &u.Email, &u.GPlusId, &u.Password, &u.AccessToken, &u.Valid_email)
 
 	switch {
 	case err == sql.ErrNoRows:
@@ -89,7 +127,20 @@ func CreateUser(email, password string) (*User, error) {
 
 	id, _ := res.LastInsertId()
 
-	return &User{int(id), email, string(hash), false}, nil
+	return &User{Id: int(id), Email: email, Password: string(hash), Valid_email: false}, nil
+}
+
+func CreateGPlusUser(gplusId, accessToken string) *User {
+	res, _ := db.Exec(`
+		INSERT INTO tiers_users (gplus_id, access_token)
+		VALUES(?, ?)
+		`,
+		gplusId, accessToken,
+	)
+
+	id, _ := res.LastInsertId()
+
+	return &User{Id: int(id), GPlusId: gplusId, AccessToken: accessToken}
 }
 
 func SetResetPassword(user_id int, ip net.IP) string {
@@ -132,6 +183,14 @@ func SetUserPassword(user_id int, password string) {
 		SET password = ?
 		WHERE id = ?
 	`, hash, user_id)
+}
+
+func UpdateGPlusToken(id int, accessToken string) {
+	db.Exec(`
+		UPDATE tiers_users
+		SET access_token = ?
+		WHERE id = ?
+	`, accessToken, id)
 }
 
 func GetAllProfiles(user_id int) []profile.Profile {
