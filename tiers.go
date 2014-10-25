@@ -35,6 +35,21 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 	session, _ := session.Get(r, "tiers")
+	userid, ok := session.Values["user"]
+
+	if !ok {
+		http.Redirect(w, r, "/", 302)
+		return
+	}
+
+	u, _ := model.GetUserById(userid.(int))
+	if u.GPlusId != "" {
+		// Execute HTTP GET request to revoke current token
+		url := "https://accounts.google.com/o/oauth2/revoke?token=" + u.AccessToken
+		resp, _ := http.Get(url)
+		defer resp.Body.Close()
+	}
+
 	delete(session.Values, "user")
 	session.Save(r, w)
 
@@ -56,6 +71,7 @@ func main() {
 	r.HandleFunc("/reset_password/{token:[a-f0-9]+}", page.ResetPassViewHandler).Methods("GET")
 	r.HandleFunc("/reset_password/{token:[a-f0-9]+}", page.ResetPassHandler).Methods("POST")
 	r.HandleFunc("/reset_password", page.ResetPassMailHandler).Methods("POST")
+	r.HandleFunc("/gplus", page.GPlusHandler)
 
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
