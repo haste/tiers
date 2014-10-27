@@ -4,12 +4,12 @@ html, body {
 }
 
 .container-main {
-	padding-left: 3px;
-	padding-right: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .navbar {
-	margin-bottom: 0;
+	margin-bottom: 10px;
 }
 
 a {
