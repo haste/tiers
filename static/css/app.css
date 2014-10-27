@@ -3,6 +3,15 @@ html, body {
 	height: 100%;
 }
 
+.container-main {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
 a {
 	color: #009FDA;
 	text-decoration: none;
@@ -49,7 +58,15 @@ h2.profile-header {
 h2.profile-header small {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: 2px;
+}
+
+.profile {
+//	font-size: 12px;
+}
+
+.profile .profile-entry-name {
+	vertical-align: middle;
 }
 
 @media (min-width: 1200px) {

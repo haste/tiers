@@ -1,9 +1,49 @@
 {{define "profile"}}{{template "header"}}
 {{template "nav" .}}
-{{$ts := .Data.Timestamp | relative}}
-<h2 class="profile-header">Profile<small class="bottom-right">updated: {{if eq $ts "Never"}}{{$ts}}{{else}}{{$ts}} ago{{end}}</small></h2>
+{{with .Data}}
+{{$ts := .Profile.Timestamp | relative}}
+<h2 class="profile-header">Profile</h2>
+				<div class="panel-group profile" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								General
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<td class="profile-entry-name">Updated</td>
+									<td class="hidden-xs"></td>
+									<td class="text-right">
+										{{if eq $ts "Never"}}{{$ts}}{{else}}{{$ts}} ago{{end}}
+									</td>
+								</tr>
+								<tr>
+									<td class="profile-entry-name">Level</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.Level}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.Level | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.Level}}{{end}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="profile-entry-name">Action Points</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.AP | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.AP | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.AP | comma}}{{end}}</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
@@ -11,18 +51,35 @@
 							</h4>
 						</div>
 						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
 							<tbody>
 								<tr>
-									<td>Unique Portals Visited</td>
-									<td class="text-right">{{.Data.UniquePortalsVisited | comma}}</td>
+									<td class="profile-entry-name">Unique Portals Visited</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.UniquePortalsVisited}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.UniquePortalsVisited | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.UniquePortalsVisited}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Portals Discovered</td>
-									<td class="text-right">{{.Data.PortalsDiscovered | comma}}</td>
+									<td class="profile-entry-name">Portals Discovered</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.PortalsDiscovered | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.PortalsDiscovered | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.PortalsDiscovered | comma}}{{end}}</div>
+									</td>
 								</tr>
-							<tr>
-									<td>XM Collected</td>
-									<td class="text-right">{{.Data.XMCollected | comma}} XM</td>
+								<tr>
+									<td class="profile-entry-name">XM Collected</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.XMCollected | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.XMCollected | comma}} XM
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.XMCollected | comma}} XM{{end}}</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -35,46 +92,91 @@
 							</h4>
 						</div>
 						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
 							<tbody>
 								<tr>
-									<td>Hacks</td>
-									<td class="text-right">{{.Data.Hacks | comma}}</td>
+									<td class="profile-entry-name">Hacks</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.Hacks | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.Hacks | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.Hacks | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Resonators Deployed</td>
-									<td class="text-right">{{.Data.ResonatorsDeployed | comma}}</td>
+									<td class="profile-entry-name">Resonators Deployed</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.ResonatorsDeployed | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.ResonatorsDeployed | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.ResonatorsDeployed | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Links Created</td>
-									<td class="text-right">{{.Data.LinksCreated | comma}}</td>
+									<td class="profile-entry-name">Links Created</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.LinksCreated | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.LinksCreated | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.LinksCreated | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Control Fields Created</td>
-									<td class="text-right">{{.Data.ControlFieldsCreated | comma}}</td>
+									<td class="profile-entry-name">Control Fields Created</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.ControlFieldsCreated | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.ControlFieldsCreated | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.ControlFieldsCreated | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Mind Units Captured</td>
-									<td class="text-right">{{.Data.MindUnitsCaptured | comma}} MUs</td>
+									<td class="profile-entry-name">Mind Units Captured</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.MindUnitsCaptured | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.MindUnitsCaptured | comma}} MUs
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.MindUnitsCaptured | comma}} MUs{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Longest Link Ever Created</td>
-									<td class="text-right">{{.Data.LongestLinkEverCreated | comma}} km</td>
+									<td class="profile-entry-name">Longest Link Ever Created</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.LongestLinkEverCreated | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.LongestLinkEverCreated | comma}} km
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.LongestLinkEverCreated | comma}} km{{end}}</div>
+									</td>
 								</tr>
-							<tr>
-									<td>Largest Control Field</td>
-									<td class="text-right">{{.Data.LargestControlField | comma}} MUs</td>
+								<tr>
+									<td class="profile-entry-name">Largest Control Field</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.LargestControlField | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.LargestControlField | comma}} MUs
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.LargestControlField | comma}} MUs{{end}}</div>
+									</td>
 									</tr>
 								<tr>
-									<td>XM Recharged</td>
-									<td class="text-right">{{.Data.XMRecharged | comma}} XM</td>
+									<td class="profile-entry-name">XM Recharged</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.XMRecharged | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.XMRecharged | comma}} XM
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.XMRecharged | comma}} XM{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Portals Captured</td>
-									<td class="text-right">{{.Data.PortalsCaptured | comma}}</td>
+									<td class="profile-entry-name">Portals Captured</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.PortalsCaptured | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.PortalsCaptured | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.PortalsCaptured | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Unique Portals Captured</td>
-									<td class="text-right">{{.Data.UniquePortalsCaptured | comma}}</td>
+									<td class="profile-entry-name">Unique Portals Captured</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.UniquePortalsCaptured | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.UniquePortalsCaptured | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.UniquePortalsCaptured | comma}}{{end}}</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -87,22 +189,43 @@
 							</h4>
 						</div>
 						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
 							<tbody>
 								<tr>
-									<td>Resonators Destroyed</td>
-									<td class="text-right">{{.Data.ResonatorsDestroyed | comma}}</td>
+									<td class="profile-entry-name">Resonators Destroyed</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.ResonatorsDestroyed | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.ResonatorsDestroyed | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.ResonatorsDestroyed | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Portals Neutralized</td>
-									<td class="text-right">{{.Data.PortalsNeutralized | comma}}</td>
+									<td class="profile-entry-name">Portals Neutralized</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.PortalsNeutralized | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.PortalsNeutralized | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.PortalsNeutralized | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Enemy Links Destroyed</td>
-									<td class="text-right">{{.Data.EnemyLinksDestroyed | comma}}</td>
+									<td class="profile-entry-name">Enemy Links Destroyed</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.EnemyLinksDestroyed | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.EnemyLinksDestroyed | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.EnemyLinksDestroyed | comma}}{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Enemy Control Fields Destroyed</td>
-									<td class="text-right">{{.Data.EnemyControlFieldsDestroyed | comma}}</td>
+									<td class="profile-entry-name">Enemy Control Fields Destroyed</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.EnemyControlFieldsDestroyed | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.EnemyControlFieldsDestroyed | comma}}
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.EnemyControlFieldsDestroyed | comma}}{{end}}</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -115,10 +238,19 @@
 							</h4>
 						</div>
 						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
 							<tbody>
 								<tr>
-									<td>Distance Walked</td>
-									<td class="text-right">{{.Data.DistanceWalked | comma}} km</td>
+									<td class="profile-entry-name">Distance Walked</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.DistanceWalked | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.DistanceWalked | comma}} km
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.DistanceWalked | comma}} km{{end}}</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -131,30 +263,56 @@
 							</h4>
 						</div>
 						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
 							<tbody>
 								<tr>
-									<td>Max Time Portal Held</td>
-									<td class="text-right">{{.Data.MaxTimePortalHeld | comma}} days</td>
+									<td class="profile-entry-name">Max Time Portal Held</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.MaxTimePortalHeld | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.MaxTimePortalHeld | comma}} days
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.MaxTimePortalHeld | comma}} days{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Max Time Link Maintained</td>
-									<td class="text-right">{{.Data.MaxTimeLinkMaintained | comma}} days</td>
+									<td class="profile-entry-name">Max Time Link Maintained</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.MaxTimeLinkMaintained | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.MaxTimeLinkMaintained | comma}} days
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.MaxTimeLinkMaintained | comma}} days{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Max Link Length x Days</td>
-									<td class="text-right">{{.Data.MaxLinkLengthXDays | comma}} km-days</td>
+									<td class="profile-entry-name">Max Link Length ✕ Days</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.MaxLinkLengthXDays | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.MaxLinkLengthXDays | comma}} km-days
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.MaxLinkLengthXDays | comma}} km-days{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Max Time Field Held</td>
-									<td class="text-right">{{.Data.MaxTimeFieldHeld | comma}} days</td>
+									<td class="profile-entry-name">Max Time Field Held</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}}{{.Diff.MaxTimeFieldHeld | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.MaxTimeFieldHeld | comma}} days
+										<div class="visible-xs text-success">{{if .Diff}} + {{.Diff.MaxTimeFieldHeld | comma}} days{{end}}</div>
+									</td>
 								</tr>
 								<tr>
-									<td>Largest Field MUs x Days</td>
-									<td class="text-right">{{.Data.LargestFieldMUsXDays | comma}} MU-days</td>
+									<td class="profile-entry-name">Largest Field MUs ✕ Days</td>
+									<td class="hidden-xs text-center text-success">{{if .Diff}} {{.Diff.LargestFieldMUsXDays | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.LargestFieldMUsXDays | comma}} MU-days
+										<div class="visible-xs text-success">{{if .Diff}} +  {{.Diff.LargestFieldMUsXDays | comma}} days{{end}}</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+{{end}}
 {{template "footer" . }}
 {{end}}
