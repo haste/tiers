@@ -98,7 +98,7 @@ func runOCR(fileName string) []byte {
 		"-resize",
 		"175%",
 		"-level",
-		"50%",
+		"35%",
 		"-colorspace",
 		"gray",
 		"+dither",
