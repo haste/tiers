@@ -245,6 +245,40 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      27,
 		LargestFieldMUsXDays:  1687,
 	},
+
+	"zyp_v1630_unknown.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    3092754,
+
+		UniquePortalsVisited: 1146,
+		PortalsDiscovered:    0,
+		XMCollected:          8480812,
+
+		Hacks:                  3818,
+		ResonatorsDeployed:     4304,
+		LinksCreated:           1271,
+		ControlFieldsCreated:   605,
+		MindUnitsCaptured:      79529,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            4137505,
+		PortalsCaptured:        597,
+		UniquePortalsCaptured:  413,
+
+		ResonatorsDestroyed:         3719,
+		PortalsNeutralized:          435,
+		EnemyLinksDestroyed:         1030,
+		EnemyControlFieldsDestroyed: 455,
+
+		DistanceWalked: 179,
+
+		MaxTimePortalHeld:     32,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+	},
 }
 
 func init() {
