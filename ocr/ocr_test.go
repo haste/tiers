@@ -279,6 +279,40 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      15,
 		LargestFieldMUsXDays:  3117,
 	},
+
+	"haste_v1630_nexus5.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    22186081,
+
+		UniquePortalsVisited: 3423,
+		PortalsDiscovered:    34,
+		XMCollected:          97206086,
+
+		Hacks:                  48188,
+		ResonatorsDeployed:     47369,
+		LinksCreated:           5082,
+		ControlFieldsCreated:   2457,
+		MindUnitsCaptured:      32617,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            25349179,
+		PortalsCaptured:        5683,
+		UniquePortalsCaptured:  1373,
+
+		ResonatorsDestroyed:         41394,
+		PortalsNeutralized:          6133,
+		EnemyLinksDestroyed:         7590,
+		EnemyControlFieldsDestroyed: 3480,
+
+		DistanceWalked: 1865,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+	},
 }
 
 func init() {

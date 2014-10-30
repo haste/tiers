@@ -19,6 +19,7 @@ func sanitizeNum(input []byte) uint {
 	n = strings.Replace(n, "L", "1", -1)
 	n = strings.Replace(n, "|", "1", -1)
 	n = strings.Replace(n, "]", "1", -1)
+	n = strings.Replace(n, "J", "1", -1)
 	n = strings.Replace(n, "o", "0", -1)
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, ",", "", -1)
@@ -48,7 +49,7 @@ func matchNum(res []byte, pattern string) uint {
 }
 
 func buildProfile(res []byte) profile.Profile {
-	var digit = `([0-9Ll|,B\]]+)`
+	var digit = `([0-9Ll|J,B\]]+)`
 	var p profile.Profile
 
 	// Remove the menu.
