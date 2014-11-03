@@ -77,6 +77,7 @@ func main() {
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
 
 	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(rice.MustFindBox("static/css").HTTPBox())))
+	r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(rice.MustFindBox("static/images").HTTPBox())))
 	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(rice.MustFindBox("static/fonts").HTTPBox())))
 	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(rice.MustFindBox("static/js").HTTPBox())))
 	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(rice.MustFindBox("static/vendor").HTTPBox())))
