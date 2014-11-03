@@ -62,7 +62,9 @@ func main() {
 	rice.MustFindBox("templates")
 
 	r.HandleFunc("/", page.ProfileHandler)
-	r.HandleFunc("/badges", page.BadgesHandler)
+	r.HandleFunc("/badges", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/progress", 302)
+	})
 	r.HandleFunc("/progress", page.ProgressHandler)
 
 	r.HandleFunc("/signin", LoginHandler)
