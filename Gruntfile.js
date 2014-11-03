@@ -30,8 +30,8 @@ module.exports = function(grunt) {
 					'static/js/app.min.js': [
 						'static/vendor/jquery/dist/jquery.js',
 						'static/vendor/bootstrap/dist/js/bootstrap.js',
-						'static/js/app.js',
-						'static/js/bullet.js'
+						'static/js/app.js'
+//						'static/js/bullet.js'
 					]
 				}]
 			}
@@ -51,8 +51,8 @@ module.exports = function(grunt) {
 		watch: {
 			js: {
 				files: [
-					'static/js/app.js',
-					'static/js/bullet.js'
+					'static/js/app.js'
+//					'static/js/bullet.js'
 				],
 				tasks: ['jshint', 'uglify']
 			},
