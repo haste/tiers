@@ -11,7 +11,6 @@ import (
 	"tiers/model"
 	"tiers/profile"
 	"tiers/session"
-	"time"
 )
 
 type tier struct {
@@ -47,7 +46,31 @@ type progressByExpected struct {
 }
 
 func (p progressByExpected) Less(i, j int) bool {
-	return p.progressValues[i].Expected < p.progressValues[j].Expected
+	var (
+		a = p.progressValues[i].Expected
+		b = p.progressValues[j].Expected
+	)
+
+	if a == -2 {
+		return false
+	} else if b == -2 {
+		return true
+	}
+
+	return a < b
+}
+
+type progressByName struct {
+	progressValues
+}
+
+func (p progressByName) Less(i, j int) bool {
+	var (
+		a = p.progressValues[i].Name
+		b = p.progressValues[j].Name
+	)
+
+	return a < b
 }
 
 type view struct {
@@ -57,6 +80,7 @@ type view struct {
 
 	Next []map[string]string
 
+	AP        progress
 	Progress  []progress
 	Completed []progress
 
@@ -141,11 +165,17 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 
 	newestProfile := profiles[len(profiles)-1]
 	if newestProfile.AP < newestProfile.NextLevel.AP {
-		slope, intercept, _ := lineaRegression(x, y["AP"])
-		ts := int64(((float64(newestProfile.NextLevel.AP) - intercept) / slope)) + 1262304000
+		var ts int64
+
+		if y["AP"][0] == y["AP"][len(y["AP"])-1] {
+			ts = -2
+		} else {
+			slope, intercept, _ := lineaRegression(x, y["AP"])
+			ts = int64(((float64(newestProfile.NextLevel.AP) - intercept) / slope)) + 1262304000
+		}
 
 		perc := (float64(int(float64(newestProfile.AP)/float64(newestProfile.NextLevel.AP)*1000)) / 10)
-		view.Progress = append(view.Progress, progress{
+		view.AP = progress{
 			Name: "AP",
 
 			Tiers: []tier{
@@ -159,9 +189,9 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 			Required: newestProfile.NextLevel.AP,
 
 			Expected: ts,
-		})
+		}
 	} else {
-		view.Progress = append(view.Progress, progress{
+		view.AP = progress{
 			Name: "AP",
 
 			Tiers: []tier{
@@ -172,7 +202,9 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 			},
 
 			Current: newestProfile.AP,
-		})
+
+			Expected: -1,
+		}
 	}
 
 	var badges []progress
@@ -211,7 +243,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 				badge.Required = f.FieldByName("Next").Int()
 
 				if y[name][0] == y[name][len(y[name])-1] {
-					badge.Expected = time.Now().AddDate(20, 0, 0).Unix()
+					badge.Expected = -2
 				} else if badge.Current < badge.Required {
 					slope, intercept, _ := lineaRegression(x, y[badge.Name])
 					ts := int64(((float64(badge.Required) - intercept) / slope)) + 1262304000
@@ -251,25 +283,21 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 		view.Progress = append(view.Progress, badge)
 	}
 
-	var priority []progress
 	var inprogress []progress
 	var completed []progress
 	for _, v := range view.Progress {
 		switch v.Expected {
 		case -1:
 			completed = append(completed, v)
-		case 0:
-			priority = append(priority, v)
 		default:
 			inprogress = append(inprogress, v)
 		}
 	}
 
-	sort.Sort(progressByExpected{priority})
 	sort.Sort(progressByExpected{inprogress})
-	sort.Sort(progressByExpected{completed})
+	sort.Sort(progressByName{completed})
 
-	view.Progress = append(priority, inprogress...)
+	view.Progress = inprogress
 	view.Completed = completed
 
 	templates.ExecuteTemplate(w, "progress", &view)

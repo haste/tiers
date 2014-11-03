@@ -24,14 +24,27 @@
 				-->
 
 				<h3>Progress</h2>
+				{{with .AP}}
+				<div class="progress-badge">
+					<h4>{{.Name}} <small>{{if ne .Expected -2}}{{.Expected | relative}}{{end}}</small></h4>
+					<div class="progress">
+						{{ range .Tiers }}
+						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
+						{{end}}
+					</div>
+
+					<div class="text-center progress-values">
+						{{.Current | comma}} / {{.Required | comma}}
+					</div>
+				</div>
+				{{end}}
+
+				<hr />
+
 		{{ range .Progress }}
 				<div class="progress-badge">
-					{{ if .Icon }}
 					<img src="{{.Icon}}" style="float: left; height: 49px; width: 59px; padding-right: 10px;">
-					{{else}}
-					<div style="float:left; width: 59px; height: 49px;"></div>
-					{{end}}
-					<h4>{{.Name}} <small>{{.Expected | relative}}</small></h4>
+					<h4>{{.Name}} <small>{{if ne .Expected -2}}{{.Expected | relative}}{{end}}</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
 						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
@@ -49,11 +62,7 @@
 
 			{{ range .Completed }}
 				<div class="progress-badge">
-					{{ if .Icon }}
 					<img src="{{.Icon}}" style="float: left; height: 49px; width: 59px; padding-right: 10px;">
-					{{else}}
-					<div style="float:left; width: 59px; height: 49px;"></div>
-					{{end}}
 					<h4>{{.Name}} <small>Completed</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
