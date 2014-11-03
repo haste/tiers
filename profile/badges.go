@@ -79,6 +79,7 @@ func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
 				p.Onyx++
 			}
 		} else {
+			b.Rank = i - 1
 			break
 		}
 	}
