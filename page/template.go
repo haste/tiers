@@ -11,7 +11,7 @@ import (
 	"github.com/GeertJohan/go.rice"
 )
 
-func comma(n uint) string {
+func comma(n int64) string {
 	var h []byte
 	var s = strconv.Itoa(int(n))
 
@@ -31,18 +31,18 @@ func comma(n uint) string {
 	return string(h)
 }
 
-func round(dividend uint, divisor float64) uint {
-	return uint(math.Floor((float64(dividend) / divisor) + .5))
+func round(dividend int64, divisor float64) int64 {
+	return int64(math.Floor((float64(dividend) / divisor) + .5))
 }
 
-func relativeTime(ts uint) string {
+func relativeTime(ts int64) string {
 	if ts == 0 {
 		return "Never"
 	}
 
-	now := uint(time.Now().Unix())
+	now := time.Now().Unix()
 
-	var seconds uint
+	var seconds int64
 	if ts > now {
 		seconds = ts - now
 	} else {

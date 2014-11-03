@@ -2,9 +2,9 @@ package profile
 
 type Badge struct {
 	Rank    int
-	Ranks   []uint
-	Current uint
-	Next    uint
+	Ranks   []int64
+	Current int64
+	Next    int64
 }
 
 type Badges struct {
@@ -22,12 +22,12 @@ type Badges struct {
 }
 
 type BadgeProgress struct {
-	Title    string `json:"title"`
-	Ranges   []uint `json:"ranges"`
-	Measures []uint `json:"measures"`
+	Title    string  `json:"title"`
+	Ranges   []int64 `json:"ranges"`
+	Measures []int64 `json:"measures"`
 }
 
-var BadgeRanks = map[string][]uint{
+var BadgeRanks = map[string][]int64{
 	"Connector":      {50, 1000, 5000, 25000, 100000},
 	"Builder":        {2000, 10000, 30000, 100000, 200000},
 	"Explorer":       {100, 1000, 2000, 10000, 30000},
@@ -56,7 +56,7 @@ var BadgeOrder = []string{
 	"Guardian",
 }
 
-func incBadgeRank(p *Profile, b *Badge, current uint, reqs []uint) {
+func incBadgeRank(p *Profile, b *Badge, current int64, reqs []int64) {
 	for i := 0; i < len(reqs); i++ {
 		req := reqs[i]
 		b.Ranks = append(b.Ranks, req)
@@ -147,7 +147,7 @@ func BuildBadgeProgress(p Profile) []BadgeProgress {
 		bp = append(bp, BadgeProgress{
 			Title:    bn,
 			Ranges:   current.Ranks,
-			Measures: []uint{current.Current},
+			Measures: []int64{current.Current},
 		})
 	}
 

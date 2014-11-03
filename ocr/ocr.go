@@ -13,7 +13,7 @@ import (
 	"tiers/profile"
 )
 
-func sanitizeNum(input []byte) uint {
+func sanitizeNum(input []byte) int64 {
 	n := string(input)
 	n = strings.Replace(n, "l", "1", -1)
 	n = strings.Replace(n, "L", "1", -1)
@@ -24,8 +24,8 @@ func sanitizeNum(input []byte) uint {
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, ",", "", -1)
 
-	un, _ := strconv.ParseUint(n, 10, 0)
-	return uint(un)
+	un, _ := strconv.ParseInt(n, 10, 0)
+	return un
 }
 
 func matchString(res []byte, pattern string) string {
@@ -38,7 +38,7 @@ func matchString(res []byte, pattern string) string {
 	return string(r.FindSubmatch(res)[1])
 }
 
-func matchNum(res []byte, pattern string) uint {
+func matchNum(res []byte, pattern string) int64 {
 	r := regexp.MustCompile(pattern)
 
 	if r.Match(res) != true {
@@ -56,7 +56,7 @@ func buildProfile(res []byte) profile.Profile {
 	res = res[bytes.Index(res, []byte("\n")):]
 
 	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\n*[^\n]*LVL")
-	p.Level = matchNum(res, "LVL\\s*"+digit)
+	p.Level = int(matchNum(res, "LVL\\s*"+digit))
 	p.AP = matchNum(res, digit+"\\s*A[Pp]")
 
 	p.UniquePortalsVisited = matchNum(res, "Unique\\s*Portals\\s*Visited\\s*"+digit)

@@ -3,11 +3,11 @@ package profile
 type Profile struct {
 	Id        int
 	UserId    int
-	Timestamp uint
+	Timestamp int64
 
 	Nick  string
-	Level uint
-	AP    uint
+	Level int
+	AP    int64
 
 	NextLevel LevelRequirement
 
@@ -19,39 +19,39 @@ type Profile struct {
 
 	Badges Badges
 
-	UniquePortalsVisited uint
-	PortalsDiscovered    uint
-	XMCollected          uint
+	UniquePortalsVisited int64
+	PortalsDiscovered    int64
+	XMCollected          int64
 
-	Hacks                  uint
-	ResonatorsDeployed     uint
-	LinksCreated           uint
-	ControlFieldsCreated   uint
-	MindUnitsCaptured      uint
-	LongestLinkEverCreated uint
-	LargestControlField    uint
-	XMRecharged            uint
-	PortalsCaptured        uint
-	UniquePortalsCaptured  uint
+	Hacks                  int64
+	ResonatorsDeployed     int64
+	LinksCreated           int64
+	ControlFieldsCreated   int64
+	MindUnitsCaptured      int64
+	LongestLinkEverCreated int64
+	LargestControlField    int64
+	XMRecharged            int64
+	PortalsCaptured        int64
+	UniquePortalsCaptured  int64
 
-	ResonatorsDestroyed         uint
-	PortalsNeutralized          uint
-	EnemyLinksDestroyed         uint
-	EnemyControlFieldsDestroyed uint
+	ResonatorsDestroyed         int64
+	PortalsNeutralized          int64
+	EnemyLinksDestroyed         int64
+	EnemyControlFieldsDestroyed int64
 
-	DistanceWalked uint
+	DistanceWalked int64
 
-	MaxTimePortalHeld     uint
-	MaxTimeLinkMaintained uint
-	MaxLinkLengthXDays    uint
-	MaxTimeFieldHeld      uint
+	MaxTimePortalHeld     int64
+	MaxTimeLinkMaintained int64
+	MaxLinkLengthXDays    int64
+	MaxTimeFieldHeld      int64
 
-	LargestFieldMUsXDays uint
+	LargestFieldMUsXDays int64
 }
 
 type LevelRequirement struct {
 	Level uint
-	AP    uint
+	AP    int64
 
 	Bronze   int
 	Silver   int

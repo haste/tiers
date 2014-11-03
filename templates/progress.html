@@ -1,5 +1,72 @@
 {{define "progress"}}{{template "header"}}
 {{template "nav" .}}
+				{{if .Warning}}
+				<p class="alert alert-warning">{{.Warning}}</p>
+				{{else}}
+				<h2>Level {{.NextLevel}}</h2>
+
+				<!--
+				<p>
+					You'll reach level <strong>15</strong> in <strong>11 months</strong> if you keep playing with
+					the same level of activity as you have had in the last <strong>30 days</strong>.
+				</p>
+
+				<p>
+					Currently lack the following:
+				</p>
+
+				<dl class="dl-horizontal">
+					<dt>1,479,265 AP</dt>
+					<dd>20 days</dd>
+					<dt>One platinum badge</dt>
+					<dd>11 months</dd>
+				</ul>
+				-->
+
+				<h3>Progress</h2>
+				{{ range .Progress }}
+				<div class="progress-badge">
+					{{ if .Icon }}
+					<img src="{{.Icon}}" style="float: left; height: 49px; padding-right: 10px;">
+					{{else}}
+					<div style="float:left; width: 59px; height: 49px;"></div>
+					{{end}}
+					<h4>{{.Name}} <small>{{.Expected | relative}}</small></h4>
+					<div class="progress">
+						{{ range .Tiers }}
+						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
+						{{end}}
+					</div>
+
+					<div class="text-center progress-values">
+						{{.Current | comma}} / {{.Required | comma}}
+					</div>
+				</div>
+				{{ end }}
+
+				<hr />
+
+				{{ range .Completed }}
+				<div class="progress-badge">
+					{{ if .Icon }}
+					<img src="{{.Icon}}" style="float: left; height: 49px; padding-right: 10px;">
+					{{else}}
+					<div style="float:left; width: 59px; height: 49px;"></div>
+					{{end}}
+					<h4>{{.Name}} <small>Completed</small></h4>
+					<div class="progress">
+						{{ range .Tiers }}
+						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
+						{{end}}
+					</div>
+
+					<div class="text-center progress-values">
+						{{.Current | comma}} / {{.Required | comma}}
+					</div>
+				</div>
+				{{ end }}
+
+				<!--
 				<h2>Next level</h2>
 
 				{{if .Warning}}
@@ -30,5 +97,7 @@
 					</tbody>
 				</table>
 				{{end}}
+				-->
+				{{ end }}
 {{template "footer" . }}
 {{end}}
