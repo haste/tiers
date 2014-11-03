@@ -1,8 +1,8 @@
 {{define "progress"}}{{template "header"}}
 {{template "nav" .}}
-				{{if .Warning}}
+	{{if .Warning}}
 				<p class="alert alert-warning">{{.Warning}}</p>
-				{{else}}
+	{{else}}
 				<h2>Level {{.NextLevel}}</h2>
 
 				<!--
@@ -24,7 +24,7 @@
 				-->
 
 				<h3>Progress</h2>
-				{{ range .Progress }}
+		{{ range .Progress }}
 				<div class="progress-badge">
 					{{ if .Icon }}
 					<img src="{{.Icon}}" style="float: left; height: 49px; width: 59px; padding-right: 10px;">
@@ -42,12 +42,12 @@
 						{{.Current | comma}} / {{.Required | comma}}
 					</div>
 				</div>
-				{{ end }}
+		{{ end }}
 
-				{{ if .Completed }}
+		{{ if .Completed }}
 				<hr />
 
-				{{ range .Completed }}
+			{{ range .Completed }}
 				<div class="progress-badge">
 					{{ if .Icon }}
 					<img src="{{.Icon}}" style="float: left; height: 49px; width: 59px; padding-right: 10px;">
@@ -65,10 +65,8 @@
 						{{.Current | comma}} / {{.Required | comma}}
 					</div>
 				</div>
-				{{ end }}
-
-				{{ end }}
-
-				{{ end }}
+			{{ end }}
+		{{ end }}
+	{{ end }}
 {{template "footer" . }}
 {{end}}
