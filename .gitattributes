@@ -1,2 +1,3 @@
 static/js/app.min.js -diff
+static/js/app.map -diff
 static/css/app.min.css -diff
