@@ -1,15 +1,20 @@
 {{define "upload"}}{{template "header"}}
 {{template "nav" .}}
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
+				<div class="col-md-6 col-md-push-6">
+					<h3>Upload</h3>
 					<div class="well well-sm well-upload">
 						<form role="form" class="form-upload" method="post" action="/upload" enctype="multipart/form-data">
 							<div class="form-group">
-								<label>Agent profile screenshot</label>
+								<label>Profile screenshot</label>
 								<input type="file" name="profile[]" accept=".png">
 							</div>
 
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<button type="submit" class="btn btn-primary btn-block">Upload</button>
+								</div>
+							</div>
 						</form>
 					</div>
 
@@ -25,6 +30,37 @@
 						This sadly doesn't work with the stock Android browser on most
 						devices. Use Chrome/Firefox or some other browser for now.
 					</p>
+				</div>
+
+				<div class="col-md-6 col-md-pull-6">
+					<h3>How to</h3>
+					<div class="panels-stacked">
+						<div class="panel panel-default">
+							<div class="panel-heading">1. Create a full agent profile screenshot</div>
+							<div class="panel-body">
+								<img class="img-responsive" src="images/how/1.png" />
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">2. Wait patiently</div>
+							<div class="panel-body">
+								<img class="img-responsive" src="images/how/2.png" />
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">2. Cancel share dialog with back button</div>
+							<div class="panel-body">
+								<img class="img-responsive" src="images/how/3.png" />
+							</div>
+
+							<div class="panel-heading">4. Click <mark>Choose File</mark><span class="visible-xs-inline"> above</span>, locate the screenshot on your device and upload</div>
+							<div class="panel-body">
+								<img class="img-responsive" src="images/how/4.png" />
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 {{template "footer"}}

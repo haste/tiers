@@ -105,7 +105,6 @@ $(".form-upload").submit(function(event) {
 		},
 
 		success: function(data, textStatus, xhr) {
-			console.log(data, textStatus, xhr);
 			$(".alert")
 			.hide()
 			.addClass("alert-success")
