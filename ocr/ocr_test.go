@@ -347,6 +347,39 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      61,
 		LargestFieldMUsXDays:  11600,
 	},
+	"oteckeh_v1630_nexus4.png": profile.Profile{
+		Nick:  "Oteckeh",
+		Level: 10,
+		AP:    5854511,
+
+		UniquePortalsVisited: 2054,
+		PortalsDiscovered:    5,
+		XMCollected:          37956247,
+
+		Hacks:                  15960,
+		ResonatorsDeployed:     16929,
+		LinksCreated:           1744,
+		ControlFieldsCreated:   472,
+		MindUnitsCaptured:      5369,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    816,
+		XMRecharged:            14595505,
+		PortalsCaptured:        1201,
+		UniquePortalsCaptured:  649,
+
+		ResonatorsDestroyed:         10152,
+		PortalsNeutralized:          1261,
+		EnemyLinksDestroyed:         2197,
+		EnemyControlFieldsDestroyed: 1026,
+
+		DistanceWalked: 622,
+
+		MaxTimePortalHeld:     202,
+		MaxTimeLinkMaintained: 24,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      21,
+		LargestFieldMUsXDays:  662,
+	},
 }
 
 func init() {
