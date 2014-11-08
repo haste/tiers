@@ -30,7 +30,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session.Set(w, r, u.Id)
-	http.Redirect(w, r, "/", 302)
+
+	numProfiles := model.GetNumProfiles(u.Id)
+	numQueued := model.GetNumQueuedProfiles(u.Id)
+	switch {
+	case numProfiles == 0 && numQueued == 0:
+		http.Redirect(w, r, "/upload", 302)
+	default:
+		http.Redirect(w, r, "/", 302)
+	}
 }
 
 func LogoutHandle(w http.ResponseWriter, r *http.Request) {
