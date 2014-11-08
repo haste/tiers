@@ -11,6 +11,7 @@ import (
 type ProfilePageData struct {
 	Profile profile.Profile
 	Diff    interface{}
+	Queue   int
 }
 
 type ProfilePage struct {
@@ -78,6 +79,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		var p profile.Profile
 		var diff interface{}
 
+		queue := model.GetNumQueuedProfiles(userid.(int))
 		profiles := model.GetNewestProfiles(userid.(int), 2)
 
 		switch len(profiles) {
@@ -93,6 +95,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 			Data: ProfilePageData{
 				Profile: p,
 				Diff:    diff,
+				Queue:   queue,
 			},
 		})
 	} else {

@@ -235,6 +235,40 @@ func GetAllProfiles(user_id int) []profile.Profile {
 	return profiles
 }
 
+func GetNumProfiles(user_id int) int {
+	var num int
+
+	// XXX: Handle errors.
+	row, _ := db.Query(`
+		SELECT COUNT(id)
+		FROM tiers_profiles
+		WHERE user_id = ?
+		`, user_id)
+	defer row.Close()
+
+	row.Next()
+	row.Scan(&num)
+
+	return num
+}
+
+func GetNumQueuedProfiles(user_id int) int {
+	var num int
+
+	// XXX: Handle errors.
+	row, _ := db.Query(`
+		SELECT COUNT(id)
+		FROM tiers_queues
+		WHERE user_id = ? AND processed = 0
+		`, user_id)
+	defer row.Close()
+
+	row.Next()
+	row.Scan(&num)
+
+	return num
+}
+
 func GetNewestProfile(user_id int) profile.Profile {
 	// XXX: Handle errors.
 	row, _ := db.Query(`

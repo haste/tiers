@@ -3,6 +3,12 @@
 {{with .Data}}
 {{$ts := .Profile.Timestamp | relative}}
 <h2 class="profile-header">Profile</h2>
+				{{ if .Queue}}
+				<div class="alert alert-info">
+						Your profile is currently in the process queue.
+				</div>
+
+				{{ end }}
 				<div class="panel-group profile" id="accordion">
 					<div class="panel panel-default">
 						<div class="panel-heading">
