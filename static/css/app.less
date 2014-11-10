@@ -1,0 +1,208 @@
+@bootstrap: "../vendor/bootstrap/less";
+
+// Core variables and mixins
+@import "@{bootstrap}/variables.less";
+@import "@{bootstrap}/mixins.less";
+
+// Overrides
+// Links
+@link-color: #009FDA;
+@link-hover-color: #00BAFF;
+
+// Typography
+@font-family-base: 'Open Sans', sans-serif;
+
+// Reset and dependencies
+@import "@{bootstrap}/normalize.less";
+@import "@{bootstrap}/print.less";
+@import "@{bootstrap}/glyphicons.less";
+
+// Core CSS
+@import "@{bootstrap}/scaffolding.less";
+@import "@{bootstrap}/type.less";
+@import "@{bootstrap}/code.less";
+@import "@{bootstrap}/grid.less";
+@import "@{bootstrap}/tables.less";
+@import "@{bootstrap}/forms.less";
+@import "@{bootstrap}/buttons.less";
+
+// Components
+@import "@{bootstrap}/component-animations.less";
+@import "@{bootstrap}/dropdowns.less";
+@import "@{bootstrap}/navs.less";
+@import "@{bootstrap}/navbar.less";
+@import "@{bootstrap}/alerts.less";
+@import "@{bootstrap}/progress-bars.less";
+@import "@{bootstrap}/list-group.less";
+@import "@{bootstrap}/panels.less";
+@import "@{bootstrap}/responsive-embed.less";
+
+// Utility classes
+@import "@{bootstrap}/utilities.less";
+@import "@{bootstrap}/responsive-utilities.less";
+
+html, body {
+	height: 100%;
+}
+
+.container-main {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.navbar {
+	margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	position: relative;
+
+	small {
+		position: absolute;
+		right: 0;
+		bottom: 2px;
+	}
+}
+
+.progress-bar-bronze {
+	background-color: #db9775;
+}
+
+.progress-bar-silver {
+	background-color: #a3bbc1;
+}
+
+.progress-bar-gold {
+	background-color: #f8d188;
+}
+
+.progress-bar-platinum {
+	background-color: #d5d4d2;
+}
+
+.progress-bar-onyx {
+	background-color: #555555;
+}
+
+.progress-values {
+	margin-top: -20px;
+	margin-bottom: 20px;
+	padding-left: 59px;
+}
+
+/* Upload */
+#howto-android > .panel-body, #howto-ios > .panel-body {
+	padding: 0;
+}
+
+.panels-stacked .panel {
+	margin-bottom: 0;
+	border-radius: 0;
+	border-bottom-color: transparent;
+}
+
+.panel-title a {
+	display: block;
+	padding: 10px 15px;
+	margin: -10px -15px;
+}
+
+.panel-group .panels-stacked .panel+.panel {
+	margin-top: 0;
+}
+
+/* Landing */
+.landing {
+	height: 100%;
+}
+
+.col-signin {
+	height: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+
+
+	@media (min-width: 1200px) {
+		width: 400px;
+		height: 100%;
+		float: left;
+	}
+
+	h4 span {
+		font-weight: 400;
+		font-size: 75%;
+		line-height: 1.7;
+		float: right;
+	}
+}
+
+.col-info {
+	background-color: #333;
+	color: #fff;
+
+	@media (min-width: 1200px) {
+		margin-left: 400px;
+		height: 100%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.col-signin, .col-info {
+		position: relative;
+	}
+}
+
+.signin-box, .signup-box, .forgot-box {
+	padding-top: 32px;
+}
+
+.signup-box, .forgot-box {
+	display: none;
+}
+
+/* Profile */
+.profile {
+	.profile-entry-name {
+		vertical-align: middle;
+	}
+}
+
+#customBtn {
+	display: inline-block;
+	background: #dd4b39;
+	color: white;
+	width: 165px;
+	border-radius: 5px;
+	white-space: nowrap;
+
+	&:hover {
+		background: #e74b37;
+		cursor: hand;
+	}
+}
+
+span {
+	.label {
+		font-weight: bold;
+	}
+
+	.icon {
+		background: url('/+/images/branding/btn_red_32.png') transparent 5px 50% no-repeat;
+		display: inline-block;
+		vertical-align: middle;
+		width: 35px;
+		height: 35px;
+		border-right: #bb3f30 1px solid;
+	}
+
+	.buttonText {
+		display: inline-block;
+		vertical-align: middle;
+		padding-left: 35px;
+		padding-right: 35px;
+		font-size: 14px;
+		font-weight: bold;
+		/* Use the Roboto font that is loaded in the <head> */
+		font-family: 'Roboto',arial,sans-serif;
+	}
+}

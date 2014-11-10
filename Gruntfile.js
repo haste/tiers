@@ -29,11 +29,23 @@ module.exports = function(grunt) {
 				files: [{
 					'static/js/app.min.js': [
 						'static/vendor/jquery/dist/jquery.js',
-						'static/vendor/bootstrap/dist/js/bootstrap.js',
+						'static/vendor/bootstrap/js/transition.js',
+						'static/vendor/bootstrap/js/collapse.js',
 						'static/js/app.js'
-//						'static/js/bullet.js'
 					]
 				}]
+			}
+		},
+
+		less: {
+			app: {
+				options: {
+					strictMath: true,
+					outputSourceFiles: true,
+				},
+
+				src: 'static/css/app.less',
+				dest: 'static/css/app.css',
 			}
 		},
 
@@ -41,7 +53,6 @@ module.exports = function(grunt) {
 			combine: {
 				files: {
 					'static/css/app.min.css': [
-						'static/vendor/bootstrap/dist/css/bootstrap.css',
 						'static/css/app.css'
 					]
 				}
@@ -52,9 +63,15 @@ module.exports = function(grunt) {
 			js: {
 				files: [
 					'static/js/app.js'
-//					'static/js/bullet.js'
 				],
 				tasks: ['jshint', 'uglify']
+			},
+
+			lint: {
+				files: [
+					'static/css/app.less'
+				],
+				tasks: ['less']
 			},
 
 			css: {
@@ -79,7 +96,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-less');
 
 	// Default task(s).
-	grunt.registerTask('default', ['jshint', 'csslint', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['jshint', 'csslint', 'uglify', 'cssmin', 'watch']);
 };
