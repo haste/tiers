@@ -201,7 +201,8 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 				},
 			},
 
-			Current: newestProfile.AP,
+			Current:  newestProfile.AP,
+			Required: newestProfile.NextLevel.AP,
 
 			Expected: -1,
 		}
