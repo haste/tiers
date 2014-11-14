@@ -380,6 +380,40 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      21,
 		LargestFieldMUsXDays:  662,
 	},
+
+	"mvnch_v1640_iphone5.jpeg": profile.Profile{
+		Nick:  "mvnch",
+		Level: 8,
+		AP:    1200134,
+
+		UniquePortalsVisited: 137,
+		PortalsDiscovered:    0,
+		XMCollected:          1673726,
+
+		Hacks:                  864,
+		ResonatorsDeployed:     1208,
+		LinksCreated:           392,
+		ControlFieldsCreated:   230,
+		MindUnitsCaptured:      701,
+		LongestLinkEverCreated: 4,
+		LargestControlField:    53,
+		XMRecharged:            494542,
+		PortalsCaptured:        114,
+		UniquePortalsCaptured:  66,
+
+		ResonatorsDestroyed:         534,
+		PortalsNeutralized:          71,
+		EnemyLinksDestroyed:         159,
+		EnemyControlFieldsDestroyed: 80,
+
+		DistanceWalked: 90,
+
+		MaxTimePortalHeld:     20,
+		MaxTimeLinkMaintained: 13,
+		MaxLinkLengthXDays:    35,
+		MaxTimeFieldHeld:      12,
+		LargestFieldMUsXDays:  531,
+	},
 }
 
 func init() {
@@ -388,107 +422,107 @@ func init() {
 
 func validateOCR(t *testing.T, file string, p, e profile.Profile) {
 	if p.Nick != e.Nick {
-		t.Errorf("%s: .Nick: %v != %v", file, p.Nick, e.Nick)
+		t.Errorf("%s: .Nick: Got %v Expected %v", file, p.Nick, e.Nick)
 	}
 
 	if p.Level != e.Level {
-		t.Errorf("%s: .Level: %v != %v", file, p.Level, e.Level)
+		t.Errorf("%s: .Level: Got %v Expected %v", file, p.Level, e.Level)
 	}
 
 	if p.AP != e.AP {
-		t.Errorf("%s: .AP: %v != %v", file, p.AP, e.AP)
+		t.Errorf("%s: .AP: Got %v Expected %v", file, p.AP, e.AP)
 	}
 
 	if p.UniquePortalsVisited != e.UniquePortalsVisited {
-		t.Errorf("%s: .UniquePortalsVisited: %v != %v", file, p.UniquePortalsVisited, e.UniquePortalsVisited)
+		t.Errorf("%s: .UniquePortalsVisited: Got %v Expected %v", file, p.UniquePortalsVisited, e.UniquePortalsVisited)
 	}
 
 	if p.PortalsDiscovered != e.PortalsDiscovered {
-		t.Errorf("%s: .PortalsDiscovered: %v != %v", file, p.PortalsDiscovered, e.PortalsDiscovered)
+		t.Errorf("%s: .PortalsDiscovered: Got %v Expected %v", file, p.PortalsDiscovered, e.PortalsDiscovered)
 	}
 
 	if p.XMCollected != e.XMCollected {
-		t.Errorf("%s: .XMCollected: %v != %v", file, p.XMCollected, e.XMCollected)
+		t.Errorf("%s: .XMCollected: Got %v Expected %v", file, p.XMCollected, e.XMCollected)
 	}
 
 	if p.Hacks != e.Hacks {
-		t.Errorf("%s: .Hacks: %v != %v", file, p.Hacks, e.Hacks)
+		t.Errorf("%s: .Hacks: Got %v Expected %v", file, p.Hacks, e.Hacks)
 	}
 
 	if p.ResonatorsDeployed != e.ResonatorsDeployed {
-		t.Errorf("%s: .ResonatorsDeployed: %v != %v", file, p.ResonatorsDeployed, e.ResonatorsDeployed)
+		t.Errorf("%s: .ResonatorsDeployed: Got %v Expected %v", file, p.ResonatorsDeployed, e.ResonatorsDeployed)
 	}
 
 	if p.LinksCreated != e.LinksCreated {
-		t.Errorf("%s: .LinksCreated: %v != %v", file, p.LinksCreated, e.LinksCreated)
+		t.Errorf("%s: .LinksCreated: Got %v Expected %v", file, p.LinksCreated, e.LinksCreated)
 	}
 
 	if p.ControlFieldsCreated != e.ControlFieldsCreated {
-		t.Errorf("%s: .ControlFieldsCreated: %v != %v", file, p.ControlFieldsCreated, e.ControlFieldsCreated)
+		t.Errorf("%s: .ControlFieldsCreated: Got %v Expected %v", file, p.ControlFieldsCreated, e.ControlFieldsCreated)
 	}
 
 	if p.MindUnitsCaptured != e.MindUnitsCaptured {
-		t.Errorf("%s: .MindUnitsCaptured: %v != %v", file, p.MindUnitsCaptured, e.MindUnitsCaptured)
+		t.Errorf("%s: .MindUnitsCaptured: Got %v Expected %v", file, p.MindUnitsCaptured, e.MindUnitsCaptured)
 	}
 
 	if p.LongestLinkEverCreated != e.LongestLinkEverCreated {
-		t.Errorf("%s: .LongestLinkEverCreated: %v != %v", file, p.LongestLinkEverCreated, e.LongestLinkEverCreated)
+		t.Errorf("%s: .LongestLinkEverCreated: Got %v Expected %v", file, p.LongestLinkEverCreated, e.LongestLinkEverCreated)
 	}
 
 	if p.LargestControlField != e.LargestControlField {
-		t.Errorf("%s: .LargestControlField: %v != %v", file, p.LargestControlField, e.LargestControlField)
+		t.Errorf("%s: .LargestControlField: Got %v Expected %v", file, p.LargestControlField, e.LargestControlField)
 	}
 
 	if p.XMRecharged != e.XMRecharged {
-		t.Errorf("%s: .XMRecharged: %v != %v", file, p.XMRecharged, e.XMRecharged)
+		t.Errorf("%s: .XMRecharged: Got %v Expected %v", file, p.XMRecharged, e.XMRecharged)
 	}
 
 	if p.PortalsCaptured != e.PortalsCaptured {
-		t.Errorf("%s: .PortalsCaptured: %v != %v", file, p.PortalsCaptured, e.PortalsCaptured)
+		t.Errorf("%s: .PortalsCaptured: Got %v Expected %v", file, p.PortalsCaptured, e.PortalsCaptured)
 	}
 
 	if p.UniquePortalsCaptured != e.UniquePortalsCaptured {
-		t.Errorf("%s: .UniquePortalsCaptured: %v != %v", file, p.UniquePortalsCaptured, e.UniquePortalsCaptured)
+		t.Errorf("%s: .UniquePortalsCaptured: Got %v Expected %v", file, p.UniquePortalsCaptured, e.UniquePortalsCaptured)
 	}
 
 	if p.ResonatorsDestroyed != e.ResonatorsDestroyed {
-		t.Errorf("%s: .ResonatorsDestroyed: %v != %v", file, p.ResonatorsDestroyed, e.ResonatorsDestroyed)
+		t.Errorf("%s: .ResonatorsDestroyed: Got %v Expected %v", file, p.ResonatorsDestroyed, e.ResonatorsDestroyed)
 	}
 
 	if p.PortalsNeutralized != e.PortalsNeutralized {
-		t.Errorf("%s: .PortalsNeutralized: %v != %v", file, p.PortalsNeutralized, e.PortalsNeutralized)
+		t.Errorf("%s: .PortalsNeutralized: Got %v Expected %v", file, p.PortalsNeutralized, e.PortalsNeutralized)
 	}
 
 	if p.EnemyLinksDestroyed != e.EnemyLinksDestroyed {
-		t.Errorf("%s: .EnemyLinksDestroyed: %v != %v", file, p.EnemyLinksDestroyed, e.EnemyLinksDestroyed)
+		t.Errorf("%s: .EnemyLinksDestroyed: Got %v Expected %v", file, p.EnemyLinksDestroyed, e.EnemyLinksDestroyed)
 	}
 
 	if p.EnemyControlFieldsDestroyed != e.EnemyControlFieldsDestroyed {
-		t.Errorf("%s: .EnemyControlFieldsDestroyed: %v != %v", file, p.EnemyControlFieldsDestroyed, e.EnemyControlFieldsDestroyed)
+		t.Errorf("%s: .EnemyControlFieldsDestroyed: Got %v Expected %v", file, p.EnemyControlFieldsDestroyed, e.EnemyControlFieldsDestroyed)
 	}
 
 	if p.DistanceWalked != e.DistanceWalked {
-		t.Errorf("%s: .DistanceWalked: %v != %v", file, p.DistanceWalked, e.DistanceWalked)
+		t.Errorf("%s: .DistanceWalked: Got %v Expected %v", file, p.DistanceWalked, e.DistanceWalked)
 	}
 
 	if p.MaxTimePortalHeld != e.MaxTimePortalHeld {
-		t.Errorf("%s: .MaxTimePortalHeld: %v != %v", file, p.MaxTimePortalHeld, e.MaxTimePortalHeld)
+		t.Errorf("%s: .MaxTimePortalHeld: Got %v Expected %v", file, p.MaxTimePortalHeld, e.MaxTimePortalHeld)
 	}
 
 	if p.MaxTimeLinkMaintained != e.MaxTimeLinkMaintained {
-		t.Errorf("%s: .MaxTimeLinkMaintained: %v != %v", file, p.MaxTimeLinkMaintained, e.MaxTimeLinkMaintained)
+		t.Errorf("%s: .MaxTimeLinkMaintained: Got %v Expected %v", file, p.MaxTimeLinkMaintained, e.MaxTimeLinkMaintained)
 	}
 
 	if p.MaxLinkLengthXDays != e.MaxLinkLengthXDays {
-		t.Errorf("%s: .MaxLinkLengthXDays: %v != %v", file, p.MaxLinkLengthXDays, e.MaxLinkLengthXDays)
+		t.Errorf("%s: .MaxLinkLengthXDays: Got %v Expected %v", file, p.MaxLinkLengthXDays, e.MaxLinkLengthXDays)
 	}
 
 	if p.MaxTimeFieldHeld != e.MaxTimeFieldHeld {
-		t.Errorf("%s: .MaxTimeFieldHeld: %v != %v", file, p.MaxTimeFieldHeld, e.MaxTimeFieldHeld)
+		t.Errorf("%s: .MaxTimeFieldHeld: Got %v Expected %v", file, p.MaxTimeFieldHeld, e.MaxTimeFieldHeld)
 	}
 
 	if p.LargestFieldMUsXDays != e.LargestFieldMUsXDays {
-		t.Errorf("%s: .LargestFieldMUsXDays: %v != %v", file, p.LargestFieldMUsXDays, e.LargestFieldMUsXDays)
+		t.Errorf("%s: .LargestFieldMUsXDays: Got %v Expected %v", file, p.LargestFieldMUsXDays, e.LargestFieldMUsXDays)
 	}
 }
 
