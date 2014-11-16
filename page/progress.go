@@ -51,9 +51,9 @@ func (p progressByExpected) Less(i, j int) bool {
 		b = p.progressValues[j].Expected
 	)
 
-	if a == -1 {
+	if a < 0 {
 		return false
-	} else if b == -1 {
+	} else if b < 0 {
 		return true
 	}
 
@@ -204,7 +204,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 			Current:  newestProfile.AP,
 			Required: newestProfile.NextLevel.AP,
 
-			Expected: -1,
+			Expected: -2,
 		}
 	}
 
@@ -244,7 +244,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 				badge.Required = f.FieldByName("Next").Int()
 
 				if y[name][0] == y[name][len(y[name])-1] {
-					badge.Expected = -1
+					badge.Expected = -2
 				} else if badge.Current < badge.Required {
 					slope, intercept, _ := lineaRegression(x, y[badge.Name])
 					ts := int64(((float64(badge.Required) - intercept) / slope)) + 1262304000
