@@ -26,7 +26,7 @@
 				<h3>Progress</h2>
 				{{with .AP}}
 				<div class="progress-badge">
-					<h4>{{.Name}} <small>{{if ne .Expected -2}}{{.Expected | relative}}{{end}}</small></h4>
+					<h4>{{.Name}} <small>{{if ne .Expected -1}}{{.Expected | relative}}{{end}}</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
 						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
@@ -44,7 +44,7 @@
 		{{ range .Progress }}
 				<div class="progress-badge">
 					<img src="{{.Icon}}" style="float: left; height: 49px; width: 59px; padding-right: 10px;">
-					<h4>{{.Name}} <small>{{if ne .Expected -2}}{{.Expected | relative}}{{end}}</small></h4>
+					<h4>{{.Name}} <small>{{if ne .Expected -1}}{{.Expected | relative}}{{end}}</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
 						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
