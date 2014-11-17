@@ -20,6 +20,7 @@ func sanitizeNum(input []byte) int64 {
 	n = strings.Replace(n, "|", "1", -1)
 	n = strings.Replace(n, "]", "1", -1)
 	n = strings.Replace(n, "J", "1", -1)
+	n = strings.Replace(n, "I", "1", -1)
 	n = strings.Replace(n, "o", "0", -1)
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, ",", "", -1)
@@ -49,7 +50,7 @@ func matchNum(res []byte, pattern string) int64 {
 }
 
 func buildProfile(res []byte) profile.Profile {
-	var digit = `([0-9Ll|J,B\]]+)`
+	var digit = `([0-9LIl|J,B\]]+)`
 	var p profile.Profile
 
 	// Remove the menu.
@@ -97,11 +98,14 @@ func runOCR(fileName string) []byte {
 	convert := exec.Command("convert", []string{
 		conf.Config.Cache + fileName,
 		"-resize",
-		"175%",
+		"250%",
 		"-level",
-		"35%",
+		"5%",
+		"-colorspace",
+		"gray",
 		"+dither",
-		"-monochrome",
+		"-colors",
+		"2",
 		"-negate",
 		tmpFile,
 	}...)
@@ -113,7 +117,7 @@ func runOCR(fileName string) []byte {
 
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
 		"-psm",
-		"4",
+		"6",
 		tmpFile,
 		"stdout",
 		"ingress",
