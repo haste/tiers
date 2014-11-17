@@ -111,7 +111,7 @@ func runOCR(fileName string) []byte {
 		log.Fatal(err)
 	}
 
-	tesseract := exec.Command("tesseract", []string{
+	tesseract := exec.Command(conf.Config.TesseractBin, []string{
 		"-psm",
 		"4",
 		tmpFile,

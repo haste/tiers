@@ -15,6 +15,7 @@ type config struct {
 	Cert           string `json:"cert"`
 	Key            string `json:"key"`
 	Cache          string `json:"cache"`
+	TesseractBin   string `json:"tesseractBin`
 }
 
 var Config config
