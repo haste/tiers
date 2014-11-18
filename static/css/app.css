@@ -4910,6 +4910,25 @@ body {
 .navbar {
   margin-bottom: 10px;
 }
+.navbar-teal {
+  background-color: #6ecff5;
+  border-bottom: #8ad7f6;
+}
+.navbar-teal .navbar-toggle {
+  border-color: #8ad7f6;
+}
+.navbar-teal .navbar-toggle:hover,
+.navbar-teal .navbar-toggle:focus {
+  background-color: #8ad7f6;
+}
+.navbar-teal .navbar-nav > li > a,
+.navbar-teal .navbar-text,
+.navbar-teal .navbar-brand {
+  color: #fff;
+}
+.navbar-teal .navbar-collapse {
+  border-color: #8ad7f6;
+}
 h1,
 h2,
 h3,
