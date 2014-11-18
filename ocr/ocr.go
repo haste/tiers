@@ -98,9 +98,9 @@ func runOCR(fileName string) []byte {
 	convert := exec.Command("convert", []string{
 		conf.Config.Cache + fileName,
 		"-resize",
-		"250%",
+		"140%",
 		"-level",
-		"5%",
+		"10%",
 		"-colorspace",
 		"gray",
 		"+dither",
@@ -117,7 +117,7 @@ func runOCR(fileName string) []byte {
 
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
 		"-psm",
-		"6",
+		"4",
 		tmpFile,
 		"stdout",
 		"ingress",
