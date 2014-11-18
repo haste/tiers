@@ -16,6 +16,7 @@ type config struct {
 	Key            string `json:"key"`
 	Cache          string `json:"cache"`
 	TesseractBin   string `json:"tesseractBin`
+	ConvertBin     string `json:"convertBin`
 }
 
 var Config config

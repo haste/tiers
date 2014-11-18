@@ -95,7 +95,7 @@ func buildProfile(res []byte) profile.Profile {
 func runOCR(fileName string) []byte {
 	tmpFile := conf.Config.Cache + "tmp_" + fileName
 
-	convert := exec.Command("convert", []string{
+	convert := exec.Command(conf.Config.ConvertBin, []string{
 		conf.Config.Cache + fileName,
 		"-resize",
 		"140%",
