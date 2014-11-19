@@ -1,7 +1,6 @@
 package ocr
 
 import (
-	"os"
 	"testing"
 
 	"tiers/conf"
@@ -532,7 +531,7 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 
 func TestOCRhaste_v1620_nexus5(t *testing.T) {
 	file := "haste_v1620_nexus5.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -540,7 +539,7 @@ func TestOCRhaste_v1620_nexus5(t *testing.T) {
 
 func TestOCRwexp_v0_unknown(t *testing.T) {
 	file := "wexp_v0_unknown.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -548,7 +547,7 @@ func TestOCRwexp_v0_unknown(t *testing.T) {
 
 func TestOCRforferdet_v0_unknown(t *testing.T) {
 	file := "forferdet_v0_unknown.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -556,7 +555,7 @@ func TestOCRforferdet_v0_unknown(t *testing.T) {
 
 func TestOCRforferdet_v0_unknowntablet(t *testing.T) {
 	file := "forferdet_v0_unknowntablet.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -564,7 +563,7 @@ func TestOCRforferdet_v0_unknowntablet(t *testing.T) {
 
 func TestOCRerebwain_v1620_s4active(t *testing.T) {
 	file := "erebwain_v1620_s4active.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -572,7 +571,7 @@ func TestOCRerebwain_v1620_s4active(t *testing.T) {
 
 func TestOCRerebwain_v1630_unknown(t *testing.T) {
 	file := "erebwain_v1630_unknown.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -580,7 +579,7 @@ func TestOCRerebwain_v1630_unknown(t *testing.T) {
 
 func TestOCRzyp_v1630_unknown(t *testing.T) {
 	file := "zyp_v1630_unknown.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -588,7 +587,7 @@ func TestOCRzyp_v1630_unknown(t *testing.T) {
 
 func TestOCRhaste_v1630_nexus5(t *testing.T) {
 	file := "haste_v1630_nexus5.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -596,7 +595,7 @@ func TestOCRhaste_v1630_nexus5(t *testing.T) {
 
 func TestOCRhaste_v1630_nexus5_1(t *testing.T) {
 	file := "haste_v1630_nexus5-1.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -604,7 +603,7 @@ func TestOCRhaste_v1630_nexus5_1(t *testing.T) {
 
 func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
 	file := "oteckeh_v1630_nexus4.png"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
@@ -612,7 +611,7 @@ func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
 
 func TestOCRmvnch_v1640_iphone5(t *testing.T) {
 	file := "mvnch_v1640_iphone5.jpeg"
-	res := runOCR(file, os.Getenv("RESIZE"), os.Getenv("LEVEL"))
+	res := runOCR(file)
 	p := buildProfile(res)
 
 	validateOCR(t, file, p)
