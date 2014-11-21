@@ -414,6 +414,40 @@ var testData = map[string]profile.Profile{
 		MaxTimeFieldHeld:      12,
 		LargestFieldMUsXDays:  531,
 	},
+
+	"mvnch_v1640_iphone5-1.jpeg": profile.Profile{
+		Nick:  "mvnch",
+		Level: 8,
+		AP:    1313096,
+
+		UniquePortalsVisited: 138,
+		PortalsDiscovered:    0,
+		XMCollected:          2039828,
+
+		Hacks:                  980,
+		ResonatorsDeployed:     1361,
+		LinksCreated:           450,
+		ControlFieldsCreated:   267,
+		MindUnitsCaptured:      749,
+		LongestLinkEverCreated: 4,
+		LargestControlField:    53,
+		XMRecharged:            627128,
+		PortalsCaptured:        127,
+		UniquePortalsCaptured:  69,
+
+		ResonatorsDestroyed:         640,
+		PortalsNeutralized:          84,
+		EnemyLinksDestroyed:         173,
+		EnemyControlFieldsDestroyed: 85,
+
+		DistanceWalked: 104,
+
+		MaxTimePortalHeld:     20,
+		MaxTimeLinkMaintained: 13,
+		MaxLinkLengthXDays:    35,
+		MaxTimeFieldHeld:      12,
+		LargestFieldMUsXDays:  531,
+	},
 }
 
 func init() {
@@ -611,6 +645,14 @@ func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
 
 func TestOCRmvnch_v1640_iphone5(t *testing.T) {
 	file := "mvnch_v1640_iphone5.jpeg"
+	res := runOCR(file)
+	p := buildProfile(res)
+
+	validateOCR(t, file, p)
+}
+
+func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
+	file := "mvnch_v1640_iphone5-1.jpeg"
 	res := runOCR(file)
 	p := buildProfile(res)
 
