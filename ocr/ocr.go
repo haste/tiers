@@ -98,9 +98,7 @@ func runOCR(fileName string) []byte {
 	convert := exec.Command(conf.Config.ConvertBin, []string{
 		conf.Config.Cache + fileName,
 		"-resize",
-		"140%",
-		"-level",
-		"10%",
+		"200%",
 		"-colorspace",
 		"gray",
 		"+dither",
