@@ -15,8 +15,9 @@ type config struct {
 	Cert           string `json:"cert"`
 	Key            string `json:"key"`
 	Cache          string `json:"cache"`
-	TesseractBin   string `json:"tesseractBin`
-	ConvertBin     string `json:"convertBin`
+	TesseractBin   string `json:"tesseractBin"`
+	ConvertBin     string `json:"convertBin"`
+	UtilsDir       string `json:"utilsDir"`
 }
 
 var Config config
@@ -25,7 +26,6 @@ func init() {
 	file, err := os.Open("config.json")
 
 	if err != nil {
-		log.Printf("Error loading config file: %s\n", err)
 		return
 	}
 

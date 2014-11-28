@@ -76,6 +76,8 @@ func (p progressByName) Less(i, j int) bool {
 type view struct {
 	User int
 
+	Queue int
+
 	NextLevel uint
 
 	Next []map[string]string
@@ -153,6 +155,8 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	view.Queue = model.GetNumQueuedProfiles(userid.(int))
+
 	var x []int64
 	var y = map[string][]int64{}
 
@@ -211,6 +215,10 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 	var badges []progress
 
 	for badgeName := range profile.BadgeRanks {
+		if badgeName == "Innovator" {
+			continue
+		}
+
 		badges = append(badges, progress{
 			Name: badgeName,
 		})

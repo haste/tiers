@@ -2,44 +2,46 @@
 {{template "nav" .}}
 			<div class="row">
 				<div class="col-md-6 col-md-push-6">
-					<h3>Upload</h3>
-					<div class="well well-sm well-upload">
-						<form role="form" class="form-upload" method="post" action="/upload" enctype="multipart/form-data">
-							<div class="form-group">
-								<label>Profile screenshot</label>
-								<input type="file" name="profile[]" accept=".png">
-							</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Upload profile screenshot</h3>
+						</div>
+						<div class="panel-body">
+							<form role="form" class="form-upload" method="post" action="/upload" enctype="multipart/form-data">
+								<div class="form-group">
+									<input type="file" name="profile[]" accept="image/">
+								</div>
 
-							<div class="row">
-								<div class="col-xs-12 col-sm-3">
-									<button type="submit" class="btn btn-primary btn-block">Upload</button>
+								<div class="row">
+									<div class="col-xs-12 col-sm-3">
+										<button type="submit" class="btn btn-primary btn-block">Upload</button>
+									</div>
+								</div>
+							</form>
+
+							<div class="progress hide">
+								<div class="progress-bar progress-bar-striped active"  role="progressbar">
 								</div>
 							</div>
-						</form>
-					</div>
 
-					<div class="progress hide">
-						<div class="progress-bar progress-bar-striped active"  role="progressbar">
+							<div class="alert hide" role="alert">
+							</div>
+
+							<p>
+								This sadly doesn't work with the stock Android browser on most
+								devices. Use Chrome/Firefox or some other browser for now.
+							</p>
 						</div>
 					</div>
-
-					<div class="alert hide" role="alert">
-					</div>
-
-					<p>
-						This sadly doesn't work with the stock Android browser on most
-						devices. Use Chrome/Firefox or some other browser for now.
-					</p>
 				</div>
 
 				<div class="col-md-6 col-md-pull-6">
-					<h3>How to</h3>
 					<div class="panel-group howto">
 						<div class="panel panel-success">
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent=".howto" href="#howto-android">
-										Android
+										How to: Android
 									</a>
 								</h4>
 							</div>
@@ -83,7 +85,7 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent=".howto" href="#howto-ios">
-										iOS
+										How to: iOS
 									</a>
 								</h4>
 							</div>

@@ -204,7 +204,9 @@ func GetAllProfiles(user_id int) []profile.Profile {
 		resonators_destroyed, portals_neutralized, enemy_links_destroyed, enemy_control_fields_destroyed,
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
-		largest_field_mus_x_days
+		largest_field_mus_x_days,
+		unique_missions_completed,
+		innovator
 		FROM tiers_profiles
 		WHERE user_id = ?
 		ORDER BY timestamp DESC
@@ -227,6 +229,8 @@ func GetAllProfiles(user_id int) []profile.Profile {
 			&p.DistanceWalked,
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
+			&p.UniqueMissionsCompleted,
+			&p.InnovatorLevel,
 		)
 
 		profiles = append(profiles, p)
@@ -280,7 +284,9 @@ func GetNewestProfile(user_id int) profile.Profile {
 		resonators_destroyed, portals_neutralized, enemy_links_destroyed, enemy_control_fields_destroyed,
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
-		largest_field_mus_x_days
+		largest_field_mus_x_days,
+		unique_missions_completed,
+		innovator
 		FROM tiers_profiles
 		WHERE user_id = ?
 		ORDER BY timestamp DESC
@@ -302,6 +308,8 @@ func GetNewestProfile(user_id int) profile.Profile {
 		&p.DistanceWalked,
 		&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 		&p.LargestFieldMUsXDays,
+		&p.UniqueMissionsCompleted,
+		&p.InnovatorLevel,
 	)
 
 	return p
@@ -320,7 +328,9 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 		resonators_destroyed, portals_neutralized, enemy_links_destroyed, enemy_control_fields_destroyed,
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
-		largest_field_mus_x_days
+		largest_field_mus_x_days,
+		unique_missions_completed,
+		innovator
 		FROM tiers_profiles
 		WHERE user_id = ?
 		ORDER BY timestamp DESC
@@ -341,6 +351,8 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 			&p.DistanceWalked,
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
+			&p.UniqueMissionsCompleted,
+			&p.InnovatorLevel,
 		)
 
 		profiles = append(profiles, p)

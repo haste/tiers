@@ -41,6 +41,10 @@ var testData = map[string]profile.Profile{
 			MaxLinkLengthXDays:
 			MaxTimeFieldHeld:
 			LargestFieldMUsXDays:
+
+			UniqueMissionsCompleted: 1,
+
+			InnovatorLevel:
 		},
 	*/
 	"haste_v1620_nexus5.png": profile.Profile{
@@ -447,6 +451,46 @@ var testData = map[string]profile.Profile{
 		MaxLinkLengthXDays:    35,
 		MaxTimeFieldHeld:      12,
 		LargestFieldMUsXDays:  531,
+
+		InnovatorLevel: 3,
+	},
+
+	"mrwolfe_v1640_unknown.png": profile.Profile{
+		Nick:  "MrWolfe",
+		Level: 14,
+		AP:    17983405,
+
+		UniquePortalsVisited: 2002,
+		PortalsDiscovered:    167,
+		XMCollected:          67535405,
+
+		Hacks:                  24443,
+		ResonatorsDeployed:     28948,
+		LinksCreated:           5383,
+		ControlFieldsCreated:   2393,
+		MindUnitsCaptured:      1122111,
+		LongestLinkEverCreated: 435,
+		LargestControlField:    119540,
+		XMRecharged:            28111419,
+		PortalsCaptured:        3518,
+		UniquePortalsCaptured:  1022,
+
+		ResonatorsDestroyed:         32967,
+		PortalsNeutralized:          3892,
+		EnemyLinksDestroyed:         7824,
+		EnemyControlFieldsDestroyed: 3958,
+
+		DistanceWalked: 826,
+
+		MaxTimePortalHeld:     75,
+		MaxTimeLinkMaintained: 64,
+		MaxLinkLengthXDays:    1853,
+		MaxTimeFieldHeld:      64,
+		LargestFieldMUsXDays:  56215,
+
+		UniqueMissionsCompleted: 1,
+
+		InnovatorLevel: 13,
 	},
 }
 
@@ -561,100 +605,96 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 	if p.LargestFieldMUsXDays != e.LargestFieldMUsXDays {
 		t.Errorf("%s: .LargestFieldMUsXDays: Got %v Expected %v", file, p.LargestFieldMUsXDays, e.LargestFieldMUsXDays)
 	}
+
+	if p.InnovatorLevel != e.InnovatorLevel {
+		t.Errorf("%s: .InnovatorLevel: Got %v Expected %v", file, p.InnovatorLevel, e.InnovatorLevel)
+	}
+
+	if p.UniqueMissionsCompleted != e.UniqueMissionsCompleted {
+		t.Errorf("%s: .UniqueMissionsCompleted: Got %v Expected %v", file, p.UniqueMissionsCompleted, e.UniqueMissionsCompleted)
+	}
 }
 
 func TestOCRhaste_v1620_nexus5(t *testing.T) {
 	file := "haste_v1620_nexus5.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRwexp_v0_unknown(t *testing.T) {
 	file := "wexp_v0_unknown.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRforferdet_v0_unknown(t *testing.T) {
 	file := "forferdet_v0_unknown.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRforferdet_v0_unknowntablet(t *testing.T) {
 	file := "forferdet_v0_unknowntablet.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRerebwain_v1620_s4active(t *testing.T) {
 	file := "erebwain_v1620_s4active.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRerebwain_v1630_unknown(t *testing.T) {
 	file := "erebwain_v1630_unknown.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRzyp_v1630_unknown(t *testing.T) {
 	file := "zyp_v1630_unknown.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRhaste_v1630_nexus5(t *testing.T) {
 	file := "haste_v1630_nexus5.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRhaste_v1630_nexus5_1(t *testing.T) {
 	file := "haste_v1630_nexus5-1.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
 	file := "oteckeh_v1630_nexus4.png"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRmvnch_v1640_iphone5(t *testing.T) {
 	file := "mvnch_v1640_iphone5.jpeg"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }
 
 func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
 	file := "mvnch_v1640_iphone5-1.jpeg"
-	res := runOCR(file)
-	p := buildProfile(res)
+	p := runOCR(file)
 
 	validateOCR(t, file, p)
 }

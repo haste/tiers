@@ -45,8 +45,11 @@ type Profile struct {
 	MaxTimeLinkMaintained int64
 	MaxLinkLengthXDays    int64
 	MaxTimeFieldHeld      int64
+	LargestFieldMUsXDays  int64
 
-	LargestFieldMUsXDays int64
+	UniqueMissionsCompleted int64
+
+	InnovatorLevel int64
 }
 
 type LevelRequirement struct {

@@ -2,6 +2,7 @@ package ocr
 
 import (
 	"bytes"
+	"encoding/json"
 	"log"
 	"os"
 	"os/exec"
@@ -12,6 +13,12 @@ import (
 	"tiers/conf"
 	"tiers/profile"
 )
+
+type innovator struct {
+	Rank  int `json:"rank"`
+	Good  int `json:"good"`
+	Total int `json:"total"`
+}
 
 func sanitizeNum(input []byte) int64 {
 	n := string(input)
@@ -53,10 +60,7 @@ func buildProfile(res []byte) profile.Profile {
 	var digit = `([0-9LIl|J,B\]]+)`
 	var p profile.Profile
 
-	// Remove the menu.
-	res = res[bytes.Index(res, []byte("\n")):]
-
-	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\n*[^\n]*LVL")
+	p.Nick = matchString(res, "([a-zA-Z0-9]+)[^\n]*\\s*[^\n]*LVL")
 	p.Level = int(matchNum(res, "LVL\\s*"+digit))
 	p.AP = matchNum(res, digit+"\\s*A[Pp]")
 
@@ -86,19 +90,43 @@ func buildProfile(res []byte) profile.Profile {
 	p.MaxTimeLinkMaintained = matchNum(res, "M[ae]x\\s*Tim[ae]\\s*Link\\s*M[ae]int[ae]in[ae]d\\s*"+digit+"\\s*d[ae]ys")
 	p.MaxLinkLengthXDays = matchNum(res, "M[ae]x\\s*Link\\s*L[ae]ngth\\s*x\\s*D[ae]ys\\s*"+digit+"\\s*km.d[ae]ys")
 	p.MaxTimeFieldHeld = matchNum(res, "M[ae]x\\s*Tim[ae]\\s*Fi[ae]ld\\s*H[ae]ld\\s*"+digit+"\\s*d[ae]ys")
-
 	p.LargestFieldMUsXDays = matchNum(res, "L[ae]rg[ae]st\\s*Fi[ae]ld\\s*MUs\\s*x\\s*D[ae]ys\\s*"+digit+"\\s*MU.d[ae]ys")
+
+	p.UniqueMissionsCompleted = matchNum(res, "Uniqu[ae]\\s*Missions\\s*Compl[ae]t[ae]d\\s*"+digit)
 
 	return p
 }
 
-func runOCR(fileName string) []byte {
+func handleInnovator(p *profile.Profile, data innovator) {
+	if data.Good > 0 {
+		p.InnovatorLevel = profile.BadgeRanks["Innovator"][data.Rank]
+	}
+}
+
+func runOCR(fileName string) profile.Profile {
+	cvFile := conf.Config.Cache + "cv_" + fileName
 	tmpFile := conf.Config.Cache + "tmp_" + fileName
 
+	cv := exec.Command(conf.Config.UtilsDir+"innovator-crop/crop.py", []string{
+		conf.Config.Cache,
+		fileName,
+	}...)
+
+	res, err := cv.Output()
+	if err != nil {
+		log.Fatal("cv", err)
+	}
+
+	var innovator innovator
+	decoder := json.NewDecoder(bytes.NewReader(res))
+	err = decoder.Decode(&innovator)
+
 	convert := exec.Command(conf.Config.ConvertBin, []string{
-		conf.Config.Cache + fileName,
+		cvFile,
 		"-resize",
-		"200%",
+		"170%",
+		"-level",
+		"50%",
 		"-colorspace",
 		"gray",
 		"+dither",
@@ -108,9 +136,9 @@ func runOCR(fileName string) []byte {
 		tmpFile,
 	}...)
 
-	err := convert.Run()
+	err = convert.Run()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("convert", err)
 	}
 
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
@@ -121,18 +149,21 @@ func runOCR(fileName string) []byte {
 		"ingress",
 	}...)
 
-	res, err := tesseract.Output()
+	res, err = tesseract.Output()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("tesseract", err)
 	}
 
+	os.Remove(cvFile)
 	os.Remove(tmpFile)
 
-	return res
+	p := buildProfile(res)
+	handleInnovator(&p, innovator)
+
+	return p
 }
 
 // XXX: Should probably return an error as well
 func OCR(fileName string) profile.Profile {
-	res := runOCR(fileName)
-	return buildProfile(res)
+	return runOCR(fileName)
 }

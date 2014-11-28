@@ -9,6 +9,9 @@
 @link-color: #009FDA;
 @link-hover-color: #00BAFF;
 
+// Gutter
+@grid-gutter-width: 8px;
+
 // Typography
 @font-family-base: 'Open Sans', sans-serif;
 
@@ -47,8 +50,8 @@ html, body {
 }
 
 .container-main {
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 .navbar {
@@ -56,14 +59,15 @@ html, body {
 }
 
 .navbar-teal {
-	background-color: #6ecff5;
-	border-bottom: #8ad7f6;
+	background-color: #00bcd4;
+	border-bottom: #33c8db;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 
 	.navbar-toggle {
-		border-color: #8ad7f6;
+		border-color: #33c8db;
 
 		&:hover, &:focus {
-			background-color: #8ad7f6;
+			background-color: #33c8db;
 		}
 	}
 
@@ -72,7 +76,7 @@ html, body {
 	}
 
 	.navbar-collapse {
-		border-color: #8ad7f6;
+		border-color: #33c8db;
 	}
 }
 
@@ -84,6 +88,15 @@ h1, h2, h3, h4, h5, h6 {
 		right: 0;
 		bottom: 2px;
 	}
+}
+
+// Progress
+
+.progress-icon {
+	float: left;
+	height: 49px;
+	width: 59px;
+	padding-right: 8px;
 }
 
 .progress-bar-bronze {
@@ -131,6 +144,28 @@ h1, h2, h3, h4, h5, h6 {
 
 .panel-group .panels-stacked .panel+.panel {
 	margin-top: 0;
+}
+
+.panel-group .panel+.panel {
+	margin-top: 8px;
+}
+
+.panel-group .panel {
+	border-radius: 2px;
+}
+
+.panel {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+	margin-bottom: 8px;
+}
+
+.panel-heading {
+	border-top-right-radius: 1px;
+	border-top-left-radius: 1px;
+}
+
+.form-upload {
+	margin-bottom: 15px;
 }
 
 /* Landing */

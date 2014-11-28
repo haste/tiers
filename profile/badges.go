@@ -19,6 +19,7 @@ type Badges struct {
 	Liberator      Badge
 	Pioneer        Badge
 	Recharger      Badge
+	Innovator      Badge
 }
 
 type BadgeProgress struct {
@@ -39,6 +40,7 @@ var BadgeRanks = map[string][]int64{
 	"Liberator":      {100, 1000, 5000, 15000, 40000},
 	"Pioneer":        {20, 200, 1000, 5000, 20000},
 	"Recharger":      {100000, 1000000, 3000000, 10000000, 25000000},
+	"Innovator":      {3, 9, 11, 13, 15},
 }
 
 // The order is defined by the agent profile.
@@ -110,6 +112,8 @@ func HandleBadges(p *Profile) {
 			incBadgeRank(p, &p.Badges.Pioneer, p.UniquePortalsCaptured, v)
 		case "Recharger":
 			incBadgeRank(p, &p.Badges.Recharger, p.XMRecharged, v)
+		case "Innovator":
+			incBadgeRank(p, &p.Badges.Innovator, p.InnovatorLevel, v)
 		}
 	}
 }

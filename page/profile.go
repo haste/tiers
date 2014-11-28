@@ -57,8 +57,9 @@ func createDiff(a, b profile.Profile) profile.Profile {
 	diff.MaxTimeLinkMaintained = b.MaxTimeLinkMaintained - a.MaxTimeLinkMaintained
 	diff.MaxLinkLengthXDays = b.MaxLinkLengthXDays - a.MaxLinkLengthXDays
 	diff.MaxTimeFieldHeld = b.MaxTimeFieldHeld - a.MaxTimeFieldHeld
-
 	diff.LargestFieldMUsXDays = b.LargestFieldMUsXDays - a.LargestFieldMUsXDays
+
+	diff.UniqueMissionsCompleted = b.UniqueMissionsCompleted - a.UniqueMissionsCompleted
 
 	return diff
 }
