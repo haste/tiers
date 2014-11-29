@@ -11,6 +11,7 @@ import (
 type ProfilePageData struct {
 	Profile profile.Profile
 	Diff    interface{}
+	Int64   int64
 	Queue   int
 }
 
