@@ -17,6 +17,7 @@ type config struct {
 	Cache          string `json:"cache"`
 	TesseractBin   string `json:"tesseractBin"`
 	ConvertBin     string `json:"convertBin"`
+	PythonBin      string `json:"pythonBin"`
 	UtilsDir       string `json:"utilsDir"`
 }
 
