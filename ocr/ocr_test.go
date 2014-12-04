@@ -615,86 +615,58 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 	}
 }
 
-func TestOCRhaste_v1620_nexus5(t *testing.T) {
-	file := "haste_v1620_nexus5.png"
-	p := runOCR(file)
+// Test wrapper
+func w(t *testing.T, file string) {
+	t.Parallel()
 
+	p := runOCR(file)
 	validateOCR(t, file, p)
+}
+
+func TestOCRhaste_v1620_nexus5(t *testing.T) {
+	w(t, "haste_v1620_nexus5.png")
 }
 
 func TestOCRwexp_v0_unknown(t *testing.T) {
-	file := "wexp_v0_unknown.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "wexp_v0_unknown.png")
 }
 
 func TestOCRforferdet_v0_unknown(t *testing.T) {
-	file := "forferdet_v0_unknown.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "forferdet_v0_unknown.png")
 }
 
 func TestOCRforferdet_v0_unknowntablet(t *testing.T) {
-	file := "forferdet_v0_unknowntablet.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "forferdet_v0_unknowntablet.png")
 }
 
 func TestOCRerebwain_v1620_s4active(t *testing.T) {
-	file := "erebwain_v1620_s4active.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "erebwain_v1620_s4active.png")
 }
 
 func TestOCRerebwain_v1630_unknown(t *testing.T) {
-	file := "erebwain_v1630_unknown.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "erebwain_v1630_unknown.png")
 }
 
 func TestOCRzyp_v1630_unknown(t *testing.T) {
-	file := "zyp_v1630_unknown.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "zyp_v1630_unknown.png")
 }
 
 func TestOCRhaste_v1630_nexus5(t *testing.T) {
-	file := "haste_v1630_nexus5.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "haste_v1630_nexus5.png")
 }
 
 func TestOCRhaste_v1630_nexus5_1(t *testing.T) {
-	file := "haste_v1630_nexus5-1.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "haste_v1630_nexus5-1.png")
 }
 
 func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
-	file := "oteckeh_v1630_nexus4.png"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "oteckeh_v1630_nexus4.png")
 }
 
 func TestOCRmvnch_v1640_iphone5(t *testing.T) {
-	file := "mvnch_v1640_iphone5.jpeg"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "mvnch_v1640_iphone5.jpeg")
 }
 
 func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
-	file := "mvnch_v1640_iphone5-1.jpeg"
-	p := runOCR(file)
-
-	validateOCR(t, file, p)
+	w(t, "mvnch_v1640_iphone5-1.jpeg")
 }
