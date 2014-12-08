@@ -42,7 +42,7 @@ var testData = map[string]profile.Profile{
 			MaxTimeFieldHeld:
 			LargestFieldMUsXDays:
 
-			UniqueMissionsCompleted: 1,
+			UniqueMissionsCompleted:
 
 			InnovatorLevel:
 		},
@@ -492,6 +492,44 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"haste_v1660_nexus5.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    24617282,
+
+		UniquePortalsVisited: 3490,
+		PortalsDiscovered:    36,
+		XMCollected:          103004717,
+
+		Hacks:                  50428,
+		ResonatorsDeployed:     51628,
+		LinksCreated:           5172,
+		ControlFieldsCreated:   2502,
+		MindUnitsCaptured:      32748,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26279823,
+		PortalsCaptured:        6086,
+		UniquePortalsCaptured:  1405,
+
+		ResonatorsDestroyed:         44043,
+		PortalsNeutralized:          6521,
+		EnemyLinksDestroyed:         8201,
+		EnemyControlFieldsDestroyed: 3813,
+
+		DistanceWalked: 1965,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 13,
+	},
 }
 
 func init() {
@@ -669,4 +707,8 @@ func TestOCRmvnch_v1640_iphone5(t *testing.T) {
 
 func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
 	w(t, "mvnch_v1640_iphone5-1.jpeg")
+}
+
+func TestOCRhaste_v1660_nexus5(t *testing.T) {
+	w(t, "haste_v1660_nexus5.png")
 }

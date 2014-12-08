@@ -3,6 +3,7 @@ package ocr
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -22,9 +23,9 @@ type innovator struct {
 
 func sanitizeNum(input []byte) int64 {
 	input = regexp.MustCompile(`[lL|\]JI]`).ReplaceAll(input, []byte("1"))
+	input = regexp.MustCompile(`[Oo]`).ReplaceAll(input, []byte("0"))
 
 	n := string(input)
-	n = strings.Replace(n, "o", "0", -1)
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, ",", "", -1)
 
@@ -60,7 +61,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIl|J,B\]]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9LIlJBOo|,\]]+)`, -1)
 
 	return matchNum(res, s)
 }
@@ -101,6 +102,7 @@ func buildProfile(res []byte) profile.Profile {
 	p.LargestFieldMUsXDays = genMatchNum(res, "Largest Field MUs x Days # MU-days")
 
 	p.UniqueMissionsCompleted = genMatchNum(res, "Unique Missions Completed #")
+	fmt.Printf("%s\n", res)
 
 	return p
 }
@@ -133,9 +135,9 @@ func runOCR(fileName string) profile.Profile {
 	convert := exec.Command(conf.Config.ConvertBin, []string{
 		cvFile,
 		"-resize",
-		"170%",
+		"200%",
 		"-level",
-		"50%",
+		"30%",
 		"-colorspace",
 		"gray",
 		"+dither",
@@ -153,6 +155,7 @@ func runOCR(fileName string) profile.Profile {
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
 		"-psm",
 		"4",
+		"-l", "eng+ing",
 		tmpFile,
 		"stdout",
 		"ingress",
