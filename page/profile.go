@@ -79,7 +79,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 	if ok {
 		var p profile.Profile
-		var diff interface{}
+		var diff profile.Profile
 
 		queue := model.GetNumQueuedProfiles(userid.(int))
 		profiles := model.GetNewestProfiles(userid.(int), 2)
