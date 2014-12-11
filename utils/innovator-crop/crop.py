@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
+from __future__ import print_function
 
 import cv2
 import cv2.cv as cv
@@ -133,15 +134,15 @@ for cnt in contours:
 
 		x, y, w, h = cv2.boundingRect(cnt)
 
+		crop = masked[y+top:y+h-bottom, x:x+w]
+
+		kp2, des2 = sift.detectAndCompute(crop, None)
+		if des2 is None:
+			continue
+
 		badge_top = min(badge_top, y)
 		badge_bottom = max(badge_bottom, y + h)
 
-		sides = int(round(w * (25 / 445)))
-		sides = 0
-
-		crop = masked[y+top:y+h-bottom, x+sides:x+w-sides]
-
-		kp2, des2 = sift.detectAndCompute(crop, None)
 		matches = flann.knnMatch(des1,des2,k=2)
 
 		count = 0
@@ -172,7 +173,6 @@ for cnt in contours:
 			for k, v in enumerate(ranges):
 				m1 = cv2.inRange(hsv, v[0], v[1])
 				m2 = cv2.inRange(hsv, v[2], v[3])
-
 
 				res4 = cv2.bitwise_and(hsv, hsv, mask = m1+m2)
 				if res4.mean() > 4:
@@ -254,5 +254,5 @@ view = np.zeros((top.shape[0]+bottom.shape[0], top.shape[1], 3), np.uint8)
 view[:h1, :w1] = top
 view[h1:h1+h2, :w1] = bottom
 
-print json.dumps(out)
+print(json.dumps(out))
 cv2.imwrite(cachePath + "/cv_" + imageName, view)
