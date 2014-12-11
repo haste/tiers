@@ -53,7 +53,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								Display
+								Discovery
 							</h4>
 						</div>
 						<table class="table table-condensed">
@@ -94,7 +94,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								Building
+								Health
 							</h4>
 						</div>
 						<table class="table table-condensed">
@@ -105,13 +105,30 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<td class="profile-entry-name">Hacks</td>
-									<td class="hidden-xs text-center text-success">{{if ne .Diff.Hacks .Int64}} + {{.Diff.Hacks | comma}}{{end}}</td>
+									<td class="profile-entry-name">Distance Walked</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.DistanceWalked .Int64}} + {{.Diff.DistanceWalked | comma}}{{end}}</td>
 									<td class="text-right">
-										{{.Profile.Hacks | comma}}
-										<div class="visible-xs text-success">{{if ne .Diff.Hacks .Int64}} + {{.Diff.Hacks | comma}}{{end}}</div>
+										{{.Profile.DistanceWalked | comma}} km
+										<div class="visible-xs text-success">{{if ne .Diff.DistanceWalked .Int64}} + {{.Diff.DistanceWalked | comma}} km{{end}}</div>
 									</td>
 								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Building
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
+							<tbody>
 								<tr>
 									<td class="profile-entry-name">Resonators Deployed</td>
 									<td class="hidden-xs text-center text-success">{{if ne .Diff.ResonatorsDeployed .Int64}} + {{.Diff.ResonatorsDeployed | comma}}{{end}}</td>
@@ -240,31 +257,6 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								Health
-							</h4>
-						</div>
-						<table class="table table-condensed">
-							<colgroup>
-								<col class="col-md-8 col-sm-8" />
-								<col class="col-md-2 col-sm-2" />
-								<col class="col-md-2 col-sm-2" />
-							</colgroup>
-							<tbody>
-								<tr>
-									<td class="profile-entry-name">Distance Walked</td>
-									<td class="hidden-xs text-center text-success">{{if ne .Diff.DistanceWalked .Int64}} + {{.Diff.DistanceWalked | comma}}{{end}}</td>
-									<td class="text-right">
-										{{.Profile.DistanceWalked | comma}} km
-										<div class="visible-xs text-success">{{if ne .Diff.DistanceWalked .Int64}} + {{.Diff.DistanceWalked | comma}} km{{end}}</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
 								Defense
 							</h4>
 						</div>
@@ -338,6 +330,31 @@
 									<td class="text-right">
 										{{.Profile.UniqueMissionsCompleted | comma}}
 										<div class="visible-xs text-success">{{if ne .Diff.UniqueMissionsCompleted .Int64}} + {{.Diff.UniqueMissionsCompleted | comma}}{{end}}</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Resource Gathering
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<td class="profile-entry-name">Hacks</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.Hacks .Int64}} + {{.Diff.Hacks | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.Hacks | comma}}
+										<div class="visible-xs text-success">{{if ne .Diff.Hacks .Int64}} + {{.Diff.Hacks | comma}}{{end}}</div>
 									</td>
 								</tr>
 							</tbody>

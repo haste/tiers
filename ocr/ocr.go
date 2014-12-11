@@ -73,11 +73,15 @@ func buildProfile(res []byte) profile.Profile {
 	p.Level = int(genMatchNum(res, "LVL #"))
 	p.AP = genMatchNum(res, "# AP")
 
+	// Discovery
 	p.UniquePortalsVisited = genMatchNum(res, "Unique Portals Visited #")
 	p.PortalsDiscovered = genMatchNum(res, "Portals Discovered #")
 	p.XMCollected = genMatchNum(res, "XM Collected # XM")
 
-	p.Hacks = genMatchNum(res, "Hacks #")
+	// Health
+	p.DistanceWalked = genMatchNum(res, "Distance Walked # km")
+
+	// Building
 	p.ResonatorsDeployed = genMatchNum(res, "Resonators Deployed #")
 	p.LinksCreated = genMatchNum(res, "Links Created #")
 	p.ControlFieldsCreated = genMatchNum(res, "Control Fields Created #")
@@ -88,20 +92,25 @@ func buildProfile(res []byte) profile.Profile {
 	p.PortalsCaptured = genMatchNum(res, "Portals Captured #")
 	p.UniquePortalsCaptured = genMatchNum(res, "Unique Portals Captured #")
 
+	// Combat
 	p.ResonatorsDestroyed = genMatchNum(res, "Resonators Destroyed #")
 	p.PortalsNeutralized = genMatchNum(res, "Portals Neutralized #")
 	p.EnemyLinksDestroyed = genMatchNum(res, "Enemy Links Destroyed #")
 	p.EnemyControlFieldsDestroyed = genMatchNum(res, "Enemy Control Fields Destroyed #")
 
-	p.DistanceWalked = genMatchNum(res, "Distance Walked # km")
-
+	// Defense
 	p.MaxTimePortalHeld = genMatchNum(res, "Max Time Portal Held # days")
 	p.MaxTimeLinkMaintained = genMatchNum(res, "Max Time Link Maintained # days")
 	p.MaxLinkLengthXDays = genMatchNum(res, "Max Link Length x Days # km-days")
 	p.MaxTimeFieldHeld = genMatchNum(res, "Max Time Field Held # days")
 	p.LargestFieldMUsXDays = genMatchNum(res, "Largest Field MUs x Days # MU-days")
 
+	// Missions
 	p.UniqueMissionsCompleted = genMatchNum(res, "Unique Missions Completed #")
+
+	// Resource Gathering
+	p.Hacks = genMatchNum(res, "Hacks #")
+
 	fmt.Printf("%s\n", res)
 
 	return p
