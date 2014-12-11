@@ -125,7 +125,7 @@ func runOCR(fileName string) profile.Profile {
 
 	res, err := cv.Output()
 	if err != nil {
-		log.Fatal("cv", err)
+		log.Fatal("cv ", err)
 	}
 
 	var innovator innovator
@@ -149,7 +149,7 @@ func runOCR(fileName string) profile.Profile {
 
 	err = convert.Run()
 	if err != nil {
-		log.Fatal("convert", err)
+		log.Fatal("convert ", err)
 	}
 
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
@@ -163,7 +163,7 @@ func runOCR(fileName string) profile.Profile {
 
 	res, err = tesseract.Output()
 	if err != nil {
-		log.Fatal("tesseract", err)
+		log.Fatal("tesseract ", err)
 	}
 
 	os.Remove(cvFile)
