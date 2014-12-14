@@ -57,6 +57,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`[Ss]`).ReplaceAllLiteralString(s, "[Ss]")
 	s = regexp.MustCompile(`[ae]`).ReplaceAllLiteralString(s, "[ae]")
 	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
+	s = regexp.MustCompile(`[D0]`).ReplaceAllLiteralString(s, "[D0]")
 	s = regexp.MustCompile(`[Oo]`).ReplaceAllLiteralString(s, "[0Oo]")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
