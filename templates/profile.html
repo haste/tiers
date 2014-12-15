@@ -201,6 +201,14 @@
 										<div class="visible-xs text-success">{{if ne .Diff.UniquePortalsCaptured .Int64}} + {{.Diff.UniquePortalsCaptured | comma}}{{end}}</div>
 									</td>
 								</tr>
+								<tr>
+									<td class="profile-entry-name">Mods Deployed</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.ModsDeployed .Int64}} + {{.Diff.ModsDeployed | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.ModsDeployed | comma}}
+										<div class="visible-xs text-success">{{if ne .Diff.ModsDeployed .Int64}} + {{.Diff.ModsDeployed | comma}}{{end}}</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

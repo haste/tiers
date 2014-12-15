@@ -33,6 +33,7 @@ type Profile struct {
 	XMRecharged            int64
 	PortalsCaptured        int64
 	UniquePortalsCaptured  int64
+	ModsDeployed           int64
 
 	ResonatorsDestroyed         int64
 	PortalsNeutralized          int64

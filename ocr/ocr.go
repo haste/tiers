@@ -92,6 +92,7 @@ func buildProfile(res []byte) profile.Profile {
 	p.XMRecharged = genMatchNum(res, "XM Recharged # XM")
 	p.PortalsCaptured = genMatchNum(res, "Portals Captured #")
 	p.UniquePortalsCaptured = genMatchNum(res, "Unique Portals Captured #")
+	p.ModsDeployed = genMatchNum(res, "Mods Deployed #")
 
 	// Combat
 	p.ResonatorsDestroyed = genMatchNum(res, "Resonators Destroyed #")

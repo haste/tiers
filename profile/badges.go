@@ -20,6 +20,9 @@ type Badges struct {
 	Pioneer        Badge
 	Recharger      Badge
 	Innovator      Badge
+	Trekker        Badge
+	Engineer       Badge
+	SpecOps        Badge
 }
 
 type BadgeProgress struct {
@@ -41,21 +44,27 @@ var BadgeRanks = map[string][]int64{
 	"Pioneer":        {20, 200, 1000, 5000, 20000},
 	"Recharger":      {100000, 1000000, 3000000, 10000000, 25000000},
 	"Innovator":      {3, 9, 11, 13, 15},
+	"Engineer":       {150, 1500, 5000, 20000, 50000},
+	"SpecOps":        {5, 25, 100, 200, 500},
+	"Trekker":        {10, 100, 300, 1000, 2500},
 }
 
 // The order is defined by the agent profile.
 var BadgeOrder = []string{
 	"Explorer",
 	"Seer",
-	"Hacker",
+	"Trekker",
 	"Builder",
 	"Connector",
 	"Mind Controller",
 	"Recharger",
 	"Liberator",
 	"Pioneer",
+	"Engineer",
 	"Purifier",
 	"Guardian",
+	"Hacker",
+	"SpecOps",
 }
 
 func incBadgeRank(p *Profile, b *Badge, current int64, reqs []int64) {
@@ -114,6 +123,12 @@ func HandleBadges(p *Profile) {
 			incBadgeRank(p, &p.Badges.Recharger, p.XMRecharged, v)
 		case "Innovator":
 			incBadgeRank(p, &p.Badges.Innovator, p.InnovatorLevel, v)
+		case "Trekker":
+			incBadgeRank(p, &p.Badges.Trekker, p.DistanceWalked, v)
+		case "Engineer":
+			incBadgeRank(p, &p.Badges.Engineer, p.ModsDeployed, v)
+		case "SpecOps":
+			incBadgeRank(p, &p.Badges.SpecOps, p.UniqueMissionsCompleted, v)
 		}
 	}
 }

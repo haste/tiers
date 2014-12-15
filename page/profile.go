@@ -46,6 +46,7 @@ func createDiff(a, b profile.Profile) profile.Profile {
 	diff.XMRecharged = b.XMRecharged - a.XMRecharged
 	diff.PortalsCaptured = b.PortalsCaptured - a.PortalsCaptured
 	diff.UniquePortalsCaptured = b.UniquePortalsCaptured - a.UniquePortalsCaptured
+	diff.ModsDeployed = b.ModsDeployed - a.ModsDeployed
 
 	diff.ResonatorsDestroyed = b.ResonatorsDestroyed - a.ResonatorsDestroyed
 	diff.PortalsNeutralized = b.PortalsNeutralized - a.PortalsNeutralized
