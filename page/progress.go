@@ -128,7 +128,7 @@ func lineaRegression(x, y []int64) (float64, float64, float64) {
 	return slope, intercept, r2
 }
 
-func shouldIncludeBadge(y map[string][]int64, name string, timestamp, newY int64) bool {
+func shouldIncludeBadge(name string, timestamp, newY int64) bool {
 	// The most random timestamp ever! Also known as the timestamp of the first
 	// profile with mod deployed data.
 	if name == "Engineer" && newY == 0 && timestamp < 1418672414 {
@@ -244,7 +244,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 				name := typeOf.Field(i).Name
 				current := f.FieldByName("Current").Int()
 
-				if badge.Name == name && shouldIncludeBadge(y, badge.Name, p.Timestamp, current) {
+				if badge.Name == name && shouldIncludeBadge(badge.Name, p.Timestamp, current) {
 					x[name] = append(x[name], p.Timestamp)
 					y[name] = append(y[name], current)
 				}
