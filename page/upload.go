@@ -106,9 +106,21 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	var numQueue float32
 	db.QueryRow(`SELECT count(id) FROM tiers_queues WHERE processed = 0`).Scan(&numQueue)
 
+	var processTime float32
+	db.QueryRow(`
+		SELECT avg(processtime) AS processtime
+		FROM (
+			SELECT processtime
+			FROM tiers_queues
+			WHERE processed = 1
+			ORDER BY id DESC
+			LIMIT 10
+		) T
+	`).Scan(&processTime)
+
 	queueText := fmt.Sprintf(
 		"Your file has been added to the queue and should be processed within %.1f seconds.",
-		numQueue*6.6,
+		numQueue*processTime/1000,
 	)
 
 	if r.Header.Get("X-Requested-With") == "XMLHttpRequest" {
