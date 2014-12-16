@@ -128,6 +128,16 @@ func lineaRegression(x, y []int64) (float64, float64, float64) {
 	return slope, intercept, r2
 }
 
+func shouldIncludeBadge(y map[string][]int64, name string, timestamp, newY int64) bool {
+	// The most random timestamp ever! Also known as the timestamp of the first
+	// profile with mod deployed data.
+	if name == "Engineer" && newY == 0 && timestamp < 1418672414 {
+		return false
+	}
+
+	return true
+}
+
 func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 	templates := loadTemplates(
 		"header.html",
@@ -157,13 +167,13 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 
 	view.Queue = model.GetNumQueuedProfiles(userid.(int))
 
-	var x []int64
+	var x = map[string][]int64{}
 	var y = map[string][]int64{}
 
 	for k := range profiles {
 		p := &profiles[k]
 		profile.HandleProfile(p)
-		x = append(x, p.Timestamp)
+		x["AP"] = append(x["AP"], p.Timestamp)
 		y["AP"] = append(y["AP"], p.AP)
 	}
 
@@ -174,7 +184,7 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 		if y["AP"][0] == y["AP"][len(y["AP"])-1] {
 			ts = -1
 		} else {
-			slope, intercept, _ := lineaRegression(x, y["AP"])
+			slope, intercept, _ := lineaRegression(x["AP"], y["AP"])
 			ts = int64(((float64(newestProfile.NextLevel.AP) - intercept) / slope)) + 1262304000
 		}
 
@@ -232,11 +242,40 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 			for i := 0; i < s.NumField(); i++ {
 				f := s.Field(i)
 				name := typeOf.Field(i).Name
+				current := f.FieldByName("Current").Int()
 
-				if badge.Name == name {
-					y[name] = append(y[name], f.FieldByName("Current").Int())
+				if badge.Name == name && shouldIncludeBadge(y, badge.Name, p.Timestamp, current) {
+					x[name] = append(x[name], p.Timestamp)
+					y[name] = append(y[name], current)
 				}
 			}
+		}
+
+		if badge.Name == "Guardian" && len(x["Guardian"]) > 1 {
+			var i int
+			var n = len(x["Guardian"]) - 1
+
+			xValue := x["Guardian"][n]
+			yValue := y["Guardian"][n]
+
+			for i = n - 1; i > 0; i-- {
+				var curX = x["Guardian"][i]
+				var curY = y["Guardian"][i]
+
+				diff := xValue - curX
+				if curY != yValue {
+					if diff <= 86400 {
+						xValue = curX
+						yValue = curY
+					}
+				} else if diff > 86400 {
+					i++
+					break
+				}
+			}
+
+			x["Guardian"] = x["Guardian"][i : n+1]
+			y["Guardian"] = y["Guardian"][i : n+1]
 		}
 
 		s := reflect.ValueOf(&newestProfile.Badges).Elem()
@@ -251,10 +290,10 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 				badge.Current = f.FieldByName("Current").Int()
 				badge.Required = f.FieldByName("Next").Int()
 
-				if y[name][0] == y[name][len(y[name])-1] {
+				if len(y[name]) > 0 && y[name][0] == y[name][len(y[name])-1] {
 					badge.Expected = -2
 				} else if badge.Current < badge.Required {
-					slope, intercept, _ := lineaRegression(x, y[badge.Name])
+					slope, intercept, _ := lineaRegression(x[badge.Name], y[badge.Name])
 					ts := int64(((float64(badge.Required) - intercept) / slope)) + 1262304000
 
 					badge.Expected = ts
