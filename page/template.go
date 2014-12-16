@@ -83,6 +83,17 @@ func relativeTime(ts int64) string {
 	}
 }
 
+func relativeTimeAgo(ts int64) string {
+	now := time.Now().Unix()
+	s := relativeTime(ts)
+
+	if ts > now {
+		return s
+	} else {
+		return s + " ago"
+	}
+}
+
 func loadTemplates(temps ...string) *template.Template {
 	box, err := rice.FindBox("templates")
 	if err != nil {
@@ -90,8 +101,9 @@ func loadTemplates(temps ...string) *template.Template {
 	}
 
 	templates := template.New("").Funcs(template.FuncMap{
-		"comma":    comma,
-		"relative": relativeTime,
+		"comma":       comma,
+		"relative":    relativeTime,
+		"relativeAgo": relativeTimeAgo,
 	})
 
 	for _, temp := range temps {

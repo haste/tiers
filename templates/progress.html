@@ -33,7 +33,7 @@
 				<h3>Progress</h2>
 				{{with .AP}}
 				<div class="progress-badge">
-					<h4>{{.Name}} <small>{{if gt .Expected 0}}{{.Expected | relative}}{{end}}</small></h4>
+					<h4>{{.Name}} <small>{{if gt .Expected 0}}{{.Expected | relativeAgo}}{{end}}</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
 						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
@@ -51,7 +51,7 @@
 		{{ range .Progress }}
 				<div class="progress-badge">
 					<img src="{{.Icon}}" class="progress-icon">
-					<h4>{{.Name}} <small>{{if gt .Expected 0}}{{.Expected | relative}}{{end}}</small></h4>
+					<h4>{{.Name}} <small>{{if gt .Expected 0}}{{.Expected | relativeAgo}}{{end}}</small></h4>
 					<div class="progress">
 						{{ range .Tiers }}
 						<div class="progress-bar progress-bar-{{.Name}}" style="width: {{.Percentage}}%"></div>
