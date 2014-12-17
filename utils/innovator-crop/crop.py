@@ -91,7 +91,7 @@ search_params = dict(checks = 50)
 
 flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-ret, bin = cv2.threshold(gray, 50, 150, cv2.THRESH_BINARY)
+ret, bin = cv2.threshold(gray, 55, 150, cv2.THRESH_BINARY)
 
 # Badges
 contours, h = cv2.findContours(bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -104,7 +104,6 @@ innovator = []
 for cnt in contours:
 	r += 1
 	approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
-
 
 	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 7 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
 		x1, x2 = np.inf, 0
