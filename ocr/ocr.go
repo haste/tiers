@@ -27,6 +27,7 @@ func sanitizeNum(input []byte) int64 {
 
 	n := string(input)
 	n = strings.Replace(n, "B", "8", -1)
+	n = strings.Replace(n, "n", "11", -1)
 	n = strings.Replace(n, ",", "", -1)
 
 	un, _ := strconv.ParseInt(n, 10, 0)
@@ -62,7 +63,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIlJBOo|,\]]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9LIlJBOon|,\]]+)`, -1)
 
 	return matchNum(res, s)
 }

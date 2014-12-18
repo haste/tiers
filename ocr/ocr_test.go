@@ -14,11 +14,12 @@ var testData = map[string]profile.Profile{
 			Level:
 			AP:
 
+			DistanceWalked:
+
 			UniquePortalsVisited:
 			PortalsDiscovered:
 			XMCollected:
 
-			Hacks:
 			ResonatorsDeployed:
 			LinksCreated:
 			ControlFieldsCreated:
@@ -28,19 +29,20 @@ var testData = map[string]profile.Profile{
 			XMRecharged:
 			PortalsCaptured:
 			UniquePortalsCaptured:
+			ModsDeployed:
 
 			ResonatorsDestroyed:
 			PortalsNeutralized:
 			EnemyLinksDestroyed:
 			EnemyControlFieldsDestroyed:
 
-			DistanceWalked:
-
 			MaxTimePortalHeld:
 			MaxTimeLinkMaintained:
 			MaxLinkLengthXDays:
 			MaxTimeFieldHeld:
 			LargestFieldMUsXDays:
+
+			Hacks:
 
 			UniqueMissionsCompleted:
 
@@ -530,6 +532,46 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"haste_v1660_nexus5-1.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    25042616,
+
+		UniquePortalsVisited: 3493,
+		PortalsDiscovered:    36,
+		XMCollected:          104041230,
+
+		DistanceWalked: 1993,
+
+		ResonatorsDeployed:     52542,
+		LinksCreated:           5216,
+		ControlFieldsCreated:   2527,
+		MindUnitsCaptured:      32777,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26357201,
+		PortalsCaptured:        6168,
+		UniquePortalsCaptured:  1406,
+		ModsDeployed:           179,
+
+		ResonatorsDestroyed:         44459,
+		PortalsNeutralized:          6587,
+		EnemyLinksDestroyed:         8314,
+		EnemyControlFieldsDestroyed: 3888,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 51113,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 13,
+	},
 }
 
 func init() {
@@ -711,4 +753,8 @@ func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
 
 func TestOCRhaste_v1660_nexus5(t *testing.T) {
 	w(t, "haste_v1660_nexus5.png")
+}
+
+func TestOCRhaste_v1660_nexus5_1(t *testing.T) {
+	w(t, "haste_v1660_nexus5-1.png")
 }
