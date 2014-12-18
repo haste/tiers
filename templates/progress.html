@@ -3,7 +3,7 @@
 	{{if .Warning}}
 				<p class="alert alert-warning">{{.Warning}}</p>
 	{{else}}
-				<h2>Level {{.NextLevel}}</h2>
+				<h2>Progress</h2>
 				{{ if .Queue}}
 
 				<div class="alert alert-info">
@@ -30,7 +30,7 @@
 				</ul>
 				-->
 
-				<h3>Progress</h2>
+				<h3>To level {{.NextLevel}}</h2>
 				{{with .AP}}
 				<div class="progress-badge">
 					<h4>{{.Name}} <small>{{if gt .Expected 0}}{{.Expected | relativeAgo}}{{end}}</small></h4>
