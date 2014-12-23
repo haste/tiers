@@ -12,7 +12,6 @@ import (
 	"tiers/queue"
 	"tiers/session"
 
-	"github.com/GeertJohan/go.rice"
 	_ "github.com/Go-SQL-Driver/MySQL"
 	"github.com/gorilla/mux"
 )
@@ -67,8 +66,6 @@ func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 
-	rice.MustFindBox("templates")
-
 	r.HandleFunc("/", page.ProfileHandler)
 	r.HandleFunc("/badges", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/progress", 302)
@@ -86,11 +83,11 @@ func main() {
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
 
-	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(rice.MustFindBox("static/css").HTTPBox())))
-	r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(rice.MustFindBox("static/images").HTTPBox())))
-	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(rice.MustFindBox("static/fonts").HTTPBox())))
-	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(rice.MustFindBox("static/js").HTTPBox())))
-	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(rice.MustFindBox("static/vendor").HTTPBox())))
+	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("static/css"))))
+	r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("static/images"))))
+	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts"))))
+	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
+	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(http.Dir("static/vendor"))))
 
 	http.Handle("/", r)
 

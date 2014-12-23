@@ -3,12 +3,11 @@ package page
 import (
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"math"
 	"strconv"
 	"time"
-
-	"github.com/GeertJohan/go.rice"
 )
 
 func comma(n int64) string {
@@ -94,29 +93,20 @@ func relativeTimeAgo(ts int64) string {
 	}
 }
 
-func loadTemplates(temps ...string) *template.Template {
-	box, err := rice.FindBox("templates")
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func loadTemplates(files ...string) *template.Template {
 	templates := template.New("").Funcs(template.FuncMap{
 		"comma":       comma,
 		"relative":    relativeTime,
 		"relativeAgo": relativeTimeAgo,
 	})
 
-	for _, temp := range temps {
-		templateString, err := box.String(temp)
+	for _, fileName := range files {
+		b, err := ioutil.ReadFile("templates/" + fileName)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		_, err = templates.New(temp).Parse(templateString)
-		if err != nil {
-			log.Fatal(err)
-		}
-
+		templates.Parse(string(b))
 	}
 
 	return templates
