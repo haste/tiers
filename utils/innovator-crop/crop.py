@@ -10,6 +10,27 @@ import numpy as np
 import os
 import sys
 
+def angle_cos(p0, p1, p2):
+	dx1 = p0[0][0] - p2[0][0]
+	dy1 = p0[0][1] - p2[0][1]
+	dx2 = p1[0][0] - p2[0][0]
+	dy2 = p1[0][1] - p2[0][1]
+
+	return (dx1*dx2 + dy1*dy2)/math.sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2) + 1e-10)
+
+def fill_view(view, approx):
+	x1, x2 = np.inf, 0
+	y1, y2 = np.inf, 0
+
+	for p in approx:
+		x1 = min(x1, p[0][0])
+		y1 = min(y1, p[0][1])
+
+		x2 = max(x2, p[0][0])
+		y2 = max(y2, p[0][1])
+
+	cv2.rectangle(view, (x1 - 10, y1 - 10), (x2 + 10, y2 + 10), (0, 0, 0), cv.CV_FILLED)
+
 basePath = os.path.dirname(sys.argv[0])
 cachePath = sys.argv[1]
 imageName = sys.argv[2]
@@ -106,18 +127,16 @@ for cnt in contours:
 	approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
 
 	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 7 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
-		x1, x2 = np.inf, 0
-		y1, y2 = np.inf, 0
-
-		for p in approx:
-			x1 = min(x1, p[0][0])
-			y1 = min(y1, p[0][1])
-
-			x2 = max(x2, p[0][0])
-			y2 = max(y2, p[0][1])
-
-		cv2.rectangle(view, (x1 - 10, y1 - 10), (x2 + 10, y2 + 10), (0, 0, 0), cv.CV_FILLED)
+		fill_view(view, approx)
 	elif len(approx) == 6 and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
+		max_cosine = 0.0
+		for r in range(2, len(approx) + 1):
+			max_cosine = max(max_cosine, math.fabs(angle_cos(approx[r%4], approx[r-2], approx[r-1])))
+
+		if max_cosine >= 0.65:
+			fill_view(view, approx)
+			continue
+
 		ret, mask = cv2.threshold(gray, 0, 0, cv2.THRESH_BINARY)
 		cv2.drawContours(mask, [cnt], 0, (255, 255, 255), -1)
 
