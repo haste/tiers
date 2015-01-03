@@ -3,7 +3,6 @@ package ocr
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -11,14 +10,18 @@ import (
 	"strconv"
 	"strings"
 
+	"image"
+	_ "image/jpeg"
+	_ "image/png"
+
 	"tiers/conf"
 	"tiers/profile"
 )
 
 type innovator struct {
-	Rank  int `json:"rank"`
-	Good  int `json:"good"`
-	Total int `json:"total"`
+	Rank  int     `json:"rank"`
+	Good  float32 `json:"good"`
+	Total int     `json:"total"`
 }
 
 func sanitizeNum(input []byte) int64 {
@@ -60,6 +63,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
 	s = regexp.MustCompile(`[D0]`).ReplaceAllLiteralString(s, "[D0]")
 	s = regexp.MustCompile(`[Oo]`).ReplaceAllLiteralString(s, "[0Oo]")
+	s = regexp.MustCompile(`[Cc]`).ReplaceAllLiteralString(s, "[Cc]")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
 	s = strings.Replace(s, `-`, ".", -1)
@@ -114,7 +118,7 @@ func buildProfile(res []byte) profile.Profile {
 	// Resource Gathering
 	p.Hacks = genMatchNum(res, "Hacks #")
 
-	fmt.Printf("%s\n", res)
+	//fmt.Printf("%s\n", res)
 
 	return p
 }
@@ -144,20 +148,96 @@ func runOCR(fileName string) profile.Profile {
 	decoder := json.NewDecoder(bytes.NewReader(res))
 	err = decoder.Decode(&innovator)
 
-	convert := exec.Command(conf.Config.ConvertBin, []string{
-		cvFile,
-		"-resize",
-		"200%",
-		"-level",
-		"30%",
-		"-colorspace",
-		"gray",
-		"+dither",
-		"-colors",
-		"2",
-		"-negate",
-		tmpFile,
-	}...)
+	reader, err := os.Open(cvFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	m, _, err := image.Decode(reader)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	width := m.Bounds().Dx()
+
+	convertArgs := []string{cvFile}
+	if width == 1200 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"105%",
+			"-level",
+			"45%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+		)
+	} else if width == 1080 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"100%",
+			"-level",
+			"25%",
+			"-colorspace",
+			"gray",
+			"-blur",
+			"1x65535",
+			"-negate",
+			"-sharpen",
+			"1x65535",
+		)
+	} else if width == 768 || width == 720 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"175%",
+			"-level",
+			"15%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+		)
+	} else if width == 480 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"140%",
+			"-level",
+			"30%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+		)
+	} else {
+		//} else if width == 640 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"150%",
+			"-level",
+			"15%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+			"-colorspace",
+			"gray",
+			"-blur",
+			"1x65535",
+			"-negate",
+			"-sharpen",
+			"1x65535",
+		)
+	}
+	convertArgs = append(convertArgs, tmpFile)
+	convert := exec.Command(conf.Config.ConvertBin, convertArgs...)
 
 	err = convert.Run()
 	if err != nil {
@@ -167,7 +247,7 @@ func runOCR(fileName string) profile.Profile {
 	tesseract := exec.Command(conf.Config.TesseractBin, []string{
 		"-psm",
 		"4",
-		"-l", "eng+ing",
+		"-l", "eng",
 		tmpFile,
 		"stdout",
 		"ingress",

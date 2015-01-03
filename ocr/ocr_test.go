@@ -572,6 +572,162 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"zyp_v0_unknown.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    3092754,
+
+		UniquePortalsVisited: 1146,
+		PortalsDiscovered:    0,
+		XMCollected:          8480812,
+
+		Hacks:                  3818,
+		ResonatorsDeployed:     4304,
+		LinksCreated:           1271,
+		ControlFieldsCreated:   605,
+		MindUnitsCaptured:      79529,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            4137505,
+		PortalsCaptured:        597,
+		UniquePortalsCaptured:  413,
+		ModsDeployed:           0,
+
+		ResonatorsDestroyed:         3719,
+		PortalsNeutralized:          435,
+		EnemyLinksDestroyed:         1030,
+		EnemyControlFieldsDestroyed: 455,
+
+		DistanceWalked: 179,
+
+		MaxTimePortalHeld:     32,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 0,
+	},
+	"viddy_v1640_nexus7_2013.png": profile.Profile{
+		Nick:  "viddy",
+		Level: 14,
+		AP:    20592365,
+
+		UniquePortalsVisited: 3033,
+		PortalsDiscovered:    15,
+		XMCollected:          103966957,
+
+		Hacks:                  39544,
+		ResonatorsDeployed:     43736,
+		LinksCreated:           3531,
+		ControlFieldsCreated:   1506,
+		MindUnitsCaptured:      15251,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    1250,
+		XMRecharged:            31730665,
+		PortalsCaptured:        6460,
+		UniquePortalsCaptured:  1482,
+		ModsDeployed:           0,
+
+		ResonatorsDestroyed:         42377,
+		PortalsNeutralized:          5973,
+		EnemyLinksDestroyed:         7120,
+		EnemyControlFieldsDestroyed: 3426,
+
+		DistanceWalked: 1418,
+
+		MaxTimePortalHeld:     218,
+		MaxTimeLinkMaintained: 67,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      64,
+		LargestFieldMUsXDays:  5153,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 13,
+	},
+
+	"sockerdricka_v0_unknown.png": profile.Profile{
+		Nick:  "sockerdricka",
+		Level: 10,
+		AP:    6470507,
+
+		UniquePortalsVisited: 704,
+		PortalsDiscovered:    26,
+		XMCollected:          27964186,
+
+		Hacks:                  10174,
+		ResonatorsDeployed:     10403,
+		LinksCreated:           2276,
+		ControlFieldsCreated:   1160,
+		MindUnitsCaptured:      35381,
+		LongestLinkEverCreated: 198,
+		LargestControlField:    12191,
+		XMRecharged:            12265545,
+		PortalsCaptured:        1008,
+		UniquePortalsCaptured:  335,
+		ModsDeployed:           0,
+
+		ResonatorsDestroyed:         6530,
+		PortalsNeutralized:          849,
+		EnemyLinksDestroyed:         1693,
+		EnemyControlFieldsDestroyed: 912,
+
+		DistanceWalked: 472,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 77,
+		MaxLinkLengthXDays:    11298,
+		MaxTimeFieldHeld:      54,
+		LargestFieldMUsXDays:  659702,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 0,
+	},
+
+	"scissorhill_v0_iphone.jpeg": profile.Profile{
+		Nick:  "Scissorhill",
+		Level: 10,
+		AP:    7980258,
+
+		UniquePortalsVisited: 714,
+		PortalsDiscovered:    0,
+		XMCollected:          22655119,
+
+		DistanceWalked: 729,
+
+		ResonatorsDeployed:     9838,
+		LinksCreated:           2760,
+		ControlFieldsCreated:   1540,
+		MindUnitsCaptured:      179031,
+		LongestLinkEverCreated: 14,
+		LargestControlField:    10243,
+		XMRecharged:            9493188,
+		PortalsCaptured:        1047,
+		UniquePortalsCaptured:  328,
+		ModsDeployed:           187,
+
+		ResonatorsDestroyed:         7128,
+		PortalsNeutralized:          919,
+		EnemyLinksDestroyed:         1561,
+		EnemyControlFieldsDestroyed: 716,
+
+		MaxTimePortalHeld:     51,
+		MaxTimeLinkMaintained: 37,
+		MaxLinkLengthXDays:    43,
+		MaxTimeFieldHeld:      25,
+		LargestFieldMUsXDays:  17837,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 6796,
+
+		InnovatorLevel: 9,
+	},
 }
 
 func init() {
@@ -703,58 +859,78 @@ func w(t *testing.T, file string) {
 	validateOCR(t, file, p)
 }
 
-func TestOCRhaste_v1620_nexus5(t *testing.T) {
-	w(t, "haste_v1620_nexus5.png")
-}
-
-func TestOCRwexp_v0_unknown(t *testing.T) {
+func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
 	w(t, "wexp_v0_unknown.png")
 }
 
-func TestOCRforferdet_v0_unknown(t *testing.T) {
-	w(t, "forferdet_v0_unknown.png")
-}
-
-func TestOCRforferdet_v0_unknowntablet(t *testing.T) {
-	w(t, "forferdet_v0_unknowntablet.png")
-}
-
-func TestOCRerebwain_v1620_s4active(t *testing.T) {
-	w(t, "erebwain_v1620_s4active.png")
-}
-
-func TestOCRerebwain_v1630_unknown(t *testing.T) {
-	w(t, "erebwain_v1630_unknown.png")
-}
-
-func TestOCRzyp_v1630_unknown(t *testing.T) {
-	w(t, "zyp_v1630_unknown.png")
-}
-
-func TestOCRhaste_v1630_nexus5(t *testing.T) {
-	w(t, "haste_v1630_nexus5.png")
-}
-
-func TestOCRhaste_v1630_nexus5_1(t *testing.T) {
-	w(t, "haste_v1630_nexus5-1.png")
-}
-
-func TestOCRoteckeh_v1630_nexus4(t *testing.T) {
-	w(t, "oteckeh_v1630_nexus4.png")
-}
-
-func TestOCRmvnch_v1640_iphone5(t *testing.T) {
+func TestOCR_640x_mvnch_v1640_iphone5(t *testing.T) {
 	w(t, "mvnch_v1640_iphone5.jpeg")
 }
 
-func TestOCRmvnch_v1640_iphone5_1(t *testing.T) {
+func TestOCR_640x_mvnch_v1640_iphone5_1(t *testing.T) {
 	w(t, "mvnch_v1640_iphone5-1.jpeg")
 }
 
-func TestOCRhaste_v1660_nexus5(t *testing.T) {
+func TestOCR_640x_Scissorhill_v0_iphone(t *testing.T) {
+	w(t, "scissorhill_v0_iphone.jpeg")
+}
+
+func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
+	w(t, "sockerdricka_v0_unknown.png")
+}
+
+func TestOCR_768x_oteckeh_v1630_nexus4(t *testing.T) {
+	w(t, "oteckeh_v1630_nexus4.png")
+}
+
+func TestOCR_768x_zyp_v1630_unknown(t *testing.T) {
+	w(t, "zyp_v1630_unknown.png")
+}
+
+func TestOCR_768x_zyp_v0_unknown(t *testing.T) {
+	w(t, "zyp_v0_unknown.png")
+}
+
+func TestOCR_1080x_haste_v1620_nexus5(t *testing.T) {
+	w(t, "haste_v1620_nexus5.png")
+}
+
+func TestOCR_1080x_forferdet_v0_unknown(t *testing.T) {
+	w(t, "forferdet_v0_unknown.png")
+}
+
+func TestOCR_1080x_erebwain_v1620_s4active(t *testing.T) {
+	w(t, "erebwain_v1620_s4active.png")
+}
+
+func TestOCR_1080x_erebwain_v1630_unknown(t *testing.T) {
+	w(t, "erebwain_v1630_unknown.png")
+}
+
+func TestOCR_1080x_haste_v1630_nexus5(t *testing.T) {
+	w(t, "haste_v1630_nexus5.png")
+}
+
+func TestOCR_1080x_haste_v1630_nexus5_1(t *testing.T) {
+	w(t, "haste_v1630_nexus5-1.png")
+}
+
+func TestOCR_1080x_haste_v1660_nexus5(t *testing.T) {
 	w(t, "haste_v1660_nexus5.png")
 }
 
-func TestOCRhaste_v1660_nexus5_1(t *testing.T) {
+func TestOCR_1080x_haste_v1660_nexus5_1(t *testing.T) {
 	w(t, "haste_v1660_nexus5-1.png")
+}
+
+func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
+	w(t, "mrwolfe_v1640_unknown.png")
+}
+
+func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
+	w(t, "forferdet_v0_unknowntablet.png")
+}
+
+func TestOCR_1200x_viddy_v1640_nexus7_2013(t *testing.T) {
+	w(t, "viddy_v1640_nexus7_2013.png")
 }

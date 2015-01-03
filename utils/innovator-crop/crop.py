@@ -10,6 +10,53 @@ import numpy as np
 import os
 import sys
 
+FLANN_INDEX_KDTREE = 1  # bug: flann enums are missing
+FLANN_INDEX_LSH    = 6
+
+def init_feature(name):
+	chunks = name.split('-')
+	if chunks[0] == 'sift':
+		detector = cv2.SIFT()
+		norm = cv2.NORM_L2
+	elif chunks[0] == 'surf':
+		detector = cv2.SURF(800)
+		norm = cv2.NORM_L2
+	elif chunks[0] == 'orb':
+		detector = cv2.ORB(400)
+		norm = cv2.NORM_HAMMING
+	elif chunks[0] == 'akaze':
+		detector = cv2.AKAZE()
+		norm = cv2.NORM_HAMMING
+	elif chunks[0] == 'brisk':
+		detector = cv2.BRISK()
+		norm = cv2.NORM_HAMMING
+	else:
+		return None, None
+	if 'flann' in chunks:
+		if norm == cv2.NORM_L2:
+			flann_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+		else:
+			flann_params= dict(algorithm = FLANN_INDEX_LSH,
+					table_number = 6, # 12
+					key_size = 12,     # 20
+					multi_probe_level = 1) #2
+		matcher = cv2.FlannBasedMatcher(flann_params, {})  # bug : need to pass empty dict (#1329)
+	else:
+		matcher = cv2.BFMatcher(norm)
+	return detector, matcher
+
+def filter_matches(kp1, kp2, matches, ratio = 0.7):
+	mkp1, mkp2 = [], []
+	for m in matches:
+		if len(m) == 2 and m[0].distance < m[1].distance * ratio:
+			m = m[0]
+			mkp1.append( kp1[m.queryIdx] )
+			mkp2.append( kp2[m.trainIdx] )
+	p1 = np.float32([kp.pt for kp in mkp1])
+	p2 = np.float32([kp.pt for kp in mkp2])
+	kp_pairs = zip(mkp1, mkp2)
+	return p1, p2, kp_pairs
+
 def angle_cos(p0, p1, p2):
 	dx1 = p0[0][0] - p2[0][0]
 	dy1 = p0[0][1] - p2[0][1]
@@ -39,47 +86,47 @@ ranges = [
 	# bronze
 	[
 		# [15, 91, 188]
-		np.array([5, 81, 178]),
-		np.array([25, 101, 198]),
+		np.array([0, 71, 168]),
+		np.array([35, 111, 208]),
 		# [10, 215, 51]
-		np.array([0, 205, 41]),
-		np.array([20, 225, 61]),
+		np.array([0, 195, 31]),
+		np.array([30, 235, 71]),
 	],
 	# silver
 	[
 		# [90, 33, 46]
-		np.array([90, 23,36]),
-		np.array([100, 43, 56]),
-		# [91, 62, 194]
-		np.array([81, 52, 184]),
+		np.array([70, 13, 26]),
 		np.array([110, 53, 66]),
+		# [91, 62, 194]
+		np.array([61, 42, 174]),
+		np.array([111, 82, 214]),
 	],
 	# gold
 	[
 		# [16, 158, 76]
-		np.array([6, 148, 66]),
-		np.array([26, 168, 86]),
+		np.array([0, 138, 56]),
+		np.array([36, 178, 96]),
 		# [25, 88, 216]
-		np.array([15, 78, 206]),
-		np.array([35, 98, 226]),
+		np.array([5, 68, 196]),
+		np.array([45, 108, 236]),
 	],
 	# platinum
 	[
 		# [90, 9, 30]
-		np.array([80, 0, 20]),
-		np.array([100, 19, 40]),
+		np.array([70, 0, 10]),
+		np.array([110, 29, 50]),
 		# [87, 27, 186]
-		np.array([77, 17, 176]),
-		np.array([97, 37, 196]),
+		np.array([67, 7, 166]),
+		np.array([107, 47, 206]),
 	],
 	# onyx
 	[
 		# [84, 56, 113]
-		np.array([74, 46, 103]),
-		np.array([94, 66, 123]),
+		np.array([64, 36, 93]),
+		np.array([104, 76, 133]),
 		# [0, 0, 2]
 		np.array([0, 0, 0]),
-		np.array([10, 10, 12]),
+		np.array([20, 20, 22]),
 	],
 ]
 
@@ -103,14 +150,9 @@ gray = cv2.cvtColor(imgCrop, cv2.COLOR_BGR2GRAY)
 
 # Matching
 query = cv2.imread(basePath + '/template.png', 0)
-sift = cv2.SIFT()
-kp1, des1 = sift.detectAndCompute(query, None)
+detector, matcher = init_feature("sift")
 
-FLANN_INDEX_KDTREE = 0
-index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-search_params = dict(checks = 50)
-
-flann = cv2.FlannBasedMatcher(index_params, search_params)
+kp1, des1 = detector.detectAndCompute(query, None)
 
 ret, bin = cv2.threshold(gray, 55, 150, cv2.THRESH_BINARY)
 
@@ -152,25 +194,33 @@ for cnt in contours:
 
 		x, y, w, h = cv2.boundingRect(cnt)
 
-		crop = masked[y+top:y+h-bottom, x:x+w]
+		crop = masked[y:y+h, x:x+w]
+		cropThres, bin = cv2.threshold(crop, 100, 255, cv2.THRESH_BINARY)
 
-		kp2, des2 = sift.detectAndCompute(crop, None)
+		kp2, des2 = detector.detectAndCompute(crop, None)
 		if des2 is None:
 			continue
 
 		badge_top = min(badge_top, y)
 		badge_bottom = max(badge_bottom, y + h)
 
-		matches = flann.knnMatch(des1,des2,k=2)
+		matches = matcher.knnMatch(des1, trainDescriptors = des2, k = 2)
 
-		count = 0
-		for m, n in matches:
-			if m.distance < 0.7 * n.distance:
-				count += 1
+		ratio = 0.0
+		p1, p2, kp_pairs = filter_matches(kp1, kp2, matches)
+		if len(p1) >= 4:
+			H, status = cv2.findHomography(p1, p2, cv2.RANSAC, 1.0)
+			if np.sum(H) == 0.0:
+				continue
 
-		if count / len(matches) > 0.09:
+			#print('%d / %d  = %.3f inliers/matched' % (np.sum(status), len(status), np.sum(status) / len(status)))
+			#print('%.3f' % (np.sum(status) / len(kp2)))
+
+			ratio = np.sum(status) / len(kp2)
+
+		if ratio >= 0.15:
 			masked = cv2.bitwise_and(imgCrop, imgCrop, mask = mask)
-			badge = masked[y:y+h, x:x+w]
+			badge = cv2.blur(masked[y:y+h, x:x+w], (3, 3))
 
 			Z = badge.reshape((-1, 3))
 			Z = np.float32(Z)
@@ -188,15 +238,17 @@ for cnt in contours:
 			c0 = cv2.cvtColor(np.uint8([[center[0]]]), cv2.COLOR_BGR2HSV)
 			c1 = cv2.cvtColor(np.uint8([[center[1]]]), cv2.COLOR_BGR2HSV)
 
-			for k, v in enumerate(ranges):
+			tier = -1
+			for k, v in reversed(list(enumerate(ranges))):
 				m1 = cv2.inRange(hsv, v[0], v[1])
 				m2 = cv2.inRange(hsv, v[2], v[3])
 
 				res4 = cv2.bitwise_and(hsv, hsv, mask = m1+m2)
 				if res4.mean() > 4:
+					tier = k
 					break
 
-			innovator.append((count, len(matches), k))
+			innovator.append((ratio, len(matches), tier))
 
 out = {}
 
