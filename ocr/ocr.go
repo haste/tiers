@@ -124,7 +124,7 @@ func buildProfile(res []byte) profile.Profile {
 }
 
 func handleInnovator(p *profile.Profile, data innovator) {
-	if data.Good > 0 {
+	if data.Good > 0 && data.Rank >= 0 {
 		p.InnovatorLevel = profile.BadgeRanks["Innovator"][data.Rank]
 	}
 }
