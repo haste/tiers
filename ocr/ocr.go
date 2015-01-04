@@ -220,20 +220,13 @@ func runOCR(fileName string) profile.Profile {
 			"-resize",
 			"150%",
 			"-level",
-			"15%",
+			"20%",
 			"-colorspace",
 			"gray",
 			"+dither",
 			"-colors",
 			"2",
 			"-negate",
-			"-colorspace",
-			"gray",
-			"-blur",
-			"1x65535",
-			"-negate",
-			"-sharpen",
-			"1x65535",
 		)
 	}
 	convertArgs = append(convertArgs, tmpFile)
