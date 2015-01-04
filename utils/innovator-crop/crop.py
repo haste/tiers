@@ -253,7 +253,7 @@ for cnt in contours:
 out = {}
 
 # Sort matches
-innovator.sort(key=lambda tup: tup[1], reverse=True)
+innovator.sort(key=lambda tup: tup[0], reverse=True)
 for i, v in enumerate(innovator):
 	out = {
 		'good': v[0],
