@@ -14,11 +14,11 @@ var testData = map[string]profile.Profile{
 			Level:
 			AP:
 
-			DistanceWalked:
-
 			UniquePortalsVisited:
 			PortalsDiscovered:
 			XMCollected:
+
+			DistanceWalked:
 
 			ResonatorsDeployed:
 			LinksCreated:
@@ -768,6 +768,46 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 3,
 	},
+
+	"haste_v1670_nexus5.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    25554981,
+
+		UniquePortalsVisited: 3515,
+		PortalsDiscovered:    36,
+		XMCollected:          106750398,
+
+		DistanceWalked: 2021,
+
+		ResonatorsDeployed:     53809,
+		LinksCreated:           5264,
+		ControlFieldsCreated:   2546,
+		MindUnitsCaptured:      32799,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26504289,
+		PortalsCaptured:        6247,
+		UniquePortalsCaptured:  1408,
+		ModsDeployed:           399,
+
+		ResonatorsDestroyed:         45071,
+		PortalsNeutralized:          6671,
+		EnemyLinksDestroyed:         8490,
+		EnemyControlFieldsDestroyed: 3992,
+
+		MaxTimePortalHeld:     113,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 52367,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 13,
+	},
 }
 
 func init() {
@@ -965,6 +1005,10 @@ func TestOCR_1080x_haste_v1660_nexus5(t *testing.T) {
 
 func TestOCR_1080x_haste_v1660_nexus5_1(t *testing.T) {
 	w(t, "haste_v1660_nexus5-1.png")
+}
+
+func TestOCR_1080x_haste_v1670_nexus5(t *testing.T) {
+	w(t, "haste_v1670_nexus5.png")
 }
 
 func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
