@@ -12,7 +12,7 @@ import (
 	"tiers/queue"
 	"tiers/session"
 
-	_ "github.com/Go-SQL-Driver/MySQL"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 )
 
