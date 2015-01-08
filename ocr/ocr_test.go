@@ -808,6 +808,46 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"tufte_v1670_iphone.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    4347932,
+
+		UniquePortalsVisited: 1067,
+		PortalsDiscovered:    0,
+		XMCollected:          16119070,
+
+		DistanceWalked: 379,
+
+		ResonatorsDeployed:     6105,
+		LinksCreated:           1059,
+		ControlFieldsCreated:   647,
+		MindUnitsCaptured:      7440,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            7252265,
+		PortalsCaptured:        496,
+		UniquePortalsCaptured:  264,
+		ModsDeployed:           384,
+
+		ResonatorsDestroyed:         3723,
+		PortalsNeutralized:          443,
+		EnemyLinksDestroyed:         861,
+		EnemyControlFieldsDestroyed: 456,
+
+		MaxTimePortalHeld:     27,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		Hacks: 4915,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 3,
+	},
 }
 
 func init() {
@@ -957,6 +997,10 @@ func TestOCR_640x_Scissorhill_v0_iphone(t *testing.T) {
 
 func TestOCR_640x_Tufte_v1660_iphone(t *testing.T) {
 	w(t, "tufte_v1660_iphone.jpeg")
+}
+
+func TestOCR_640x_Tufte_v1670_iphone(t *testing.T) {
+	w(t, "tufte_v1670_iphone.jpeg")
 }
 
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {

@@ -219,7 +219,7 @@ func runOCR(fileName string) profile.Profile {
 			"-resize",
 			"150%",
 			"-level",
-			"20%",
+			"0%",
 			"-colorspace",
 			"gray",
 			"+dither",
