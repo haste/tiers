@@ -23,6 +23,7 @@ type Badges struct {
 	Trekker        Badge
 	Engineer       Badge
 	SpecOps        Badge
+	Recruiter      Badge
 }
 
 type BadgeProgress struct {
@@ -47,6 +48,7 @@ var BadgeRanks = map[string][]int64{
 	"Engineer":       {150, 1500, 5000, 20000, 50000},
 	"SpecOps":        {5, 25, 100, 200, 500},
 	"Trekker":        {10, 100, 300, 1000, 2500},
+	"Recruiter":      {2, 10, 25, 50, 100},
 }
 
 // The order is defined by the agent profile.
@@ -65,6 +67,7 @@ var BadgeOrder = []string{
 	"Guardian",
 	"Hacker",
 	"SpecOps",
+	"Recruiter",
 }
 
 func incBadgeRank(p *Profile, b *Badge, current int64, reqs []int64) {
