@@ -219,7 +219,7 @@ func runOCR(fileName string) profile.Profile {
 			"-resize",
 			"150%",
 			"-level",
-			"0%",
+			"25%",
 			"-colorspace",
 			"gray",
 			"+dither",
@@ -254,6 +254,7 @@ func runOCR(fileName string) profile.Profile {
 	os.Remove(tmpFile)
 
 	p := buildProfile(res)
+
 	handleInnovator(&p, innovator)
 
 	return p
