@@ -888,6 +888,44 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"haste_v1680_nexus6-1.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    25965522,
+
+		UniquePortalsVisited: 3541,
+		PortalsDiscovered:    37,
+		XMCollected:          108540094,
+
+		DistanceWalked: 2045,
+
+		ResonatorsDeployed:     54626,
+		LinksCreated:           5318,
+		ControlFieldsCreated:   2568,
+		MindUnitsCaptured:      32856,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26527164,
+		PortalsCaptured:        6308,
+		UniquePortalsCaptured:  1415,
+		ModsDeployed:           596,
+
+		ResonatorsDestroyed:         45557,
+		PortalsNeutralized:          6739,
+		EnemyLinksDestroyed:         8707,
+		EnemyControlFieldsDestroyed: 4150,
+
+		MaxTimePortalHeld:     123,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 53033,
+
+		InnovatorLevel: 13,
+	},
 }
 
 func init() {
@@ -1109,4 +1147,8 @@ func TestOCR_1200x_viddy_v1640_nexus7_2013(t *testing.T) {
 
 func TestOCR_1440x_haste_v1680_nexus6(t *testing.T) {
 	w(t, "haste_v1680_nexus6.png")
+}
+
+func TestOCR_1440x_haste_v1680_nexus6_1(t *testing.T) {
+	w(t, "haste_v1680_nexus6-1.png")
 }

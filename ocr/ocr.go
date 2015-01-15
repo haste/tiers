@@ -219,7 +219,7 @@ func runOCR(fileName string) profile.Profile {
 			"-resize",
 			"150%",
 			"-level",
-			"25%",
+			"10%",
 			"-colorspace",
 			"gray",
 			"+dither",
@@ -228,6 +228,7 @@ func runOCR(fileName string) profile.Profile {
 			"-negate",
 		)
 	}
+
 	convertArgs = append(convertArgs, tmpFile)
 	convert := exec.Command(conf.Config.ConvertBin, convertArgs...)
 
