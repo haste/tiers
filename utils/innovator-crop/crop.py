@@ -131,17 +131,6 @@ ranges = [
 ]
 
 img = cv2.imread(cachePath + "/" + imageName)
-
-# remove the menu
-i = 0
-crop_top = 0
-for row in img:
-	i += 1
-	if row.sum() < 3000:
-		crop_top = i
-		break
-
-img = img[crop_top:, :img.shape[1]]
 imgCrop = img[:(img.shape[0] // 2), :img.shape[1]]
 viewCrop = imgCrop.copy()
 
