@@ -93,9 +93,16 @@ func relativeTimeAgo(ts int64) string {
 	}
 }
 
+func date(ts int64) string {
+	t := time.Unix(ts, 0)
+
+	return t.Format("02.01.2006")
+}
+
 func loadTemplates(files ...string) *template.Template {
 	templates := template.New("").Funcs(template.FuncMap{
 		"comma":       comma,
+		"date":        date,
 		"relative":    relativeTime,
 		"relativeAgo": relativeTimeAgo,
 	})
