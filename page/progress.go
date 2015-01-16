@@ -11,6 +11,7 @@ import (
 	"tiers/model"
 	"tiers/profile"
 	"tiers/session"
+	"time"
 )
 
 type tier struct {
@@ -157,7 +158,8 @@ func ProgressHandler(w http.ResponseWriter, r *http.Request) {
 	var view view
 	view.User = userid.(int)
 
-	profiles := model.GetAllProfiles(view.User)
+	limit := time.Now().Unix() - int64((time.Hour * 24 * 30).Seconds())
+	profiles := model.GetAllProfiles(view.User, limit)
 
 	if len(profiles) == 0 {
 		view.Warning = "Not enough data to generate page. :("

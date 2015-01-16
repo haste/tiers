@@ -1,17 +1,16 @@
 package model
 
 import (
+	"crypto/sha256"
 	"database/sql"
 	"encoding/hex"
 	"errors"
 	"log"
 	"net"
 
-	"github.com/gorilla/securecookie"
-
-	"crypto/sha256"
-
 	"code.google.com/p/go.crypto/bcrypt"
+	"github.com/gorilla/securecookie"
+	"github.com/lann/squirrel"
 
 	"tiers/profile"
 	"time"
@@ -193,10 +192,10 @@ func UpdateGPlusToken(id int, accessToken string) {
 	`, accessToken, id)
 }
 
-func GetAllProfiles(user_id int) []profile.Profile {
-	// XXX: Handle errors.
-	rows, _ := db.Query(`
-		(SELECT id, user_id, timestamp, agent, level, ap,
+func GetAllProfiles(user_id int, timestamp int64) []profile.Profile {
+	query := squirrel.Select(`
+		id, user_id, timestamp,
+		agent, level, ap,
 		unique_portals_visited, portals_discovered, xm_collected,
 		hacks, resonators_deployed, links_created, control_fields_created, mind_units_captured,
 		longest_link_ever_created, largest_control_field, xm_recharged, portals_captured,
@@ -207,11 +206,17 @@ func GetAllProfiles(user_id int) []profile.Profile {
 		largest_field_mus_x_days,
 		unique_missions_completed,
 		innovator
-		FROM tiers_profiles
-		WHERE user_id = ?
-		ORDER BY timestamp DESC
-		LIMIT 50) ORDER BY timestamp ASC
-		`, user_id)
+	`).From("tiers_profiles").OrderBy("timestamp ASC")
+
+	query = query.Where(
+		squirrel.And{
+			squirrel.Eq{"user_id": user_id},
+			squirrel.Expr("timestamp >= ?", timestamp),
+		},
+	)
+
+	// XXX: Handle errors.
+	rows, _ := query.RunWith(db).Query()
 	defer rows.Close()
 
 	var profiles []profile.Profile
