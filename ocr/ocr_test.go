@@ -1006,7 +1006,7 @@ var testData = map[string]profile.Profile{
 
 		Hacks: 9533,
 
-		//AgentsSuccessfullyRecruited: 1,
+		AgentsSuccessfullyRecruited: 1,
 
 		InnovatorLevel: 9,
 	},
@@ -1130,6 +1130,10 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 
 	if p.UniqueMissionsCompleted != e.UniqueMissionsCompleted {
 		t.Errorf("%s: .UniqueMissionsCompleted: Got %v Expected %v", file, p.UniqueMissionsCompleted, e.UniqueMissionsCompleted)
+	}
+
+	if p.AgentsSuccessfullyRecruited != e.AgentsSuccessfullyRecruited {
+		t.Errorf("%s: .AgentsSuccessfullyRecruited: Got %v Expected %v", file, p.AgentsSuccessfullyRecruited, e.AgentsSuccessfullyRecruited)
 	}
 }
 

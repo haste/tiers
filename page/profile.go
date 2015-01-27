@@ -63,6 +63,8 @@ func createDiff(a, b profile.Profile) profile.Profile {
 
 	diff.UniqueMissionsCompleted = b.UniqueMissionsCompleted - a.UniqueMissionsCompleted
 
+	diff.AgentsSuccessfullyRecruited = b.AgentsSuccessfullyRecruited - a.AgentsSuccessfullyRecruited
+
 	return diff
 }
 

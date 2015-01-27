@@ -368,6 +368,31 @@
 							</tbody>
 						</table>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Mentoring
+							</h4>
+						</div>
+						<table class="table table-condensed">
+							<colgroup>
+								<col class="col-md-8 col-sm-8" />
+								<col class="col-md-2 col-sm-2" />
+								<col class="col-md-2 col-sm-2" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<td class="profile-entry-name">Agents Successfully Recruited</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.AgentsSuccessfullyRecruited .Int64}} + {{.Diff.AgentsSuccessfullyRecruited | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.AgentsSuccessfullyRecruited | comma}}
+										<div class="visible-xs text-success">{{if ne .Diff.AgentsSuccessfullyRecruited .Int64}} + {{.Diff.AgentsSuccessfullyRecruited | comma}}{{end}}</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 {{end}}
 {{template "footer" . }}

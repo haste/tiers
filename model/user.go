@@ -205,6 +205,7 @@ func GetAllProfiles(user_id int, timestamp int64) []profile.Profile {
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
 		unique_missions_completed,
+		agents_succsessfully_recruited,
 		innovator
 	`).From("tiers_profiles").OrderBy("timestamp ASC")
 
@@ -235,6 +236,7 @@ func GetAllProfiles(user_id int, timestamp int64) []profile.Profile {
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
 			&p.UniqueMissionsCompleted,
+			&p.AgentsSuccessfullyRecruited,
 			&p.InnovatorLevel,
 		)
 
@@ -291,6 +293,7 @@ func GetNewestProfile(user_id int) profile.Profile {
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
 		unique_missions_completed,
+		agents_succsessfully_recruited,
 		innovator
 		FROM tiers_profiles
 		WHERE user_id = ?
@@ -314,6 +317,7 @@ func GetNewestProfile(user_id int) profile.Profile {
 		&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 		&p.LargestFieldMUsXDays,
 		&p.UniqueMissionsCompleted,
+		&p.AgentsSuccessfullyRecruited,
 		&p.InnovatorLevel,
 	)
 
@@ -335,6 +339,7 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
 		unique_missions_completed,
+		agents_succsessfully_recruited,
 		innovator
 		FROM tiers_profiles
 		WHERE user_id = ?
@@ -357,6 +362,7 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
 			&p.UniqueMissionsCompleted,
+			&p.AgentsSuccessfullyRecruited,
 			&p.InnovatorLevel,
 		)
 

@@ -132,6 +132,8 @@ func HandleBadges(p *Profile) {
 			incBadgeRank(p, &p.Badges.Engineer, p.ModsDeployed, v)
 		case "SpecOps":
 			incBadgeRank(p, &p.Badges.SpecOps, p.UniqueMissionsCompleted, v)
+		case "Recruiter":
+			incBadgeRank(p, &p.Badges.Recruiter, p.AgentsSuccessfullyRecruited, v)
 		}
 	}
 }
@@ -164,6 +166,14 @@ func BuildBadgeProgress(p Profile) []BadgeProgress {
 			current = p.Badges.Pioneer
 		case "Recharger":
 			current = p.Badges.Recharger
+		case "Trekker":
+			current = p.Badges.Trekker
+		case "Engineer":
+			current = p.Badges.Engineer
+		case "SpecOps":
+			current = p.Badges.SpecOps
+		case "Recruiter":
+			current = p.Badges.Recruiter
 		}
 
 		bp = append(bp, BadgeProgress{

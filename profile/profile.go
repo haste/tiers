@@ -50,6 +50,8 @@ type Profile struct {
 
 	UniqueMissionsCompleted int64
 
+	AgentsSuccessfullyRecruited int64
+
 	InnovatorLevel int64
 }
 
