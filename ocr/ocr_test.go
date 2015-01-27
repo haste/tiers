@@ -926,6 +926,46 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"forferdet_v1680_oneplusone.png": profile.Profile{
+		Nick:  "forferdet",
+		Level: 14,
+		AP:    25137484,
+
+		UniquePortalsVisited: 1746,
+		PortalsDiscovered:    13,
+		XMCollected:          97771074,
+
+		DistanceWalked: 1372,
+
+		ResonatorsDeployed:     41586,
+		LinksCreated:           7113,
+		ControlFieldsCreated:   3459,
+		MindUnitsCaptured:      24251,
+		LongestLinkEverCreated: 156,
+		LargestControlField:    977,
+		XMRecharged:            33691418,
+		PortalsCaptured:        4414,
+		UniquePortalsCaptured:  1049,
+		ModsDeployed:           1333,
+
+		ResonatorsDestroyed:         35730,
+		PortalsNeutralized:          4935,
+		EnemyLinksDestroyed:         7296,
+		EnemyControlFieldsDestroyed: 3627,
+
+		MaxTimePortalHeld:     53,
+		MaxTimeLinkMaintained: 55,
+		MaxLinkLengthXDays:    2543,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  2632,
+
+		Hacks: 37532,
+
+		UniqueMissionsCompleted: 0,
+
+		InnovatorLevel: 9,
+	},
 }
 
 func init() {
@@ -1135,6 +1175,10 @@ func TestOCR_1080x_haste_v1670_nexus5(t *testing.T) {
 
 func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
 	w(t, "mrwolfe_v1640_unknown.png")
+}
+
+func TestOCR_1080x_forferdet_v1680_oneplusone(t *testing.T) {
+	w(t, "forferdet_v1680_oneplusone.png")
 }
 
 func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
