@@ -42,9 +42,11 @@ var testData = map[string]profile.Profile{
 			MaxTimeFieldHeld:
 			LargestFieldMUsXDays:
 
+			UniqueMissionsCompleted:
+
 			Hacks:
 
-			UniqueMissionsCompleted:
+			AgentsSuccessfullyRecruited:
 
 			InnovatorLevel:
 		},
@@ -966,6 +968,48 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"madder79_v1680_unknown.png": profile.Profile{
+		Nick:  "madder79",
+		Level: 10,
+		AP:    7334883,
+
+		UniquePortalsVisited: 1102,
+		PortalsDiscovered:    4,
+		XMCollected:          25527106,
+
+		DistanceWalked: 418,
+
+		ResonatorsDeployed:     10419,
+		LinksCreated:           2137,
+		ControlFieldsCreated:   1081,
+		MindUnitsCaptured:      18187,
+		LongestLinkEverCreated: 37,
+		LargestControlField:    803,
+		XMRecharged:            6500245,
+		PortalsCaptured:        887,
+		UniquePortalsCaptured:  351,
+		ModsDeployed:           481,
+
+		ResonatorsDestroyed:         10412,
+		PortalsNeutralized:          1345,
+		EnemyLinksDestroyed:         2169,
+		EnemyControlFieldsDestroyed: 1132,
+
+		MaxTimePortalHeld:     20,
+		MaxTimeLinkMaintained: 21,
+		MaxLinkLengthXDays:    199,
+		MaxTimeFieldHeld:      13,
+		LargestFieldMUsXDays:  2624,
+
+		UniqueMissionsCompleted: 3,
+
+		Hacks: 9533,
+
+		//AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 9,
+	},
 }
 
 func init() {
@@ -1179,6 +1223,10 @@ func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
 
 func TestOCR_1080x_forferdet_v1680_oneplusone(t *testing.T) {
 	w(t, "forferdet_v1680_oneplusone.png")
+}
+
+func TestOCR_1080x_madder79_v1680_unknown(t *testing.T) {
+	w(t, "madder79_v1680_unknown.png")
 }
 
 func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
