@@ -1010,6 +1010,86 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"haste_v1680_nexus6-2.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    26526758,
+
+		UniquePortalsVisited: 3564,
+		PortalsDiscovered:    37,
+		XMCollected:          110765815,
+
+		DistanceWalked: 2084,
+
+		ResonatorsDeployed:     56074,
+		LinksCreated:           5362,
+		ControlFieldsCreated:   2586,
+		MindUnitsCaptured:      32880,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26547006,
+		PortalsCaptured:        6459,
+		UniquePortalsCaptured:  1432,
+		ModsDeployed:           761,
+
+		ResonatorsDestroyed:         46454,
+		PortalsNeutralized:          6886,
+		EnemyLinksDestroyed:         8944,
+		EnemyControlFieldsDestroyed: 4296,
+
+		MaxTimePortalHeld:     134,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		UniqueMissionsCompleted: 0,
+
+		Hacks: 53963,
+
+		AgentsSuccessfullyRecruited: 0,
+
+		InnovatorLevel: 13,
+	},
+
+	"haste_v1690_nexus6.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    26601022,
+
+		UniquePortalsVisited: 3567,
+		PortalsDiscovered:    39,
+		XMCollected:          111451742,
+
+		DistanceWalked: 2093,
+
+		ResonatorsDeployed:     56352,
+		LinksCreated:           5374,
+		ControlFieldsCreated:   2593,
+		MindUnitsCaptured:      32903,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26907756,
+		PortalsCaptured:        6471,
+		UniquePortalsCaptured:  1433,
+		ModsDeployed:           810,
+
+		ResonatorsDestroyed:         46508,
+		PortalsNeutralized:          6893,
+		EnemyLinksDestroyed:         8947,
+		EnemyControlFieldsDestroyed: 4296,
+
+		MaxTimePortalHeld:     136,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 54204,
+
+		InnovatorLevel: 13,
+	},
 }
 
 func init() {
@@ -1247,4 +1327,12 @@ func TestOCR_1440x_haste_v1680_nexus6(t *testing.T) {
 
 func TestOCR_1440x_haste_v1680_nexus6_1(t *testing.T) {
 	w(t, "haste_v1680_nexus6-1.png")
+}
+
+func TestOCR_1440x_haste_v1680_nexus6_2(t *testing.T) {
+	w(t, "haste_v1680_nexus6-1.png")
+}
+
+func TestOCR_1440x_haste_v1690_nexus6(t *testing.T) {
+	w(t, "haste_v1690_nexus6.png")
 }

@@ -163,7 +163,20 @@ func runOCR(fileName string) profile.Profile {
 	width := m.Bounds().Dx()
 
 	convertArgs := []string{cvFile}
-	if width == 1200 {
+	if width == 1440 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"130%",
+			"-level",
+			"40%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+		)
+	} else if width == 1200 {
 		convertArgs = append(convertArgs,
 			"-resize",
 			"105%",
