@@ -45,6 +45,7 @@ var testData = map[string]profile.Profile{
 			UniqueMissionsCompleted:
 
 			Hacks:
+			GlyphHackPoints:
 
 			AgentsSuccessfullyRecruited:
 
@@ -1124,10 +1125,6 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 		t.Errorf("%s: .XMCollected: Got %v Expected %v", file, p.XMCollected, e.XMCollected)
 	}
 
-	if p.Hacks != e.Hacks {
-		t.Errorf("%s: .Hacks: Got %v Expected %v", file, p.Hacks, e.Hacks)
-	}
-
 	if p.ResonatorsDeployed != e.ResonatorsDeployed {
 		t.Errorf("%s: .ResonatorsDeployed: Got %v Expected %v", file, p.ResonatorsDeployed, e.ResonatorsDeployed)
 	}
@@ -1206,6 +1203,14 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 
 	if p.InnovatorLevel != e.InnovatorLevel {
 		t.Errorf("%s: .InnovatorLevel: Got %v Expected %v", file, p.InnovatorLevel, e.InnovatorLevel)
+	}
+
+	if p.Hacks != e.Hacks {
+		t.Errorf("%s: .Hacks: Got %v Expected %v", file, p.Hacks, e.Hacks)
+	}
+
+	if p.GlyphHackPoints != e.GlyphHackPoints {
+		t.Errorf("%s: .GlyphHackPoints: Got %v Expected %v", file, p.GlyphHackPoints, e.GlyphHackPoints)
 	}
 
 	if p.UniqueMissionsCompleted != e.UniqueMissionsCompleted {

@@ -365,6 +365,15 @@
 										<div class="visible-xs text-success">{{if ne .Diff.Hacks .Int64}} + {{.Diff.Hacks | comma}}{{end}}</div>
 									</td>
 								</tr>
+
+								<tr>
+									<td class="profile-entry-name">Glyph Hack Points</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.GlyphHackPoints .Int64}} + {{.Diff.GlyphHackPoints | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.GlyphHackPoints | comma}}
+										<div class="visible-xs text-success">{{if ne .Diff.GlyphHackPoints .Int64}} + {{.Diff.GlyphHackPoints | comma}}{{end}}</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

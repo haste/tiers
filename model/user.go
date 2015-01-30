@@ -204,6 +204,7 @@ func GetAllProfiles(user_id int, timestamp int64) []profile.Profile {
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
+		glyph_hack_points,
 		unique_missions_completed,
 		agents_successfully_recruited,
 		innovator
@@ -235,6 +236,7 @@ func GetAllProfiles(user_id int, timestamp int64) []profile.Profile {
 			&p.DistanceWalked,
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
+			&p.GlyphHackPoints,
 			&p.UniqueMissionsCompleted,
 			&p.AgentsSuccessfullyRecruited,
 			&p.InnovatorLevel,
@@ -292,6 +294,7 @@ func GetNewestProfile(user_id int) profile.Profile {
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
+		glyph_hack_points,
 		unique_missions_completed,
 		agents_successfully_recruited,
 		innovator
@@ -316,6 +319,7 @@ func GetNewestProfile(user_id int) profile.Profile {
 		&p.DistanceWalked,
 		&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 		&p.LargestFieldMUsXDays,
+		&p.GlyphHackPoints,
 		&p.UniqueMissionsCompleted,
 		&p.AgentsSuccessfullyRecruited,
 		&p.InnovatorLevel,
@@ -338,6 +342,7 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 		distance_walked,
 		max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
 		largest_field_mus_x_days,
+		glyph_hack_points,
 		unique_missions_completed,
 		agents_successfully_recruited,
 		innovator
@@ -361,6 +366,7 @@ func GetNewestProfiles(user_id, limit int) []profile.Profile {
 			&p.DistanceWalked,
 			&p.MaxTimePortalHeld, &p.MaxTimeLinkMaintained, &p.MaxLinkLengthXDays, &p.MaxTimeFieldHeld,
 			&p.LargestFieldMUsXDays,
+			&p.GlyphHackPoints,
 			&p.UniqueMissionsCompleted,
 			&p.AgentsSuccessfullyRecruited,
 			&p.InnovatorLevel,

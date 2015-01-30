@@ -134,6 +134,10 @@ func shouldIncludeBadge(name string, timestamp, newY int64) bool {
 	// profile with mod deployed data.
 	if name == "Engineer" && newY == 0 && timestamp < 1418672414 {
 		return false
+		// Badge was implemented around 22:30 CET, timestamp is form the last profile
+		// submitted before it was public.
+	} else if name == "Translator" && newY == 0 && timestamp < 1422564883 {
+		return false
 	}
 
 	return true

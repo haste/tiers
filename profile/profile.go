@@ -23,7 +23,6 @@ type Profile struct {
 	PortalsDiscovered    int64
 	XMCollected          int64
 
-	Hacks                  int64
 	ResonatorsDeployed     int64
 	LinksCreated           int64
 	ControlFieldsCreated   int64
@@ -49,6 +48,9 @@ type Profile struct {
 	LargestFieldMUsXDays  int64
 
 	UniqueMissionsCompleted int64
+
+	Hacks           int64
+	GlyphHackPoints int64
 
 	AgentsSuccessfullyRecruited int64
 

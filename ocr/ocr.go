@@ -118,6 +118,7 @@ func buildProfile(res []byte) profile.Profile {
 
 	// Resource Gathering
 	p.Hacks = genMatchNum(res, "Hacks #")
+	p.GlyphHackPoints = genMatchNum(res, "Glyph Hack Points #")
 
 	// Mentoring
 	p.AgentsSuccessfullyRecruited = genMatchNum(res, "Agents Successfully Recruited #")

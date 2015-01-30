@@ -13,8 +13,8 @@ func InsertProfile(user_id, timestamp int, p profile.Profile) int64 {
 			longest_link_ever_created, largest_control_field, xm_recharged, portals_captured, unique_portals_captured,
 			mods_deployed, resonators_destroyed, portals_neutralized, enemy_links_destroyed, enemy_control_fields_destroyed,
 			distance_walked, max_time_portal_held, max_time_link_maintained, max_link_length_x_days, max_time_field_held,
-			largest_field_mus_x_days, unique_missions_completed, agents_successfully_recruited, innovator)
-			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			largest_field_mus_x_days, glyph_hack_points, unique_missions_completed, agents_successfully_recruited, innovator)
+			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			`,
 		user_id, timestamp,
 		p.Nick, p.Level, p.AP,
@@ -25,6 +25,7 @@ func InsertProfile(user_id, timestamp int, p profile.Profile) int64 {
 		p.DistanceWalked,
 		p.MaxTimePortalHeld, p.MaxTimeLinkMaintained, p.MaxLinkLengthXDays, p.MaxTimeFieldHeld,
 		p.LargestFieldMUsXDays,
+		p.GlyphHackPoints,
 		p.UniqueMissionsCompleted,
 		p.AgentsSuccessfullyRecruited,
 		p.InnovatorLevel,
