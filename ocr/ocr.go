@@ -167,9 +167,9 @@ func runOCR(fileName string) profile.Profile {
 	if width == 1440 {
 		convertArgs = append(convertArgs,
 			"-resize",
-			"130%",
+			"205%",
 			"-level",
-			"40%",
+			"10%",
 			"-colorspace",
 			"gray",
 			"+dither",
