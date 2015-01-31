@@ -36,7 +36,6 @@ func createDiff(a, b profile.Profile) profile.Profile {
 	diff.PortalsDiscovered = b.PortalsDiscovered - a.PortalsDiscovered
 	diff.XMCollected = b.XMCollected - a.XMCollected
 
-	diff.Hacks = b.Hacks - a.Hacks
 	diff.ResonatorsDeployed = b.ResonatorsDeployed - a.ResonatorsDeployed
 	diff.LinksCreated = b.LinksCreated - a.LinksCreated
 	diff.ControlFieldsCreated = b.ControlFieldsCreated - a.ControlFieldsCreated
@@ -60,6 +59,9 @@ func createDiff(a, b profile.Profile) profile.Profile {
 	diff.MaxLinkLengthXDays = b.MaxLinkLengthXDays - a.MaxLinkLengthXDays
 	diff.MaxTimeFieldHeld = b.MaxTimeFieldHeld - a.MaxTimeFieldHeld
 	diff.LargestFieldMUsXDays = b.LargestFieldMUsXDays - a.LargestFieldMUsXDays
+
+	diff.Hacks = b.Hacks - a.Hacks
+	diff.GlyphHackPoints = b.GlyphHackPoints - a.GlyphHackPoints
 
 	diff.UniqueMissionsCompleted = b.UniqueMissionsCompleted - a.UniqueMissionsCompleted
 
