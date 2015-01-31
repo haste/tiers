@@ -50,7 +50,7 @@ var BadgeRanks = map[string][]int64{
 	"SpecOps":        {5, 25, 100, 200, 500},
 	"Trekker":        {10, 100, 300, 1000, 2500},
 	"Recruiter":      {2, 10, 25, 50, 100},
-	"Translator":     {200, 20000, 6000, 20000, 50000},
+	"Translator":     {200, 2000, 6000, 20000, 50000},
 }
 
 // The order is defined by the agent profile.
