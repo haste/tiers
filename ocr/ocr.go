@@ -207,7 +207,20 @@ func runOCR(fileName string) profile.Profile {
 			"-sharpen",
 			"1x65535",
 		)
-	} else if width == 768 || width == 720 {
+	} else if width == 768 {
+		convertArgs = append(convertArgs,
+			"-resize",
+			"151%",
+			"-level",
+			"35%",
+			"-colorspace",
+			"gray",
+			"+dither",
+			"-colors",
+			"2",
+			"-negate",
+		)
+	} else if width == 720 {
 		convertArgs = append(convertArgs,
 			"-resize",
 			"175%",

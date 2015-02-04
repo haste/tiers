@@ -1130,6 +1130,87 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"zyp_v1690_unknown.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    3625188,
+
+		UniquePortalsVisited: 1649,
+		PortalsDiscovered:    0,
+		XMCollected:          10863728,
+
+		DistanceWalked: 223,
+
+		ResonatorsDeployed:     5111,
+		LinksCreated:           1302,
+		ControlFieldsCreated:   617,
+		MindUnitsCaptured:      79600,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            5129754,
+		PortalsCaptured:        820,
+		UniquePortalsCaptured:  608,
+		ModsDeployed:           151,
+
+		ResonatorsDestroyed:         4949,
+		PortalsNeutralized:          650,
+		EnemyLinksDestroyed:         1303,
+		EnemyControlFieldsDestroyed: 589,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		UniqueMissionsCompleted: 5,
+
+		Hacks:           4488,
+		GlyphHackPoints: 8,
+
+		InnovatorLevel: 9,
+	},
+
+	"zyp_v1690_unknown-1.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    3671555,
+
+		UniquePortalsVisited: 1810,
+		XMCollected:          10965815,
+
+		DistanceWalked: 234,
+
+		ResonatorsDeployed:     5188,
+		LinksCreated:           1314,
+		ControlFieldsCreated:   626,
+		MindUnitsCaptured:      79830,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            5130754,
+		PortalsCaptured:        828,
+		UniquePortalsCaptured:  616,
+		ModsDeployed:           156,
+
+		ResonatorsDestroyed:         5009,
+		PortalsNeutralized:          656,
+		EnemyLinksDestroyed:         1316,
+		EnemyControlFieldsDestroyed: 595,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		UniqueMissionsCompleted: 5,
+
+		Hacks:           4660,
+		GlyphHackPoints: 8,
+
+		InnovatorLevel: 9,
+	},
 }
 
 func init() {
@@ -1303,6 +1384,14 @@ func TestOCR_768x_oteckeh_v1630_nexus4(t *testing.T) {
 
 func TestOCR_768x_zyp_v1630_unknown(t *testing.T) {
 	w(t, "zyp_v1630_unknown.png")
+}
+
+func TestOCR_768x_zyp_v1690_unknown(t *testing.T) {
+	w(t, "zyp_v1690_unknown.png")
+}
+
+func TestOCR_768x_zyp_v1690_unknown_1(t *testing.T) {
+	w(t, "zyp_v1690_unknown-1.png")
 }
 
 func TestOCR_768x_zyp_v0_unknown(t *testing.T) {
