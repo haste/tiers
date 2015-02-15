@@ -1,0 +1,27 @@
+{
+	"top": [
+		"-resize",
+		"175%",
+		"-level",
+		"15%",
+		"-colorspace",
+		"gray",
+		"+dither",
+		"-colors",
+		"2",
+		"-negate"
+	],
+
+	"bottom": [
+		"-resize",
+		"175%",
+		"-level",
+		"15%",
+		"-colorspace",
+		"gray",
+		"+dither",
+		"-colors",
+		"2",
+		"-negate"
+	]
+}

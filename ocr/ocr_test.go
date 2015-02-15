@@ -1,6 +1,7 @@
 package ocr
 
 import (
+	"flag"
 	"testing"
 
 	"tiers/conf"
@@ -967,7 +968,7 @@ var testData = map[string]profile.Profile{
 
 		UniqueMissionsCompleted: 0,
 
-		InnovatorLevel: 9,
+		InnovatorLevel: 11,
 	},
 
 	"madder79_v1680_unknown.png": profile.Profile{
@@ -1211,14 +1212,102 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"oteckeh_v1690_nexus4.png": profile.Profile{
+		Nick:  "Oteckeh",
+		Level: 11,
+		AP:    7288498,
+
+		UniquePortalsVisited: 2190,
+		PortalsDiscovered:    5,
+		XMCollected:          42660034,
+
+		DistanceWalked: 690,
+
+		ResonatorsDeployed:     19354,
+		LinksCreated:           1857,
+		ControlFieldsCreated:   542,
+		MindUnitsCaptured:      5620,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    816,
+		XMRecharged:            14968211,
+		PortalsCaptured:        1494,
+		UniquePortalsCaptured:  700,
+		ModsDeployed:           195,
+
+		ResonatorsDestroyed:         13038,
+		PortalsNeutralized:          1652,
+		EnemyLinksDestroyed:         2979,
+		EnemyControlFieldsDestroyed: 1478,
+
+		MaxTimePortalHeld:     220,
+		MaxTimeLinkMaintained: 24,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      21,
+		LargestFieldMUsXDays:  662,
+
+		Hacks: 17775,
+
+		InnovatorLevel: 9,
+	},
+
+	"forferdet_v1700_oneplusone.png": profile.Profile{
+		Nick:  "forferdet",
+		Level: 14,
+		AP:    27199137,
+
+		UniquePortalsVisited: 1759,
+		PortalsDiscovered:    13,
+		XMCollected:          107292028,
+
+		DistanceWalked: 1471,
+
+		ResonatorsDeployed:     45165,
+		LinksCreated:           7569,
+		ControlFieldsCreated:   3648,
+		MindUnitsCaptured:      25072,
+		LongestLinkEverCreated: 156,
+		LargestControlField:    977,
+		XMRecharged:            35797326,
+		PortalsCaptured:        4810,
+		UniquePortalsCaptured:  1062,
+		ModsDeployed:           2000,
+
+		ResonatorsDestroyed:         39521,
+		PortalsNeutralized:          5475,
+		EnemyLinksDestroyed:         8171,
+		EnemyControlFieldsDestroyed: 4070,
+
+		MaxTimePortalHeld:     53,
+		MaxTimeLinkMaintained: 55,
+		MaxLinkLengthXDays:    2543,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  2632,
+
+		Hacks:           40723,
+		GlyphHackPoints: 11472,
+
+		InnovatorLevel: 11,
+	},
 }
+
+var (
+	onlyTop    bool
+	onlyBottom bool
+)
 
 func init() {
 	conf.Load("../config.json")
 	conf.Config.Cache = "testdata/"
+	InitConfig()
+
+	flag.BoolVar(&onlyTop, "top", false, "Only validate top part of OCR image.")
+	flag.BoolVar(&onlyBottom, "bottom", false, "Only validate bottom part of OCR image.")
+
+	flag.Parse()
 }
 
-func validateOCR(t *testing.T, file string, p profile.Profile) {
+func validateTop(t *testing.T, file string, p profile.Profile) {
 	e := testData[file]
 
 	if p.Nick != e.Nick {
@@ -1232,6 +1321,10 @@ func validateOCR(t *testing.T, file string, p profile.Profile) {
 	if p.AP != e.AP {
 		t.Errorf("%s: .AP: Got %v Expected %v", file, p.AP, e.AP)
 	}
+}
+
+func validateBottom(t *testing.T, file string, p profile.Profile) {
+	e := testData[file]
 
 	if p.UniquePortalsVisited != e.UniquePortalsVisited {
 		t.Errorf("%s: .UniquePortalsVisited: Got %v Expected %v", file, p.UniquePortalsVisited, e.UniquePortalsVisited)
@@ -1347,7 +1440,13 @@ func w(t *testing.T, file string) {
 	t.Parallel()
 
 	p := runOCR(file)
-	validateOCR(t, file, p)
+	if !onlyBottom {
+		validateTop(t, file, p)
+	}
+
+	if !onlyTop {
+		validateBottom(t, file, p)
+	}
 }
 
 func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
@@ -1380,6 +1479,10 @@ func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
 
 func TestOCR_768x_oteckeh_v1630_nexus4(t *testing.T) {
 	w(t, "oteckeh_v1630_nexus4.png")
+}
+
+func TestOCR_768x_oteckeh_v1690_nexus4(t *testing.T) {
+	w(t, "oteckeh_v1690_nexus4.png")
 }
 
 func TestOCR_768x_zyp_v1630_unknown(t *testing.T) {
@@ -1440,6 +1543,10 @@ func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
 
 func TestOCR_1080x_forferdet_v1680_oneplusone(t *testing.T) {
 	w(t, "forferdet_v1680_oneplusone.png")
+}
+
+func TestOCR_1080x_forferdet_v1700_oneplusone(t *testing.T) {
+	w(t, "forferdet_v1700_oneplusone.png")
 }
 
 func TestOCR_1080x_madder79_v1680_unknown(t *testing.T) {

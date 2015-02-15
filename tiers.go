@@ -67,10 +67,14 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", page.ProfileHandler)
+	r.HandleFunc("/profile", page.ProfileHandler)
+	r.HandleFunc("/profile/{period}", page.ProfileHandler)
+
 	r.HandleFunc("/badges", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/progress", 302)
 	})
 	r.HandleFunc("/progress", page.ProgressHandler)
+	r.HandleFunc("/profiles", page.ProfilesHandler)
 
 	r.HandleFunc("/signin", LoginHandler)
 	r.HandleFunc("/logout", LogoutHandle)

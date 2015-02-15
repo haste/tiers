@@ -1,0 +1,34 @@
+{
+	"top": [
+		"-resize",
+		"100%",
+		"-level",
+		"20%",
+		"-colorspace",
+		"gray",
+		"-blur",
+		"1x65535",
+		"+dither",
+		"-colors",
+		"2",
+		"-negate",
+		"-sharpen",
+		"1x65535"
+	],
+	"bottom": [
+		"-resize",
+		"100%",
+		"-level",
+		"40%",
+		"-colorspace",
+		"gray",
+		"-blur",
+		"1x65535",
+		"+dither",
+		"-colors",
+		"2",
+		"-negate",
+		"-sharpen",
+		"1x65535"
+	]
+}

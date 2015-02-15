@@ -14,6 +14,7 @@ type config struct {
 	CookieBlockKey []byte `json:"cookieBlockKey`
 	Cert           string `json:"cert"`
 	Key            string `json:"key"`
+	Workdir        string `json:"workdir"`
 	Cache          string `json:"cache"`
 	TesseractBin   string `json:"tesseractBin"`
 	ConvertBin     string `json:"convertBin"`

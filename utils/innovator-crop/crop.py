@@ -81,6 +81,7 @@ def fill_view(view, approx):
 basePath = os.path.dirname(sys.argv[0])
 cachePath = sys.argv[1]
 imageName = sys.argv[2]
+outName = sys.argv[3]
 
 ranges = [
 	# bronze
@@ -103,12 +104,12 @@ ranges = [
 	],
 	# gold
 	[
-		# [16, 158, 76]
-		np.array([0, 138, 56]),
-		np.array([36, 178, 96]),
-		# [25, 88, 216]
-		np.array([5, 68, 196]),
-		np.array([45, 108, 236]),
+		# [30, 255, 1]
+		np.array([10, 235, 0]),
+		np.array([50, 255, 21]),
+		# [19, 132, 131]
+		np.array([0, 112, 111]),
+		np.array([39, 152, 151]),
 	],
 	# platinum
 	[
@@ -215,7 +216,7 @@ for cnt in contours:
 			Z = np.float32(Z)
 			criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 			K = 2
-			ret, label, center=cv2.kmeans(Z, K, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+			ret, label, center=cv2.kmeans(Z, K, criteria, 10, cv2.KMEANS_PP_CENTERS)
 
 			center = np.uint8(center)
 
@@ -305,13 +306,6 @@ for x, row in enumerate(bottom):
 
 bottom = bottom[i - 1:, :view.shape[1]]
 
-h1, w1 = top.shape[:2]
-h2, w2 = bottom.shape[:2]
-
-view = np.zeros((top.shape[0]+bottom.shape[0], top.shape[1], 3), np.uint8)
-
-view[:h1, :w1] = top
-view[h1:h1+h2, :w1] = bottom
-
 print(json.dumps(out))
-cv2.imwrite(cachePath + "/cv_" + imageName, view)
+cv2.imwrite(cachePath + "/" + outName + "_cv_top.png", top)
+cv2.imwrite(cachePath + "/" + outName + "_cv_bottom.png", bottom)
