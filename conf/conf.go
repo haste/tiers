@@ -17,7 +17,7 @@ type config struct {
 	Workdir        string `json:"workdir"`
 	Cache          string `json:"cache"`
 	TesseractBin   string `json:"tesseractBin"`
-	ConvertBin     string `json:"convertBin"`
+	ImageMagickBin string `json:"imageMagickBin"`
 	PythonBin      string `json:"pythonBin"`
 	UtilsDir       string `json:"utilsDir"`
 }

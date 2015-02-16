@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"image"
 	"io"
 	"net/http"
 	"os"
@@ -96,11 +97,26 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		reader, err := os.Open(conf.Config.Cache + fileName)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer reader.Close()
+
+		m, _, err := image.Decode(reader)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		width := m.Bounds().Dx()
+
 		// XXX: Handle errors...
 		db.Exec(`
-			INSERT INTO tiers_queues(user_id, timestamp, file)
-			VALUES(?, ?, ?)
-		`, userid, t.Unix(), fileName)
+			INSERT INTO tiers_queues(user_id, timestamp, file, ocr_profile)
+			VALUES(?, ?, ?, ?)
+		`, userid, t.Unix(), fileName, width)
 	}
 
 	var numQueue float32

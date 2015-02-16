@@ -23,12 +23,18 @@ func ProcessQueue() {
 			var id, user_id, timestamp int
 			var file string
 			var processed bool
+			var ocrProfile int
 
-			if err := queue.Scan(&id, &user_id, &timestamp, &file, &processed); err != nil {
+			if err := queue.Scan(&id, &user_id, &timestamp, &file, &processed, &ocrProfile); err != nil {
 				log.Fatal(err)
 			}
 
-			p := ocr.OCR(file)
+			o := ocr.New(file, ocrProfile)
+
+			o.Split()
+			o.Process()
+
+			p := o.Profile
 			profileId := model.InsertProfile(user_id, timestamp, p)
 
 			processTime := time.Now().Sub(start).Nanoseconds() / 1e6

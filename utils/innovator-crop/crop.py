@@ -307,5 +307,5 @@ for x, row in enumerate(bottom):
 bottom = bottom[i - 1:, :view.shape[1]]
 
 print(json.dumps(out))
-cv2.imwrite(cachePath + "/" + outName + "_cv_top.png", top)
-cv2.imwrite(cachePath + "/" + outName + "_cv_bottom.png", bottom)
+cv2.imwrite(cachePath + "/" + outName + "_top.png", top)
+cv2.imwrite(cachePath + "/" + outName + "_bottom.png", bottom)

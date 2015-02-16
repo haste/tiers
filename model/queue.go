@@ -8,7 +8,7 @@ import (
 func GetPendingQueues() *sql.Rows {
 	// XXX: Handle errors.
 	rows, err := db.Query(`
-		SELECT id, user_id, timestamp, file, processed
+		SELECT id, user_id, timestamp, file, processed, ocr_profile
 		FROM tiers_queues
 		WHERE processed = 0
 		`)

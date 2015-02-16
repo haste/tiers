@@ -1327,11 +1327,52 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"tufte_v1700_iphone.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    7024572,
+
+		UniquePortalsVisited: 1461,
+		XMCollected:          32848892,
+
+		DistanceWalked: 586,
+
+		ResonatorsDeployed:     11020,
+		LinksCreated:           1693,
+		ControlFieldsCreated:   1024,
+		MindUnitsCaptured:      623080,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            15618577,
+		PortalsCaptured:        932,
+		UniquePortalsCaptured:  470,
+		ModsDeployed:           1099,
+
+		ResonatorsDestroyed:         7667,
+		PortalsNeutralized:          916,
+		EnemyLinksDestroyed:         1840,
+		EnemyControlFieldsDestroyed: 1025,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 2,
+
+		Hacks:           8335,
+		GlyphHackPoints: 713,
+
+		InnovatorLevel: 3,
+	},
 }
 
 var (
-	onlyTop    bool
-	onlyBottom bool
+	onlyTop         bool
+	onlyBottom      bool
+	overrideProfile int
 )
 
 func init() {
@@ -1341,6 +1382,7 @@ func init() {
 
 	flag.BoolVar(&onlyTop, "top", false, "Only validate top part of OCR image.")
 	flag.BoolVar(&onlyBottom, "bottom", false, "Only validate bottom part of OCR image.")
+	flag.IntVar(&overrideProfile, "profile", 0, "Profile to use.")
 
 	flag.Parse()
 }
@@ -1477,13 +1519,18 @@ func validateBottom(t *testing.T, file string, p profile.Profile) {
 func w(t *testing.T, file string) {
 	t.Parallel()
 
-	p := runOCR(file)
+	p := New(file, overrideProfile)
+	p.Split()
+
 	if !onlyBottom {
-		validateTop(t, file, p)
+		p.ProcessTop()
+		validateTop(t, file, p.Profile)
 	}
 
 	if !onlyTop {
-		validateBottom(t, file, p)
+		p.ProcessBottom()
+		p.ProcessInnovator()
+		validateBottom(t, file, p.Profile)
 	}
 }
 
@@ -1509,6 +1556,10 @@ func TestOCR_640x_Tufte_v1660_iphone(t *testing.T) {
 
 func TestOCR_640x_Tufte_v1670_iphone(t *testing.T) {
 	w(t, "tufte_v1670_iphone.jpeg")
+}
+
+func TestOCR_640x_Tufte_v1700_iphone(t *testing.T) {
+	w(t, "tufte_v1700_iphone.jpeg")
 }
 
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {

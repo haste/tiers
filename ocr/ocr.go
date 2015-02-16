@@ -3,7 +3,6 @@ package ocr
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -26,12 +25,12 @@ type innovator struct {
 	Total int     `json:"total"`
 }
 
-type convertProfile struct {
+type OCRProfile struct {
 	Top    []string `json:"top"`
 	Bottom []string `json:"bottom"`
 }
 
-var convertOptions = map[int]convertProfile{}
+var options = map[int]OCRProfile{}
 
 func InitConfig() {
 	path := conf.Config.Workdir + "ocr/profiles/"
@@ -49,7 +48,7 @@ func InitConfig() {
 	for _, file := range files {
 		if file.Mode().IsRegular() {
 			var (
-				data  convertProfile
+				data  OCRProfile
 				width int
 			)
 
@@ -78,7 +77,7 @@ func InitConfig() {
 				log.Fatalf("ocr init: %s\n", err)
 			}
 
-			convertOptions[width] = data
+			options[width] = data
 		}
 	}
 }
@@ -121,7 +120,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`[ae]`).ReplaceAllLiteralString(s, "[aeE8B]")
 	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
 	s = regexp.MustCompile(`[D0]`).ReplaceAllLiteralString(s, "[D0]")
-	s = regexp.MustCompile(`[Oo]`).ReplaceAllLiteralString(s, "[0Oo]")
+	s = regexp.MustCompile(`[Oou]`).ReplaceAllLiteralString(s, "[0Oou]")
 	s = regexp.MustCompile(`[Cc]`).ReplaceAllLiteralString(s, "[Cc]")
 	s = regexp.MustCompile(`[ltI]`).ReplaceAllLiteralString(s, "[l|1tI]")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
@@ -133,12 +132,148 @@ func genMatchNum(res []byte, s string) int64 {
 	return matchNum(res, s)
 }
 
-func buildProfile(top, bottom []byte) profile.Profile {
-	var p profile.Profile
+type OCR struct {
+	Filename   string
+	OCRProfile int
+	Profile    profile.Profile
+
+	tmpName   string
+	innovator []byte
+}
+
+func (ocr *OCR) Split() {
+	ocr.tmpName = id.New()
+
+	cv := exec.Command(conf.Config.PythonBin, []string{
+		conf.Config.UtilsDir + "innovator-crop/crop.py",
+		conf.Config.Cache,
+		ocr.Filename,
+		ocr.tmpName,
+	}...)
+
+	res, err := cv.Output()
+	if err != nil {
+		log.Fatal("cv ", err)
+	}
+
+	ocr.innovator = res
+}
+
+func (ocr *OCR) getArguments(part string, width int) []string {
+	var (
+		profile OCRProfile
+		args    []string
+	)
+
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_" + part + ".png"
+	// non-zero width means we already have a profile defined.
+	if width == 0 {
+		reader, err := os.Open(fileName)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer reader.Close()
+
+		m, _, err := image.Decode(reader)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		width = m.Bounds().Dx()
+	}
+
+	if opt, ok := options[width]; ok {
+		profile = opt
+	} else {
+		profile = options[0]
+	}
+
+	switch part {
+	case "top":
+		args = append(args, profile.Top...)
+	case "bottom":
+		args = append(args, profile.Bottom...)
+	}
+
+	return append(args, fileName)
+}
+
+func (ocr *OCR) mogrify(kind string) {
+	args := ocr.getArguments(kind, ocr.OCRProfile)
+	mogrify := exec.Command(conf.Config.ImageMagickBin+"mogrify", args...)
+
+	err := mogrify.Run()
+	if err != nil {
+		log.Fatal("convert ", err)
+	}
+}
+
+func (ocr *OCR) tesseract(fileName string) []byte {
+	tesseract := exec.Command(conf.Config.TesseractBin, []string{
+		"-psm",
+		"4",
+		"-l", "eng",
+		fileName,
+		"stdout",
+		"ingress",
+	}...)
+
+	res, err := tesseract.Output()
+	if err != nil {
+		log.Fatal("tesseract ", err)
+	}
+
+	return res
+}
+
+func (ocr *OCR) ProcessInnovator() {
+	var data innovator
+	decoder := json.NewDecoder(bytes.NewReader(ocr.innovator))
+	err := decoder.Decode(&data)
+	if err != nil {
+		log.Fatal("json ", err)
+	}
+
+	p := &ocr.Profile
+	if data.Good > 0 && data.Rank >= 0 {
+		p.InnovatorLevel = profile.BadgeRanks["Innovator"][data.Rank]
+	}
+}
+
+func (ocr *OCR) ProcessTop() {
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_top.png"
+	ocr.mogrify("top")
+	top := ocr.tesseract(fileName)
+	ocr.buildProfileTop(top)
+
+	os.Remove(fileName)
+}
+
+func (ocr *OCR) ProcessBottom() {
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_bottom.png"
+	ocr.mogrify("bottom")
+	bottom := ocr.tesseract(fileName)
+	ocr.buildProfileBottom(bottom)
+
+	os.Remove(fileName)
+}
+
+func (ocr *OCR) Process() {
+	ocr.ProcessInnovator()
+	ocr.ProcessTop()
+	ocr.ProcessBottom()
+}
+
+func (ocr *OCR) buildProfileTop(top []byte) {
+	p := &ocr.Profile
 
 	p.Nick = matchString(top, "([a-zA-Z0-9]+)[^\n]*\\s*[^\n]*LVL")
 	p.Level = int(genMatchNum(top, "LVL #"))
 	p.AP = genMatchNum(top, "# AP")
+}
+
+func (ocr *OCR) buildProfileBottom(bottom []byte) {
+	p := &ocr.Profile
 
 	// Discovery
 	p.UniquePortalsVisited = genMatchNum(bottom, "Unique Portals Visited #")
@@ -182,128 +317,12 @@ func buildProfile(top, bottom []byte) profile.Profile {
 
 	// Mentoring
 	p.AgentsSuccessfullyRecruited = genMatchNum(bottom, "Agents Successfully Recruited #")
-
-	return p
 }
 
-func handleInnovator(p *profile.Profile, data innovator) {
-	if data.Good > 0 && data.Rank >= 0 {
-		p.InnovatorLevel = profile.BadgeRanks["Innovator"][data.Rank]
-	}
-}
+func New(fileName string, override int) *OCR {
+	ocr := new(OCR)
+	ocr.Filename = fileName
+	ocr.OCRProfile = override
 
-func getConvertArgs(in, out, part string, width int) []string {
-	var (
-		profile     convertProfile
-		convertArgs = []string{in}
-	)
-
-	if opt, ok := convertOptions[width]; ok {
-		profile = opt
-	} else {
-		profile = convertOptions[0]
-	}
-
-	switch part {
-	case "top":
-		convertArgs = append(convertArgs, profile.Top...)
-	case "bottom":
-		convertArgs = append(convertArgs, profile.Bottom...)
-	}
-
-	return append(convertArgs, out)
-}
-
-func runOpenCV(in, out string) []byte {
-	cv := exec.Command(conf.Config.PythonBin, []string{
-		conf.Config.UtilsDir + "innovator-crop/crop.py",
-		conf.Config.Cache,
-		in,
-		out,
-	}...)
-
-	res, err := cv.Output()
-	if err != nil {
-		log.Fatal("cv ", err)
-	}
-
-	return res
-}
-
-func runConvert(in, out, part string, width int) {
-	convertArgs := getConvertArgs(in, out, part, width)
-	convert := exec.Command(conf.Config.ConvertBin, convertArgs...)
-
-	err := convert.Run()
-	if err != nil {
-		log.Fatal("convert ", err)
-	}
-}
-
-func runTesseract(in string) []byte {
-	tesseract := exec.Command(conf.Config.TesseractBin, []string{
-		"-psm",
-		"4",
-		"-l", "eng",
-		in,
-		"stdout",
-		"ingress",
-	}...)
-
-	res, err := tesseract.Output()
-	if err != nil {
-		log.Fatal("tesseract ", err)
-	}
-
-	return res
-}
-
-func runOCR(fileName string) profile.Profile {
-	tmpId := id.New()
-	tmpFormat := fmt.Sprintf("%s/%s_%%s_%%s.png", conf.Config.Cache, tmpId)
-
-	cvTop := fmt.Sprintf(tmpFormat, "cv", "top")
-	cvBottom := fmt.Sprintf(tmpFormat, "cv", "bottom")
-	tmpTop := fmt.Sprintf(tmpFormat, "tmp", "top")
-	tmpBottom := fmt.Sprintf(tmpFormat, "tmp", "bottom")
-
-	res := runOpenCV(fileName, tmpId)
-
-	var innovator innovator
-	decoder := json.NewDecoder(bytes.NewReader(res))
-	err := decoder.Decode(&innovator)
-
-	reader, err := os.Open(cvTop)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer reader.Close()
-
-	m, _, err := image.Decode(reader)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	width := m.Bounds().Dx()
-	runConvert(cvTop, tmpTop, "top", width)
-	runConvert(cvBottom, tmpBottom, "bottom", width)
-
-	top := runTesseract(tmpTop)
-	bottom := runTesseract(tmpBottom)
-
-	p := buildProfile(top, bottom)
-
-	handleInnovator(&p, innovator)
-
-	os.Remove(cvTop)
-	os.Remove(cvBottom)
-	os.Remove(tmpTop)
-	os.Remove(tmpBottom)
-
-	return p
-}
-
-// XXX: Should probably return an error as well
-func OCR(fileName string) profile.Profile {
-	return runOCR(fileName)
+	return ocr
 }
