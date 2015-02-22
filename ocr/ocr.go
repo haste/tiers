@@ -3,6 +3,7 @@ package ocr
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -267,6 +268,8 @@ func (ocr *OCR) Process() {
 func (ocr *OCR) buildProfileTop(top []byte) {
 	p := &ocr.Profile
 
+	fmt.Printf("%s\n", top)
+
 	p.Nick = matchString(top, "([a-zA-Z0-9]+)[^\n]*\\s*[^\n]*LVL")
 	p.Level = int(genMatchNum(top, "LVL #"))
 	p.AP = genMatchNum(top, "# AP")
@@ -274,6 +277,8 @@ func (ocr *OCR) buildProfileTop(top []byte) {
 
 func (ocr *OCR) buildProfileBottom(bottom []byte) {
 	p := &ocr.Profile
+
+	fmt.Printf("%s\n", bottom)
 
 	// Discovery
 	p.UniquePortalsVisited = genMatchNum(bottom, "Unique Portals Visited #")

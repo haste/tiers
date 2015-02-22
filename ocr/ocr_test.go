@@ -1367,6 +1367,86 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 3,
 	},
+
+	"tufte_v1700_iphone-1.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    7093540,
+
+		UniquePortalsVisited: 1461,
+		XMCollected:          33088719,
+
+		DistanceWalked: 588,
+
+		ResonatorsDeployed:     11135,
+		LinksCreated:           1717,
+		ControlFieldsCreated:   1036,
+		MindUnitsCaptured:      623112,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            15695063,
+		PortalsCaptured:        945,
+		UniquePortalsCaptured:  471,
+		ModsDeployed:           1116,
+
+		ResonatorsDestroyed:         7750,
+		PortalsNeutralized:          926,
+		EnemyLinksDestroyed:         1863,
+		EnemyControlFieldsDestroyed: 1034,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 2,
+
+		Hacks:           8400,
+		GlyphHackPoints: 721,
+
+		InnovatorLevel: 3,
+	},
+
+	"zyp_v1700_unknown.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    3931449,
+
+		UniquePortalsVisited: 2016,
+		XMCollected:          11476134,
+
+		DistanceWalked: 247,
+
+		ResonatorsDeployed:     5631,
+		LinksCreated:           1350,
+		ControlFieldsCreated:   640,
+		MindUnitsCaptured:      80098,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            5216613,
+		PortalsCaptured:        894,
+		UniquePortalsCaptured:  664,
+		ModsDeployed:           207,
+
+		ResonatorsDestroyed:         5540,
+		PortalsNeutralized:          722,
+		EnemyLinksDestroyed:         1448,
+		EnemyControlFieldsDestroyed: 654,
+
+		MaxTimePortalHeld:     52,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		UniqueMissionsCompleted: 9,
+
+		Hacks:           4919,
+		GlyphHackPoints: 44,
+
+		InnovatorLevel: 9,
+	},
 }
 
 var (
@@ -1562,6 +1642,10 @@ func TestOCR_640x_Tufte_v1700_iphone(t *testing.T) {
 	w(t, "tufte_v1700_iphone.jpeg")
 }
 
+func TestOCR_640x_Tufte_v1700_iphone_1(t *testing.T) {
+	w(t, "tufte_v1700_iphone-1.jpeg")
+}
+
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
 	w(t, "sockerdricka_v0_unknown.png")
 }
@@ -1588,6 +1672,10 @@ func TestOCR_768x_zyp_v1690_unknown_1(t *testing.T) {
 
 func TestOCR_768x_zyp_v0_unknown(t *testing.T) {
 	w(t, "zyp_v0_unknown.png")
+}
+
+func TestOCR_768x_zyp_v1700_unknown(t *testing.T) {
+	w(t, "zyp_v1700_unknown.png")
 }
 
 func TestOCR_1080x_haste_v1620_nexus5(t *testing.T) {
