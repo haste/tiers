@@ -11,6 +11,7 @@ import (
 var Queue = make(chan bool, 1)
 
 func ProcessQueue() {
+	ocr.InitConfig()
 	for {
 		<-Queue
 		log.Println("Queue: Processing.")

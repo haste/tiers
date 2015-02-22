@@ -247,7 +247,7 @@ func (ocr *OCR) ProcessTop() {
 	top := ocr.tesseract(fileName)
 	ocr.buildProfileTop(top)
 
-	os.Remove(fileName)
+	//os.Remove(fileName)
 }
 
 func (ocr *OCR) ProcessBottom() {
@@ -256,7 +256,7 @@ func (ocr *OCR) ProcessBottom() {
 	bottom := ocr.tesseract(fileName)
 	ocr.buildProfileBottom(bottom)
 
-	os.Remove(fileName)
+	//os.Remove(fileName)
 }
 
 func (ocr *OCR) Process() {
