@@ -1447,6 +1447,45 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"haste_v1771_nexus6.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    29629843,
+
+		UniquePortalsVisited: 3805,
+		PortalsDiscovered:    40,
+		XMCollected:          123400576,
+
+		DistanceWalked: 2258,
+
+		ResonatorsDeployed:     63128,
+		LinksCreated:           5723,
+		ControlFieldsCreated:   2780,
+		MindUnitsCaptured:      33453,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            27698152,
+		PortalsCaptured:        7092,
+		UniquePortalsCaptured:  1523,
+		ModsDeployed:           1502,
+
+		ResonatorsDestroyed:         51499,
+		PortalsNeutralized:          7566,
+		EnemyLinksDestroyed:         10347,
+		EnemyControlFieldsDestroyed: 5087,
+
+		MaxTimePortalHeld:     163,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		UniqueMissionsCompleted: 16,
+
+		Hacks:           57908,
+		GlyphHackPoints: 8637,
+	},
 }
 
 var (
@@ -1756,6 +1795,10 @@ func TestOCR_1440x_haste_v1690_nexus6(t *testing.T) {
 
 func TestOCR_1440x_haste_v1690_nexus6_1(t *testing.T) {
 	w(t, "haste_v1690_nexus6-1.png")
+}
+
+func TestOCR_1440x_haste_v1771_nexus6_1(t *testing.T) {
+	w(t, "haste_v1771_nexus6.png")
 }
 
 func TestOCR_1536x_Scissorhill_v0_ipad(t *testing.T) {

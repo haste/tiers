@@ -11,12 +11,11 @@
 		"2",
 		"-negate"
 	],
-
 	"bottom": [
 		"-resize",
-		"205%",
+		"100%",
 		"-level",
-		"10%",
+		"0%",
 		"-colorspace",
 		"gray",
 		"+dither",
