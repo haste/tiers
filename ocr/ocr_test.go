@@ -1448,7 +1448,7 @@ var testData = map[string]profile.Profile{
 		InnovatorLevel: 9,
 	},
 
-	"haste_v1771_nexus6.png": profile.Profile{
+	"haste_v1711_nexus6.png": profile.Profile{
 		Nick:  "haste",
 		Level: 15,
 		AP:    29629843,
@@ -1485,6 +1485,46 @@ var testData = map[string]profile.Profile{
 
 		Hacks:           57908,
 		GlyphHackPoints: 8637,
+	},
+
+	"zyp_v1711_unknown.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 10,
+		AP:    4012418,
+
+		UniquePortalsVisited: 2022,
+		XMCollected:          11632244,
+
+		DistanceWalked: 250,
+
+		ResonatorsDeployed:     5751,
+		LinksCreated:           1362,
+		ControlFieldsCreated:   646,
+		MindUnitsCaptured:      80104,
+		LongestLinkEverCreated: 172,
+		LargestControlField:    24772,
+		XMRecharged:            5232639,
+		PortalsCaptured:        909,
+		UniquePortalsCaptured:  669,
+		ModsDeployed:           208,
+
+		ResonatorsDestroyed:         5629,
+		PortalsNeutralized:          733,
+		EnemyLinksDestroyed:         1497,
+		EnemyControlFieldsDestroyed: 689,
+
+		MaxTimePortalHeld:     55,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    180,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		UniqueMissionsCompleted: 9,
+
+		Hacks:           4948,
+		GlyphHackPoints: 48,
+
+		InnovatorLevel: 9,
 	},
 }
 
@@ -1717,6 +1757,10 @@ func TestOCR_768x_zyp_v1700_unknown(t *testing.T) {
 	w(t, "zyp_v1700_unknown.png")
 }
 
+func TestOCR_768x_zyp_v1711_unknown(t *testing.T) {
+	w(t, "zyp_v1711_unknown.png")
+}
+
 func TestOCR_1080x_haste_v1620_nexus5(t *testing.T) {
 	w(t, "haste_v1620_nexus5.png")
 }
@@ -1797,8 +1841,8 @@ func TestOCR_1440x_haste_v1690_nexus6_1(t *testing.T) {
 	w(t, "haste_v1690_nexus6-1.png")
 }
 
-func TestOCR_1440x_haste_v1771_nexus6_1(t *testing.T) {
-	w(t, "haste_v1771_nexus6.png")
+func TestOCR_1440x_haste_v1711_nexus6_1(t *testing.T) {
+	w(t, "haste_v1711_nexus6.png")
 }
 
 func TestOCR_1536x_Scissorhill_v0_ipad(t *testing.T) {
