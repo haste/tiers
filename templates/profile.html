@@ -49,6 +49,7 @@
 									</td>
 									<td class="text-right">
 										{{if eq $ts "Never"}}{{$ts}}{{else}}{{$ts}} ago{{end}}
+										<div class="visible-xs text-success">{{if eq $diffStamp "Never"}}{{$diffStamp}}{{else}}{{$diffStamp}} ago{{end}}</div>
 									</td>
 								</tr>
 								<tr>
