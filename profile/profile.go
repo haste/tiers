@@ -115,6 +115,8 @@ func HandleProfile(p *Profile) {
 func Diff(a, b Profile) Profile {
 	var diff Profile
 
+	diff.Timestamp = a.Timestamp
+
 	diff.Level = b.Level - a.Level
 	diff.AP = b.AP - a.AP
 

@@ -5108,6 +5108,9 @@ h6 small {
   background: #e74b37;
   cursor: hand;
 }
+.dropdown-period {
+  float: right;
+}
 span .label {
   font-weight: bold;
 }

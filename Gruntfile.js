@@ -31,6 +31,7 @@ module.exports = function(grunt) {
 						'static/vendor/jquery/dist/jquery.js',
 						'static/vendor/bootstrap/js/transition.js',
 						'static/vendor/bootstrap/js/collapse.js',
+						'static/vendor/bootstrap/js/dropdown.js',
 						'static/js/app.js'
 					]
 				}]

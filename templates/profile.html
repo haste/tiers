@@ -2,7 +2,26 @@
 {{template "nav" .}}
 {{with .Data}}
 {{$ts := .Profile.Timestamp | relative}}
-<h2 class="profile-header">Profile</h2>
+{{$diffStamp := .Diff.Timestamp | relative}}
+
+				<h2 class="profile-header">
+					Profile
+
+					<div class="dropdown dropdown-period">
+						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+							{{.Period}}
+							<span class="caret"></span>
+						</button>
+
+						<ul class="dropdown-menu">
+							<li><a role="menuitem" tabindex="-1" href="/profile/previous">Previous</a></li>
+							<li><a role="menuitem" tabindex="-1" href="/profile/daily">Daily</a></li>
+							<li><a role="menuitem" tabindex="-1" href="/profile/weekly">Weekly</a></li>
+							<li><a role="menuitem" tabindex="-1" href="/profile/monthly">Monthly</a></li>
+						</ul>
+					</div>
+				</h2>
+
 				{{ if .Queue}}
 				<div class="alert alert-info">
 						Your profile is currently in the process queue.
@@ -25,7 +44,9 @@
 							<tbody>
 								<tr>
 									<td class="profile-entry-name">Updated</td>
-									<td class="hidden-xs"></td>
+									<td class="hidden-xs text-center">
+										{{if eq $diffStamp "Never"}}{{$diffStamp}}{{else}}{{$diffStamp}} ago{{end}}
+									</td>
 									<td class="text-right">
 										{{if eq $ts "Never"}}{{$ts}}{{else}}{{$ts}} ago{{end}}
 									</td>
