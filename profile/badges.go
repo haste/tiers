@@ -25,6 +25,7 @@ type Badges struct {
 	SpecOps        Badge
 	Recruiter      Badge
 	Translator     Badge
+	Illuminator    Badge
 }
 
 type BadgeProgress struct {
@@ -51,6 +52,7 @@ var BadgeRanks = map[string][]int64{
 	"Trekker":        {10, 100, 300, 1000, 2500},
 	"Recruiter":      {2, 10, 25, 50, 100},
 	"Translator":     {200, 2000, 6000, 20000, 50000},
+	"Illuminator":    {5000, 50000, 250000, 1000000, 4000000},
 }
 
 // The order is defined by the agent profile.
@@ -71,6 +73,7 @@ var BadgeOrder = []string{
 	"SpecOps",
 	"Recruiter",
 	"Translator",
+	"Illuminator",
 }
 
 func incBadgeRank(p *Profile, b *Badge, current int64, reqs []int64) {
@@ -139,6 +142,8 @@ func HandleBadges(p *Profile) {
 			incBadgeRank(p, &p.Badges.Recruiter, p.AgentsSuccessfullyRecruited, v)
 		case "Translator":
 			incBadgeRank(p, &p.Badges.Translator, p.GlyphHackPoints, v)
+		case "Illuminator":
+			incBadgeRank(p, &p.Badges.Illuminator, p.MindUnitsCaptured, v)
 		}
 	}
 }
@@ -181,6 +186,8 @@ func BuildBadgeProgress(p Profile) []BadgeProgress {
 			current = p.Badges.Recruiter
 		case "Translator":
 			current = p.Badges.Translator
+		case "Illuminator":
+			current = p.Badges.Illuminator
 		}
 
 		bp = append(bp, BadgeProgress{
