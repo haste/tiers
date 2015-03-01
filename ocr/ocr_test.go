@@ -1526,6 +1526,44 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 9,
 	},
+
+	"leiasqz_v1711_unknown.png": profile.Profile{
+		Nick:  "leiasqz",
+		Level: 8,
+		AP:    1705304,
+
+		UniquePortalsVisited: 295,
+		XMCollected:          1593907,
+
+		DistanceWalked: 24,
+
+		ResonatorsDeployed:     4245,
+		LinksCreated:           1841,
+		ControlFieldsCreated:   229,
+		MindUnitsCaptured:      15415,
+		LongestLinkEverCreated: 19,
+		LargestControlField:    3705,
+		XMRecharged:            465584,
+		PortalsCaptured:        364,
+		UniquePortalsCaptured:  138,
+		ModsDeployed:           114,
+
+		ResonatorsDestroyed:         3321,
+		PortalsNeutralized:          110,
+		EnemyLinksDestroyed:         779,
+		EnemyControlFieldsDestroyed: 192,
+
+		MaxTimePortalHeld:     5,
+		MaxTimeLinkMaintained: 4,
+		MaxLinkLengthXDays:    1,
+		MaxTimeFieldHeld:      4,
+		LargestFieldMUsXDays:  77,
+
+		Hacks:           4034,
+		GlyphHackPoints: 62,
+
+		InnovatorLevel: 3,
+	},
 }
 
 var (
@@ -1799,6 +1837,10 @@ func TestOCR_1080x_haste_v1670_nexus5(t *testing.T) {
 
 func TestOCR_1080x_mrwolfe_v1640_unknown(t *testing.T) {
 	w(t, "mrwolfe_v1640_unknown.png")
+}
+
+func TestOCR_1080x_leiasqz_v1711_unknown(t *testing.T) {
+	w(t, "leiasqz_v1711_unknown.png")
 }
 
 func TestOCR_1080x_forferdet_v1680_oneplusone(t *testing.T) {
