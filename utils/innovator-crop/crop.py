@@ -281,7 +281,7 @@ top = top[0:offset_bottom, :view.shape[1]]
 cv2.rectangle(top, (top.shape[1] // 8 * 6, 0), (top.shape[1], top.shape[0]//2), (0, 0, 0), cv.CV_FILLED)
 
 # Lines below
-bottom = view[achieve_bottom:, 0:view.shape[1]]
+bottom = view[achieve_bottom:, :view.shape[1]]
 
 maxSwitches = 7
 if mission_bottom > 0:
@@ -304,7 +304,9 @@ for x, row in enumerate(bottom):
 	if switches == maxSwitches:
 		break
 
-bottom = bottom[i - 1:, :view.shape[1]]
+# Tesseract hates it if we have fonts against the border of the image, so leave
+# ten pixels as padding.
+bottom = bottom[i - 10:, :view.shape[1]]
 
 print(json.dumps(out))
 cv2.imwrite(cachePath + "/" + outName + "_top.png", top)
