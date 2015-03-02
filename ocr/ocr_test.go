@@ -1564,6 +1564,40 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 3,
 	},
+
+	"mvnch_vunknown_iphone5.jpeg": profile.Profile{
+		Nick:  "mvnch",
+		Level: 5,
+		AP:    262843,
+
+		UniquePortalsVisited: 123,
+		XMCollected:          410381,
+
+		DistanceWalked: 35,
+
+		ResonatorsDeployed:     336,
+		LinksCreated:           153,
+		ControlFieldsCreated:   105,
+		MindUnitsCaptured:      408,
+		LongestLinkEverCreated: 4,
+		LargestControlField:    53,
+		XMRecharged:            181304,
+		PortalsCaptured:        28,
+		UniquePortalsCaptured:  25,
+
+		ResonatorsDestroyed:         65,
+		PortalsNeutralized:          8,
+		EnemyLinksDestroyed:         12,
+		EnemyControlFieldsDestroyed: 2,
+
+		MaxTimePortalHeld:     5,
+		MaxTimeLinkMaintained: 5,
+		MaxLinkLengthXDays:    11,
+		MaxTimeFieldHeld:      5,
+		LargestFieldMUsXDays:  36,
+
+		Hacks: 365,
+	},
 }
 
 var (
@@ -1741,6 +1775,11 @@ func TestOCR_640x_mvnch_v1640_iphone5(t *testing.T) {
 
 func TestOCR_640x_mvnch_v1640_iphone5_1(t *testing.T) {
 	w(t, "mvnch_v1640_iphone5-1.jpeg")
+}
+
+func TestOCR_640x_mvnch_vunknown_iphone5(t *testing.T) {
+	// Invalid nick and AP.
+	w(t, "mvnch_vunknown_iphone5.jpeg")
 }
 
 func TestOCR_640x_Scissorhill_v0_iphone(t *testing.T) {
