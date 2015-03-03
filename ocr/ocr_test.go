@@ -1627,6 +1627,40 @@ var testData = map[string]profile.Profile{
 
 		Hacks: 45,
 	},
+
+	"steino_v0_unknown.png": profile.Profile{
+		Nick:  "steino",
+		Level: 8,
+		AP:    1391847,
+
+		UniquePortalsVisited: 586,
+		XMCollected:          3247773,
+
+		DistanceWalked: 145,
+
+		ResonatorsDeployed:     2836,
+		LinksCreated:           638,
+		ControlFieldsCreated:   331,
+		MindUnitsCaptured:      10650,
+		LongestLinkEverCreated: 3,
+		LargestControlField:    378,
+		XMRecharged:            315312,
+		PortalsCaptured:        240,
+		UniquePortalsCaptured:  71,
+
+		ResonatorsDestroyed:         1367,
+		PortalsNeutralized:          226,
+		EnemyLinksDestroyed:         207,
+		EnemyControlFieldsDestroyed: 96,
+
+		MaxTimePortalHeld:     11,
+		MaxTimeLinkMaintained: 11,
+		MaxLinkLengthXDays:    5,
+		MaxTimeFieldHeld:      6,
+		LargestFieldMUsXDays:  760,
+
+		Hacks: 2444,
+	},
 }
 
 var (
@@ -1870,6 +1904,11 @@ func TestOCR_768x_zyp_v1700_unknown(t *testing.T) {
 
 func TestOCR_768x_zyp_v1711_unknown(t *testing.T) {
 	w(t, "zyp_v1711_unknown.png")
+}
+
+func TestOCR_1080x_steino_v0_unknown(t *testing.T) {
+	// Invalid nick.
+	w(t, "steino_v0_unknown.png")
 }
 
 func TestOCR_1080x_haste_v1620_nexus5(t *testing.T) {
