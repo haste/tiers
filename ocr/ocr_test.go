@@ -1661,6 +1661,40 @@ var testData = map[string]profile.Profile{
 
 		Hacks: 2444,
 	},
+
+	"wexp_v0_unknown-1.png": profile.Profile{
+		Nick:  "wexp",
+		Level: 8,
+		AP:    1206693,
+
+		UniquePortalsVisited: 176,
+		XMCollected:          4884617,
+
+		DistanceWalked: 123,
+
+		ResonatorsDeployed:     1899,
+		LinksCreated:           608,
+		ControlFieldsCreated:   305,
+		MindUnitsCaptured:      511,
+		LongestLinkEverCreated: 20,
+		LargestControlField:    59,
+		XMRecharged:            1879663,
+		PortalsCaptured:        162,
+		UniquePortalsCaptured:  77,
+
+		ResonatorsDestroyed:         869,
+		PortalsNeutralized:          124,
+		EnemyLinksDestroyed:         187,
+		EnemyControlFieldsDestroyed: 90,
+
+		MaxTimePortalHeld:     8,
+		MaxTimeLinkMaintained: 5,
+		MaxLinkLengthXDays:    38,
+		MaxTimeFieldHeld:      4,
+		LargestFieldMUsXDays:  35,
+
+		Hacks: 2268,
+	},
 }
 
 var (
@@ -1830,6 +1864,11 @@ func w(t *testing.T, file string) {
 
 func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
 	w(t, "wexp_v0_unknown.png")
+}
+
+func TestOCR_480x_wexp_v0_unknown_1(t *testing.T) {
+	// Invalid Max Link Length x Days
+	w(t, "wexp_v0_unknown-1.png")
 }
 
 func TestOCR_640x_mvnch_v1640_iphone5(t *testing.T) {
