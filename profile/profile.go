@@ -1,7 +1,7 @@
 package profile
 
 type Profile struct {
-	Id        int
+	Id        int64
 	UserId    int
 	Timestamp int64
 

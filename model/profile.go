@@ -3,6 +3,8 @@ package model
 import (
 	"log"
 	"tiers/profile"
+
+	"github.com/lann/squirrel"
 )
 
 func InsertProfile(user_id, timestamp int, p profile.Profile) int64 {
@@ -38,4 +40,63 @@ func InsertProfile(user_id, timestamp int, p profile.Profile) int64 {
 	insertId, _ := res.LastInsertId()
 
 	return insertId
+}
+
+func UpdateProfile(profileId int64, p profile.Profile) {
+	sdb.Update("tiers_profiles").
+		SetMap(
+		squirrel.Eq{
+			// General
+			"agent": p.Nick,
+			"level": p.Level,
+			"ap":    p.AP,
+
+			// Discovery
+			"unique_portals_visited": p.UniquePortalsVisited,
+			"portals_discovered":     p.PortalsDiscovered,
+			"xm_collected":           p.XMCollected,
+
+			// Health
+			"distance_walked": p.DistanceWalked,
+
+			// Building
+			"resonators_deployed":       p.ResonatorsDeployed,
+			"links_created":             p.LinksCreated,
+			"control_fields_created":    p.ControlFieldsCreated,
+			"mind_units_captured":       p.MindUnitsCaptured,
+			"longest_link_ever_created": p.LongestLinkEverCreated,
+			"largest_control_field":     p.LargestControlField,
+			"xm_recharged":              p.XMRecharged,
+			"portals_captured":          p.PortalsCaptured,
+			"unique_portals_captured":   p.UniquePortalsCaptured,
+			"mods_deployed":             p.ModsDeployed,
+
+			// Combat
+			"resonators_destroyed":           p.ResonatorsDestroyed,
+			"portals_neutralized":            p.PortalsNeutralized,
+			"enemy_links_destroyed":          p.EnemyLinksDestroyed,
+			"enemy_control_fields_destroyed": p.EnemyControlFieldsDestroyed,
+
+			// Defense
+			"max_time_portal_held":     p.MaxTimePortalHeld,
+			"max_time_link_maintained": p.MaxTimeLinkMaintained,
+			"max_link_length_x_days":   p.MaxLinkLengthXDays,
+			"max_time_field_held":      p.MaxTimeFieldHeld,
+			"largest_field_mus_x_days": p.LargestFieldMUsXDays,
+
+			// Missions
+			"unique_missions_completed": p.UniqueMissionsCompleted,
+
+			// Resource Gathering
+			"hacks":             p.Hacks,
+			"glyph_hack_points": p.GlyphHackPoints,
+
+			// Mentoring
+			"agents_successfully_recruited": p.AgentsSuccessfullyRecruited,
+
+			// Badges
+			"innovator": p.InnovatorLevel,
+		}).
+		Where("id = ?", profileId).
+		Exec()
 }

@@ -18,6 +18,20 @@ import (
 
 var templates *template.Template
 
+func requireAdmin(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		session, _ := session.Get(r, "tiers")
+		userid, _ := session.Values["user"]
+
+		if userid.(int) != 1 {
+			http.Error(w, "Not found", http.StatusNotFound)
+			return
+		}
+
+		fn(w, r)
+	}
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	email, password := r.PostFormValue("email"), r.PostFormValue("password")
 
@@ -76,6 +90,11 @@ func main() {
 	r.HandleFunc("/progress", page.ProgressHandler)
 	r.HandleFunc("/profiles", page.ProfilesHandler)
 
+	r.HandleFunc("/admin/process", requireAdmin(page.ProcessIndexHandler))
+	r.HandleFunc("/admin/process/{owner}", requireAdmin(page.ProcessListHandler))
+	r.HandleFunc("/admin/process/{owner}/{faulty}/{previous}", requireAdmin(page.ProcessQueueHandler))
+	r.HandleFunc("/admin/process/{owner}/{faulty}/{previous}/run", requireAdmin(page.ProcessRunHandler))
+
 	r.HandleFunc("/signin", LoginHandler)
 	r.HandleFunc("/logout", LogoutHandle)
 	r.HandleFunc("/signup", page.SignupHandler).Methods("POST")
@@ -92,6 +111,7 @@ func main() {
 	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts"))))
 	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
 	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(http.Dir("static/vendor"))))
+	r.PathPrefix("/secret_cache/").Handler(http.StripPrefix("/secret_cache/", http.FileServer(http.Dir("cache"))))
 
 	http.Handle("/", r)
 

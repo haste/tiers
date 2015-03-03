@@ -1,0 +1,31 @@
+{{define "processList"}}{{template "header"}}
+{{template "nav" .}}
+{{$owner := .Owner}}
+
+				<h2>Profile quality</h2>
+
+				<table class="table">
+					<colgroup>
+						<col class="col-md-2">
+					</colgroup>
+
+					<thead>
+						<th>Id</th>
+						<th>Date</th>
+						<th>File</th>
+					</thead>
+
+					<tbody>
+					{{range .List}}
+						<tr {{if .HasProblem}}class="danger"{{end}}>
+							<td><a href="/admin/process/{{$owner}}/{{.Id}}/{{.Previous}}">{{.Id}}</a></td>
+							<td>{{.Profile.Timestamp | date}}</td>
+							<td>{{.File}}</td>
+						</tr>
+					{{end}}
+					</tbody>
+
+				</table>
+
+{{template "footer" . }}
+{{end}}

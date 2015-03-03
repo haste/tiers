@@ -1,0 +1,457 @@
+{{define "processQueue"}}{{template "header"}}
+{{template "nav" .}}
+{{$ts := .Faulty.Profile.Timestamp | relative}}
+{{$diffStamp := .Previous.Profile.Timestamp | relative}}
+
+				<h2 class="profile-header">
+					Faulty Profile
+				</h2>
+
+				<div class="row">
+					<div class="col-md-5">
+						<img src="/secret_cache/{{.Faulty.File}}" class="img-responsive" />
+					</div>
+
+					<div class="col-md-7">
+						<div class="well well-sm">
+							<a href="/admin/process/{{.Owner}}/{{.Faulty.Id}}/{{.Previous.Id}}/run" class="btn btn-default" type="button">Commit</a>
+						</div>
+
+						<div class="panel-group profile" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										General
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Updated</td>
+											<td class="text-center">
+												{{$diffStamp}}
+											</td>
+											<td class="text-center">
+												{{$ts}}
+											</td>
+											<td class="text-center">
+											</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Nick</td>
+											<td class="hidden-xs text-center text-danger">{{if ne .Previous.Profile.Nick .Faulty.Profile.Nick}}{{.Previous.Profile.Nick}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.Nick}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.Nick .Faulty.Profile.Nick}}{{.Dry.Nick}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Level</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.Level .Faulty.Profile.Level}}{{.Previous.Profile.Level}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.Level}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.Level .Faulty.Profile.Level}}{{.Dry.Level}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Action Points</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.AP .Faulty.Profile.AP}}{{.Previous.Profile.AP | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.AP | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.AP .Faulty.Profile.AP}}{{.Dry.AP | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<hr />
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Discovery
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Unique Portals Visited</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.UniquePortalsVisited .Faulty.Profile.UniquePortalsVisited}}{{.Previous.Profile.UniquePortalsVisited}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.UniquePortalsVisited | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.UniquePortalsVisited .Faulty.Profile.UniquePortalsVisited}}{{.Dry.UniquePortalsVisited}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Portals Discovered</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.PortalsDiscovered .Faulty.Profile.PortalsDiscovered}}{{.Previous.Profile.PortalsDiscovered | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.PortalsDiscovered | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.PortalsDiscovered .Faulty.Profile.PortalsDiscovered}}{{.Dry.PortalsDiscovered | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">XM Collected</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.XMCollected .Faulty.Profile.XMCollected}}{{.Previous.Profile.XMCollected | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.XMCollected | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.XMCollected .Faulty.Profile.XMCollected}}{{.Dry.XMCollected | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Health
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Distance Walked</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.DistanceWalked .Faulty.Profile.DistanceWalked}}{{.Previous.Profile.DistanceWalked | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.DistanceWalked | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.DistanceWalked .Faulty.Profile.DistanceWalked}}{{.Dry.DistanceWalked | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Building
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Resonators Deployed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.ResonatorsDeployed .Faulty.Profile.ResonatorsDeployed}}{{.Previous.Profile.ResonatorsDeployed | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.ResonatorsDeployed | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.ResonatorsDeployed .Faulty.Profile.ResonatorsDeployed}}{{.Dry.ResonatorsDeployed | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Links Created</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.LinksCreated .Faulty.Profile.LinksCreated}}{{.Previous.Profile.LinksCreated | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.LinksCreated | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.LinksCreated .Faulty.Profile.LinksCreated}}{{.Dry.LinksCreated | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Control Fields Created</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.ControlFieldsCreated .Faulty.Profile.ControlFieldsCreated}}{{.Previous.Profile.ControlFieldsCreated | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.ControlFieldsCreated | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.ControlFieldsCreated .Faulty.Profile.ControlFieldsCreated}}{{.Dry.ControlFieldsCreated | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Mind Units Captured</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.MindUnitsCaptured .Faulty.Profile.MindUnitsCaptured}}{{.Previous.Profile.MindUnitsCaptured | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.MindUnitsCaptured | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.MindUnitsCaptured .Faulty.Profile.MindUnitsCaptured}}{{.Dry.MindUnitsCaptured | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Longest Link Ever Created</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.LongestLinkEverCreated .Faulty.Profile.LongestLinkEverCreated}}{{.Previous.Profile.LongestLinkEverCreated | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.LongestLinkEverCreated | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.LongestLinkEverCreated .Faulty.Profile.LongestLinkEverCreated}}{{.Dry.LongestLinkEverCreated | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Largest Control Field</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.LargestControlField .Faulty.Profile.LargestControlField}}{{.Previous.Profile.LargestControlField | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.LargestControlField | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.LargestControlField .Faulty.Profile.LargestControlField}}{{.Dry.LargestControlField | comma}}{{end}}</td>
+											</tr>
+										<tr>
+											<td class="profile-entry-name">XM Recharged</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.XMRecharged .Faulty.Profile.XMRecharged}}{{.Previous.Profile.XMRecharged | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.XMRecharged | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.XMRecharged .Faulty.Profile.XMRecharged}}{{.Dry.XMRecharged | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Portals Captured</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.PortalsCaptured .Faulty.Profile.PortalsCaptured}}{{.Previous.Profile.PortalsCaptured | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.PortalsCaptured | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.PortalsCaptured .Faulty.Profile.PortalsCaptured}}{{.Dry.PortalsCaptured | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Unique Portals Captured</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.UniquePortalsCaptured .Faulty.Profile.UniquePortalsCaptured}}{{.Previous.Profile.UniquePortalsCaptured | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.UniquePortalsCaptured | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.UniquePortalsCaptured .Faulty.Profile.UniquePortalsCaptured}}{{.Dry.UniquePortalsCaptured | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Mods Deployed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.ModsDeployed .Faulty.Profile.ModsDeployed}}{{.Previous.Profile.ModsDeployed | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.ModsDeployed | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.ModsDeployed .Faulty.Profile.ModsDeployed}}{{.Dry.ModsDeployed | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Combat
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Resonators Destroyed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.ResonatorsDestroyed .Faulty.Profile.ResonatorsDestroyed}}{{.Previous.Profile.ResonatorsDestroyed | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.ResonatorsDestroyed | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.ResonatorsDestroyed .Faulty.Profile.ResonatorsDestroyed}}{{.Dry.ResonatorsDestroyed | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Portals Neutralized</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.PortalsNeutralized .Faulty.Profile.PortalsNeutralized}}{{.Previous.Profile.PortalsNeutralized | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.PortalsNeutralized | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.PortalsNeutralized .Faulty.Profile.PortalsNeutralized}}{{.Dry.PortalsNeutralized | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Enemy Links Destroyed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.EnemyLinksDestroyed .Faulty.Profile.EnemyLinksDestroyed}}{{.Previous.Profile.EnemyLinksDestroyed | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.EnemyLinksDestroyed | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.EnemyLinksDestroyed .Faulty.Profile.EnemyLinksDestroyed}}{{.Dry.EnemyLinksDestroyed | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Enemy Control Fields Destroyed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.EnemyControlFieldsDestroyed .Faulty.Profile.EnemyControlFieldsDestroyed}}{{.Previous.Profile.EnemyControlFieldsDestroyed | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.EnemyControlFieldsDestroyed | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.EnemyControlFieldsDestroyed .Faulty.Profile.EnemyControlFieldsDestroyed}}{{.Dry.EnemyControlFieldsDestroyed | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Defense
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Max Time Portal Held</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.MaxTimePortalHeld .Faulty.Profile.MaxTimePortalHeld}}{{.Previous.Profile.MaxTimePortalHeld | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.MaxTimePortalHeld | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.MaxTimePortalHeld .Faulty.Profile.MaxTimePortalHeld}}{{.Dry.MaxTimePortalHeld | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Max Time Link Maintained</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.MaxTimeLinkMaintained .Faulty.Profile.MaxTimeLinkMaintained}}{{.Previous.Profile.MaxTimeLinkMaintained | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.MaxTimeLinkMaintained | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.MaxTimeLinkMaintained .Faulty.Profile.MaxTimeLinkMaintained}}{{.Dry.MaxTimeLinkMaintained | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Max Link Length ✕ Days</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.MaxLinkLengthXDays .Faulty.Profile.MaxLinkLengthXDays}}{{.Previous.Profile.MaxLinkLengthXDays | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.MaxLinkLengthXDays | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.MaxLinkLengthXDays .Faulty.Profile.MaxLinkLengthXDays}}{{.Dry.MaxLinkLengthXDays | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Max Time Field Held</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.MaxTimeFieldHeld .Faulty.Profile.MaxTimeFieldHeld}}{{.Previous.Profile.MaxTimeFieldHeld | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.MaxTimeFieldHeld | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.MaxTimeFieldHeld .Faulty.Profile.MaxTimeFieldHeld}}{{.Dry.MaxTimeFieldHeld | comma}}{{end}}</td>
+										</tr>
+										<tr>
+											<td class="profile-entry-name">Largest Field MUs ✕ Days</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.LargestFieldMUsXDays .Faulty.Profile.LargestFieldMUsXDays}}{{.Previous.Profile.LargestFieldMUsXDays | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.LargestFieldMUsXDays | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.LargestFieldMUsXDays .Faulty.Profile.LargestFieldMUsXDays}}{{.Dry.LargestFieldMUsXDays | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Missions
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Unique Missions Completed</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.UniqueMissionsCompleted .Faulty.Profile.UniqueMissionsCompleted}}{{.Previous.Profile.UniqueMissionsCompleted | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.UniqueMissionsCompleted | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.UniqueMissionsCompleted .Faulty.Profile.UniqueMissionsCompleted}}{{.Dry.UniqueMissionsCompleted | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Resource Gathering
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Hacks</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.Hacks .Faulty.Profile.Hacks}}{{.Previous.Profile.Hacks | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.Hacks | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.Hacks .Faulty.Profile.Hacks}}{{.Dry.Hacks | comma}}{{end}}</td>
+										</tr>
+
+										<tr>
+											<td class="profile-entry-name">Glyph Hack Points</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.GlyphHackPoints .Faulty.Profile.GlyphHackPoints}}{{.Previous.Profile.GlyphHackPoints | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.GlyphHackPoints | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.GlyphHackPoints .Faulty.Profile.GlyphHackPoints}}{{.Dry.GlyphHackPoints | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Mentoring
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Agents Successfully Recruited</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.AgentsSuccessfullyRecruited .Faulty.Profile.AgentsSuccessfullyRecruited}}{{.Previous.Profile.AgentsSuccessfullyRecruited | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.AgentsSuccessfullyRecruited | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.AgentsSuccessfullyRecruited .Faulty.Profile.AgentsSuccessfullyRecruited}}{{.Dry.AgentsSuccessfullyRecruited | comma}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										Innovator
+									</h4>
+								</div>
+								<table class="table table-condensed">
+									<colgroup>
+										<col class="col-md-6 col-sm-6" />
+										<col class="col-md-2 col-sm-2" />
+										<col class="col-md-2 col-sm-2" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<td class="profile-entry-name">Level</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.InnovatorLevel .Faulty.Profile.InnovatorLevel}}{{.Previous.Profile.InnovatorLevel}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.InnovatorLevel}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.InnovatorLevel .Faulty.Profile.InnovatorLevel}}{{.Dry.InnovatorLevel}}{{end}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+{{template "footer" . }}
+{{end}}

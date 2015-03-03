@@ -1,0 +1,32 @@
+{{define "processIndex"}}{{template "header"}}
+{{template "nav" .}}
+
+				<h2>Process(ed) queue</h2>
+
+				<table class="table">
+					<colgroup>
+						<col class="col-md-2">
+						<col class="col-md-2">
+						<col class="col-md-8">
+					</colgroup>
+
+					<thead>
+						<th>User id</th>
+						<th>Latest</th>
+						<th>Count</th>
+					</thead>
+
+					<tbody>
+					{{range .List}}
+						<tr>
+							<td><a href="/admin/process/{{.Id}}">{{.Id}}</a></td>
+							<td>{{.Latest | date}}</td>
+							<td class="text-right">{{.Count | comma}}</td>
+						</tr>
+					{{end}}
+					</tbody>
+
+				</table>
+
+{{template "footer" . }}
+{{end}}
