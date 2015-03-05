@@ -34,6 +34,7 @@ func ProcessQueue() {
 
 			o.Split()
 			o.Process()
+			o.CleanUp()
 
 			p := o.Profile
 			profileId := model.InsertProfile(user_id, timestamp, p)

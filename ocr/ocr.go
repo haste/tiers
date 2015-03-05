@@ -90,6 +90,7 @@ func sanitizeNum(input []byte) int64 {
 	n := string(input)
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, "n", "11", -1)
+	n = strings.Replace(n, "H", "11", -1)
 	n = strings.Replace(n, ",", "", -1)
 
 	un, _ := strconv.ParseInt(n, 10, 0)
@@ -128,7 +129,7 @@ func genMatchNum(res []byte, s string) int64 {
 
 	s = strings.Replace(s, `Hn`, "im", -1)
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIlJBOon|,\]]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9LIlJBOonH|,\]]+)`, -1)
 
 	return matchNum(res, s)
 }
@@ -246,8 +247,6 @@ func (ocr *OCR) ProcessTop() {
 	ocr.mogrify("top")
 	top := ocr.tesseract(fileName)
 	ocr.buildProfileTop(top)
-
-	os.Remove(fileName)
 }
 
 func (ocr *OCR) ProcessBottom() {
@@ -255,14 +254,17 @@ func (ocr *OCR) ProcessBottom() {
 	ocr.mogrify("bottom")
 	bottom := ocr.tesseract(fileName)
 	ocr.buildProfileBottom(bottom)
-
-	os.Remove(fileName)
 }
 
 func (ocr *OCR) Process() {
 	ocr.ProcessInnovator()
 	ocr.ProcessTop()
 	ocr.ProcessBottom()
+}
+
+func (ocr *OCR) CleanUp() {
+	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_top.png")
+	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_bottom.png")
 }
 
 func (ocr *OCR) buildProfileTop(top []byte) {

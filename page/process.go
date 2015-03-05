@@ -122,6 +122,7 @@ func ProcessRunHandler(w http.ResponseWriter, r *http.Request) {
 
 	o.Split()
 	o.Process()
+	o.CleanUp()
 
 	model.UpdateProfile(faultyProfile.Profile.Id, o.Profile)
 
@@ -162,6 +163,7 @@ func ProcessQueueHandler(w http.ResponseWriter, r *http.Request) {
 
 	o.Split()
 	o.Process()
+	o.CleanUp()
 
 	templates := loadTemplates(
 		"header.html",
