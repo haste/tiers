@@ -53,6 +53,7 @@ var testData = map[string]profile.Profile{
 			InnovatorLevel:
 		},
 	*/
+
 	"haste_v1620_nexus5.png": profile.Profile{
 		Nick:  "haste",
 		Level: 14,
@@ -1763,6 +1764,130 @@ var testData = map[string]profile.Profile{
 
 		Hacks: 2521,
 	},
+
+	"tufte_v0_iphone.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    6939195,
+
+		UniquePortalsVisited: 1460,
+		XMCollected:          32500971,
+
+		DistanceWalked: 581,
+
+		ResonatorsDeployed:     10897,
+		LinksCreated:           1656,
+		ControlFieldsCreated:   1005,
+		MindUnitsCaptured:      622776,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            15524531,
+		PortalsCaptured:        918,
+		UniquePortalsCaptured:  466,
+		ModsDeployed:           1071,
+
+		ResonatorsDestroyed:         7571,
+		PortalsNeutralized:          903,
+		EnemyLinksDestroyed:         1817,
+		EnemyControlFieldsDestroyed: 1015,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 2,
+
+		Hacks:           8285,
+		GlyphHackPoints: 705,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-1.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    7854616,
+
+		UniquePortalsVisited: 1662,
+		XMCollected:          37340314,
+
+		DistanceWalked: 642,
+
+		ResonatorsDeployed:     12452,
+		LinksCreated:           1871,
+		ControlFieldsCreated:   1106,
+		MindUnitsCaptured:      623487,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            17258148,
+		PortalsCaptured:        1093,
+		UniquePortalsCaptured:  555,
+		ModsDeployed:           1243,
+
+		ResonatorsDestroyed:         9184,
+		PortalsNeutralized:          1092,
+		EnemyLinksDestroyed:         2184,
+		EnemyControlFieldsDestroyed: 1214,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 8,
+
+		Hacks:           9260,
+		GlyphHackPoints: 1112,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-2.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    7898767,
+
+		UniquePortalsVisited: 1730,
+		XMCollected:          37508101,
+
+		DistanceWalked: 646,
+
+		ResonatorsDeployed:     12554,
+		LinksCreated:           1891,
+		ControlFieldsCreated:   1110,
+		MindUnitsCaptured:      623524,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            17329909,
+		PortalsCaptured:        1107,
+		UniquePortalsCaptured:  569,
+		ModsDeployed:           1250,
+
+		ResonatorsDestroyed:         9236,
+		PortalsNeutralized:          1101,
+		EnemyLinksDestroyed:         2187,
+		EnemyControlFieldsDestroyed: 1216,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 8,
+
+		Hacks:           9382,
+		GlyphHackPoints: 1156,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 3,
+	},
 }
 
 var (
@@ -1928,6 +2053,8 @@ func w(t *testing.T, file string) {
 		p.ProcessInnovator()
 		validateBottom(t, file, p.Profile)
 	}
+
+	p.CleanUp()
 }
 
 func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
@@ -1975,6 +2102,20 @@ func TestOCR_640x_Tufte_v1700_iphone(t *testing.T) {
 
 func TestOCR_640x_Tufte_v1700_iphone_1(t *testing.T) {
 	w(t, "tufte_v1700_iphone-1.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone(t *testing.T) {
+	w(t, "tufte_v0_iphone.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_1(t *testing.T) {
+	// Invalid portals captured and neutralized
+	w(t, "tufte_v0_iphone-1.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_2(t *testing.T) {
+	// Invalid level
+	w(t, "tufte_v0_iphone-2.jpeg")
 }
 
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
