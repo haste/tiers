@@ -397,6 +397,15 @@
 											</td>
 											<td class="hidden-xs text-center text-info">{{if ne .Dry.GlyphHackPoints .Faulty.Profile.GlyphHackPoints}}{{.Dry.GlyphHackPoints | comma}}{{end}}</td>
 										</tr>
+
+										<tr>
+											<td class="profile-entry-name">Consecutive Days Hacking</td>
+											<td class="hidden-xs text-center text-danger">{{if gt .Previous.Profile.ConsecutiveDaysHacking .Faulty.Profile.ConsecutiveDaysHacking}}{{.Previous.Profile.ConsecutiveDaysHacking | comma}}{{end}}</td>
+											<td class="text-center">
+												{{.Faulty.Profile.ConsecutiveDaysHacking | comma}}
+											</td>
+											<td class="hidden-xs text-center text-info">{{if ne .Dry.ConsecutiveDaysHacking .Faulty.Profile.ConsecutiveDaysHacking}}{{.Dry.ConsecutiveDaysHacking | comma}}{{end}}</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>

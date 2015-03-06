@@ -34,6 +34,7 @@ func getQueueWithProfile() squirrel.SelectBuilder {
 
 			p.hacks,
 			p.glyph_hack_points,
+			p.consecutive_days_hacking,
 
 			p.agents_successfully_recruited,
 

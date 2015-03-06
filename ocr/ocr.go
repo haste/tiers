@@ -321,6 +321,7 @@ func (ocr *OCR) buildProfileBottom(bottom []byte) {
 	// Resource Gathering
 	p.Hacks = genMatchNum(bottom, "Hacks #")
 	p.GlyphHackPoints = genMatchNum(bottom, "Glyph Hack Points #")
+	p.ConsecutiveDaysHacking = genMatchNum(bottom, "Consecutive Days Hacking #")
 
 	// Mentoring
 	p.AgentsSuccessfullyRecruited = genMatchNum(bottom, "Agents Successfully Recruited #")

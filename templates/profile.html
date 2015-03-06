@@ -396,6 +396,15 @@
 										<div class="visible-xs text-success">{{if ne .Diff.GlyphHackPoints .Int64}} + {{.Diff.GlyphHackPoints | comma}}{{end}}</div>
 									</td>
 								</tr>
+
+								<tr>
+									<td class="profile-entry-name">Consecutive Days Hacking</td>
+									<td class="hidden-xs text-center text-success">{{if ne .Diff.ConsecutiveDaysHacking .Int64}} + {{.Diff.ConsecutiveDaysHacking | comma}}{{end}}</td>
+									<td class="text-right">
+										{{.Profile.ConsecutiveDaysHacking | comma}} days
+										<div class="visible-xs text-success">{{if ne .Diff.ConsecutiveDaysHacking .Int64}} + {{.Diff.ConsecutiveDaysHacking | comma}}{{end}}</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

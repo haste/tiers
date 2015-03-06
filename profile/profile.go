@@ -49,8 +49,9 @@ type Profile struct {
 
 	UniqueMissionsCompleted int64
 
-	Hacks           int64
-	GlyphHackPoints int64
+	Hacks                  int64
+	GlyphHackPoints        int64
+	ConsecutiveDaysHacking int64
 
 	AgentsSuccessfullyRecruited int64
 
@@ -156,6 +157,7 @@ func Diff(a, b Profile) Profile {
 
 	diff.Hacks = b.Hacks - a.Hacks
 	diff.GlyphHackPoints = b.GlyphHackPoints - a.GlyphHackPoints
+	diff.ConsecutiveDaysHacking = b.ConsecutiveDaysHacking - a.ConsecutiveDaysHacking
 
 	diff.UniqueMissionsCompleted = b.UniqueMissionsCompleted - a.UniqueMissionsCompleted
 

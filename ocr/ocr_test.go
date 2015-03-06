@@ -47,6 +47,7 @@ var testData = map[string]profile.Profile{
 
 			Hacks:
 			GlyphHackPoints:
+			ConsecutiveDaysHacking:
 
 			AgentsSuccessfullyRecruited:
 

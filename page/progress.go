@@ -138,6 +138,10 @@ func shouldIncludeBadge(name string, timestamp, newY int64) bool {
 		// submitted before it was public.
 	} else if name == "Translator" && newY == 0 && timestamp < 1422564883 {
 		return false
+		// Badge was implemented night to Fri Mar 6 CET, timestamp is from the last profile
+		// submitted before it was public.
+	} else if name == "Sojourner" && newY == 0 && timestamp < 1425582031 {
+		return false
 	}
 
 	return true

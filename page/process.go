@@ -92,6 +92,7 @@ func rowToQueueProfile(rows *sql.Rows) userQueueEntry {
 		&e.Profile.UniqueMissionsCompleted,
 
 		&e.Profile.Hacks, &e.Profile.GlyphHackPoints,
+		&e.Profile.ConsecutiveDaysHacking,
 
 		&e.Profile.AgentsSuccessfullyRecruited,
 
