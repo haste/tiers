@@ -1888,6 +1888,155 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 3,
 	},
+
+	"tufte_v0_iphone-3.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    4705187,
+
+		UniquePortalsVisited: 1121,
+		XMCollected:          18711907,
+
+		DistanceWalked: 411,
+
+		ResonatorsDeployed:     6802,
+		LinksCreated:           1140,
+		ControlFieldsCreated:   707,
+		MindUnitsCaptured:      7944,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            8997171,
+		PortalsCaptured:        555,
+		UniquePortalsCaptured:  295,
+		ModsDeployed:           490,
+
+		ResonatorsDestroyed:         4147,
+		PortalsNeutralized:          498,
+		EnemyLinksDestroyed:         965,
+		EnemyControlFieldsDestroyed: 519,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 5501,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-4.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    4347932,
+
+		UniquePortalsVisited: 1067,
+		XMCollected:          16119070,
+
+		DistanceWalked: 379,
+
+		ResonatorsDeployed:     6105,
+		LinksCreated:           1059,
+		ControlFieldsCreated:   647,
+		MindUnitsCaptured:      7440,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            7252265,
+		PortalsCaptured:        496,
+		UniquePortalsCaptured:  264,
+		ModsDeployed:           384,
+
+		ResonatorsDestroyed:         3723,
+		PortalsNeutralized:          443,
+		EnemyLinksDestroyed:         861,
+		EnemyControlFieldsDestroyed: 456,
+
+		MaxTimePortalHeld:     27,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		Hacks: 4915,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-5.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    4268726,
+
+		UniquePortalsVisited: 1053,
+		XMCollected:          15378942,
+
+		DistanceWalked: 368,
+
+		ResonatorsDeployed:     5895,
+		LinksCreated:           1037,
+		ControlFieldsCreated:   632,
+		MindUnitsCaptured:      7018,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            6829037,
+		PortalsCaptured:        491,
+		UniquePortalsCaptured:  262,
+		ModsDeployed:           337,
+
+		ResonatorsDestroyed:         3616,
+		PortalsNeutralized:          429,
+		EnemyLinksDestroyed:         841,
+		EnemyControlFieldsDestroyed: 449,
+
+		MaxTimePortalHeld:     26,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		Hacks: 4808,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-6.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 8,
+		AP:    3325704,
+
+		UniquePortalsVisited: 854,
+		XMCollected:          9734486,
+
+		DistanceWalked: 279,
+
+		ResonatorsDeployed:     4188,
+		LinksCreated:           798,
+		ControlFieldsCreated:   468,
+		MindUnitsCaptured:      6091,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            3851703,
+		PortalsCaptured:        379,
+		UniquePortalsCaptured:  208,
+
+		ResonatorsDestroyed:         2645,
+		PortalsNeutralized:          316,
+		EnemyLinksDestroyed:         585,
+		EnemyControlFieldsDestroyed: 288,
+
+		MaxTimePortalHeld:     13,
+		MaxTimeLinkMaintained: 9,
+		MaxLinkLengthXDays:    6,
+		MaxTimeFieldHeld:      7,
+		LargestFieldMUsXDays:  417,
+
+		Hacks: 3400,
+
+		InnovatorLevel: 3,
+	},
 }
 
 var (
@@ -2116,6 +2265,26 @@ func TestOCR_640x_Tufte_v0_iphone_1(t *testing.T) {
 func TestOCR_640x_Tufte_v0_iphone_2(t *testing.T) {
 	// Invalid level
 	w(t, "tufte_v0_iphone-2.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_3(t *testing.T) {
+	// Invalid AP
+	w(t, "tufte_v0_iphone-3.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_4(t *testing.T) {
+	// Invalid level
+	w(t, "tufte_v0_iphone-4.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_5(t *testing.T) {
+	// Invalid level, ap, resonators deployed, unique portals captured
+	w(t, "tufte_v0_iphone-5.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_6(t *testing.T) {
+	// Invalid level, largest control field, max time link maintained
+	w(t, "tufte_v0_iphone-6.jpeg")
 }
 
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
