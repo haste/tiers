@@ -1,7 +1,7 @@
 {
 	"top": [
 		"-resize",
-		"300%",
+		"169%",
 		"-level",
 		"0%",
 		"-colorspace",
@@ -17,14 +17,18 @@
 	],
 	"bottom": [
 		"-resize",
-		"185%",
+		"167%",
 		"-level",
-		"10%",
+		"45%",
 		"-colorspace",
 		"gray",
+		"-blur",
+		"1x65535",
 		"+dither",
 		"-colors",
 		"2",
-		"-negate"
+		"-negate",
+		"-sharpen",
+		"1x65535"
 	]
 }

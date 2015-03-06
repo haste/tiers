@@ -89,6 +89,7 @@ func sanitizeNum(input []byte) int64 {
 
 	n := string(input)
 	n = strings.Replace(n, "B", "8", -1)
+	n = strings.Replace(n, "S", "5", -1)
 	n = strings.Replace(n, "n", "11", -1)
 	n = strings.Replace(n, "H", "11", -1)
 	n = strings.Replace(n, ",", "", -1)
@@ -118,18 +119,18 @@ func matchNum(res []byte, pattern string) int64 {
 }
 
 func genMatchNum(res []byte, s string) int64 {
-	s = regexp.MustCompile(`[Ss]`).ReplaceAllLiteralString(s, "[Ss]")
-	s = regexp.MustCompile(`[ae]`).ReplaceAllLiteralString(s, "[aeE8B]")
+	s = regexp.MustCompile(`[Ss]`).ReplaceAllLiteralString(s, "[Ss5]")
+	s = regexp.MustCompile(`[aeCc]`).ReplaceAllLiteralString(s, "[aecE8B9Cc0]")
 	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
-	s = regexp.MustCompile(`[D0]`).ReplaceAllLiteralString(s, "[D0]")
-	s = regexp.MustCompile(`[Oou]`).ReplaceAllLiteralString(s, "[0Oou]")
-	s = regexp.MustCompile(`[Cc]`).ReplaceAllLiteralString(s, "[Cc]")
+	s = regexp.MustCompile(`[OoUu]`).ReplaceAllLiteralString(s, "[0OoUu]")
 	s = regexp.MustCompile(`[ltI]`).ReplaceAllLiteralString(s, "[l|1tI]")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
+	s = strings.Replace(s, `D`, "[D00]", -1)
+	s = strings.Replace(s, `r`, "[rt]", -1)
 	s = strings.Replace(s, `Hn`, "im", -1)
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIlJBOonH|,\]]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9LIlJBOonHS|,\]]+)`, -1)
 
 	return matchNum(res, s)
 }
@@ -228,6 +229,24 @@ func (ocr *OCR) tesseract(fileName string) []byte {
 	return res
 }
 
+func (ocr *OCR) replaces(in []byte) []byte {
+	// MaxTHnekajHem | MaxTHnekaiHem
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0]k[aecE8B9Cc0][ij]H[aecE8B9Cc0][mM]`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
+	// MaxTHnekamed
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0]k[aecE8B9Cc0]m[aecE8B9Cc0]d`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
+	// MaxTHnePonalHdd | MaxTHnePonalHem
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0][Pp]on[aecE8B9Cc0]lH[aecE8B9Cc0d][mMd]`).ReplaceAllLiteral(in, []byte("Max Time Portal Held"))
+	// 131th Hack Points | 131th HaCk Points
+	in = regexp.MustCompile(`131th\s*H[aecE8B9Cc0][aecE8B9Cc0]k\s*[Pp]oin[l|1tI][Ss5]`).ReplaceAllLiteral(in, []byte("Glyph Hack Points"))
+
+	in = bytes.Replace(in, []byte("081310de"), []byte("Deployed"), -1)
+	in = bytes.Replace(in, []byte("Deonyed"), []byte("Destroyed"), -1)
+	in = bytes.Replace(in, []byte("08500de"), []byte("Destroyed"), -1)
+	in = bytes.Replace(in, []byte("M08"), []byte("MUs"), -1)
+
+	return in
+}
+
 func (ocr *OCR) ProcessInnovator() {
 	var data innovator
 	decoder := json.NewDecoder(bytes.NewReader(ocr.innovator))
@@ -253,6 +272,7 @@ func (ocr *OCR) ProcessBottom() {
 	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_bottom.png"
 	ocr.mogrify("bottom")
 	bottom := ocr.tesseract(fileName)
+	bottom = ocr.replaces(bottom)
 	ocr.buildProfileBottom(bottom)
 }
 

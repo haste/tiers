@@ -2038,6 +2038,554 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 3,
 	},
+
+	"tufte_v0_iphone-7.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 9,
+		AP:    3579919,
+
+		UniquePortalsVisited: 895,
+		XMCollected:          10510155,
+
+		DistanceWalked: 294,
+
+		ResonatorsDeployed:     4543,
+		LinksCreated:           877,
+		ControlFieldsCreated:   510,
+		MindUnitsCaptured:      6236,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            4094199,
+		PortalsCaptured:        409,
+		UniquePortalsCaptured:  232,
+
+		ResonatorsDestroyed:         2898,
+		PortalsNeutralized:          348,
+		EnemyLinksDestroyed:         657,
+		EnemyControlFieldsDestroyed: 336,
+
+		MaxTimePortalHeld:     13,
+		MaxTimeLinkMaintained: 9,
+		MaxLinkLengthXDays:    6,
+		MaxTimeFieldHeld:      9,
+		LargestFieldMUsXDays:  417,
+
+		Hacks: 3591,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-8.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    5247462,
+
+		UniquePortalsVisited: 1254,
+		XMCollected:          22217022,
+
+		DistanceWalked: 458,
+
+		ResonatorsDeployed:     7722,
+		LinksCreated:           1237,
+		ControlFieldsCreated:   767,
+		MindUnitsCaptured:      8365,
+		LongestLinkEverCreated: 11,
+		LargestControlField:    838,
+		XMRecharged:            10598977,
+		PortalsCaptured:        642,
+		UniquePortalsCaptured:  335,
+		ModsDeployed:           681,
+
+		ResonatorsDestroyed:         4909,
+		PortalsNeutralized:          591,
+		EnemyLinksDestroyed:         1185,
+		EnemyControlFieldsDestroyed: 661,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 6473,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-9.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    7544424,
+
+		UniquePortalsVisited: 1506,
+		XMCollected:          35235674,
+
+		DistanceWalked: 616,
+
+		ResonatorsDeployed:     11813,
+		LinksCreated:           1805,
+		ControlFieldsCreated:   1081,
+		MindUnitsCaptured:      623364,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            16281832,
+		PortalsCaptured:        1020,
+		UniquePortalsCaptured:  503,
+		ModsDeployed:           1173,
+
+		ResonatorsDestroyed:         8588,
+		PortalsNeutralized:          1015,
+		EnemyLinksDestroyed:         2087,
+		EnemyControlFieldsDestroyed: 1168,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 4,
+
+		Hacks:           8788,
+		GlyphHackPoints: 1009,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-10.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    8370496,
+
+		UniquePortalsVisited: 1972,
+		XMCollected:          39880838,
+
+		DistanceWalked: 674,
+
+		ResonatorsDeployed:     13326,
+		LinksCreated:           1980,
+		ControlFieldsCreated:   1158,
+		MindUnitsCaptured:      623572,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            18896676,
+		PortalsCaptured:        1287,
+		UniquePortalsCaptured:  694,
+		ModsDeployed:           1290,
+
+		ResonatorsDestroyed:         10156,
+		PortalsNeutralized:          1252,
+		EnemyLinksDestroyed:         2313,
+		EnemyControlFieldsDestroyed: 1266,
+
+		MaxTimePortalHeld:     39,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 11,
+
+		Hacks:                  10030,
+		GlyphHackPoints:        1304,
+		ConsecutiveDaysHacking: 1,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-11.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    5926107,
+
+		UniquePortalsVisited: 1311,
+		XMCollected:          26234325,
+
+		DistanceWalked: 506,
+
+		ResonatorsDeployed:     9027,
+		LinksCreated:           1442,
+		ControlFieldsCreated:   875,
+		MindUnitsCaptured:      9194,
+		LongestLinkEverCreated: 11,
+		LargestControlField:    838,
+		XMRecharged:            12595563,
+		PortalsCaptured:        747,
+		UniquePortalsCaptured:  392,
+		ModsDeployed:           874,
+
+		ResonatorsDestroyed:         5905,
+		PortalsNeutralized:          706,
+		EnemyLinksDestroyed:         1415,
+		EnemyControlFieldsDestroyed: 780,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks:           7147,
+		GlyphHackPoints: 106,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-12.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    8017423,
+
+		UniquePortalsVisited: 1895,
+		XMCollected:          38457336,
+
+		DistanceWalked: 655,
+
+		ResonatorsDeployed:     12686,
+		LinksCreated:           1891,
+		ControlFieldsCreated:   1110,
+		MindUnitsCaptured:      623524,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            17960793,
+		PortalsCaptured:        1173,
+		UniquePortalsCaptured:  635,
+		ModsDeployed:           1257,
+
+		ResonatorsDestroyed:         9566,
+		PortalsNeutralized:          1161,
+		EnemyLinksDestroyed:         2230,
+		EnemyControlFieldsDestroyed: 1232,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 9,
+
+		Hacks:           9673,
+		GlyphHackPoints: 1220,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-13.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    5185518,
+
+		UniquePortalsVisited: 1196,
+		XMCollected:          21881822,
+
+		DistanceWalked: 446,
+
+		ResonatorsDeployed:     7574,
+		LinksCreated:           1231,
+		ControlFieldsCreated:   760,
+		MindUnitsCaptured:      8313,
+		LongestLinkEverCreated: 11,
+		LargestControlField:    838,
+		XMRecharged:            10442711,
+		PortalsCaptured:        626,
+		UniquePortalsCaptured:  325,
+		ModsDeployed:           657,
+
+		ResonatorsDestroyed:         4817,
+		PortalsNeutralized:          574,
+		EnemyLinksDestroyed:         1172,
+		EnemyControlFieldsDestroyed: 655,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 6346,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-14.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    8271973,
+
+		UniquePortalsVisited: 1972,
+		XMCollected:          39653322,
+
+		DistanceWalked: 670,
+
+		ResonatorsDeployed:     13108,
+		LinksCreated:           1955,
+		ControlFieldsCreated:   1148,
+		MindUnitsCaptured:      623562,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            18820163,
+		PortalsCaptured:        1254,
+		UniquePortalsCaptured:  694,
+		ModsDeployed:           1284,
+
+		ResonatorsDestroyed:         9921,
+		PortalsNeutralized:          1216,
+		EnemyLinksDestroyed:         2284,
+		EnemyControlFieldsDestroyed: 1255,
+
+		MaxTimePortalHeld:     37,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 10,
+
+		Hacks:           9956,
+		GlyphHackPoints: 1252,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 0,
+	},
+
+	"tufte_v0_iphone-15.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 11,
+		AP:    8161319,
+
+		UniquePortalsVisited: 1970,
+		XMCollected:          39293283,
+
+		DistanceWalked: 665,
+
+		ResonatorsDeployed:     12936,
+		LinksCreated:           1915,
+		ControlFieldsCreated:   1125,
+		MindUnitsCaptured:      623539,
+		LongestLinkEverCreated: 304,
+		LargestControlField:    610877,
+		XMRecharged:            18559324,
+		PortalsCaptured:        1234,
+		UniquePortalsCaptured:  694,
+		ModsDeployed:           1267,
+
+		ResonatorsDestroyed:         9795,
+		PortalsNeutralized:          1200,
+		EnemyLinksDestroyed:         2262,
+		EnemyControlFieldsDestroyed: 1246,
+
+		MaxTimePortalHeld:     36,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    274,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  354224,
+
+		UniqueMissionsCompleted: 10,
+
+		Hacks:           9900,
+		GlyphHackPoints: 1236,
+
+		AgentsSuccessfullyRecruited: 1,
+
+		InnovatorLevel: 3,
+	},
+
+	"tufte_v0_iphone-16.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 10,
+		AP:    5703653,
+
+		UniquePortalsVisited: 1292,
+		XMCollected:          24439953,
+
+		DistanceWalked: 487,
+
+		ResonatorsDeployed:     8594,
+		LinksCreated:           1373,
+		ControlFieldsCreated:   836,
+		MindUnitsCaptured:      8910,
+		LongestLinkEverCreated: 11,
+		LargestControlField:    838,
+		XMRecharged:            11419550,
+		PortalsCaptured:        711,
+		UniquePortalsCaptured:  379,
+		ModsDeployed:           823,
+
+		ResonatorsDestroyed:         5571,
+		PortalsNeutralized:          665,
+		EnemyLinksDestroyed:         1344,
+		EnemyControlFieldsDestroyed: 746,
+
+		MaxTimePortalHeld:     34,
+		MaxTimeLinkMaintained: 23,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      20,
+		LargestFieldMUsXDays:  518,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 6904,
+
+		InnovatorLevel: 3,
+	},
+
+	"viddy_v1711_oneplusone.png": profile.Profile{
+		Nick:  "viddy",
+		Level: 15,
+		AP:    26164065,
+
+		UniquePortalsVisited: 3169,
+		PortalsDiscovered:    16,
+		XMCollected:          122692805,
+
+		DistanceWalked: 1606,
+
+		ResonatorsDeployed:     56207,
+		LinksCreated:           3786,
+		ControlFieldsCreated:   1667,
+		MindUnitsCaptured:      15602,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    1250,
+		XMRecharged:            34247088,
+		PortalsCaptured:        8446,
+		UniquePortalsCaptured:  1550,
+		ModsDeployed:           1046,
+
+		ResonatorsDestroyed:         53601,
+		PortalsNeutralized:          7753,
+		EnemyLinksDestroyed:         9663,
+		EnemyControlFieldsDestroyed: 4743,
+
+		MaxTimePortalHeld:     220,
+		MaxTimeLinkMaintained: 67,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      64,
+		LargestFieldMUsXDays:  5153,
+
+		UniqueMissionsCompleted: 3,
+
+		Hacks: 47195,
+		ConsecutiveDaysHacking: 0,
+
+		InnovatorLevel: 13,
+	},
+
+	"tufte_v0_iphone-17.jpeg": profile.Profile{
+		Nick:  "Tufte",
+		Level: 9,
+		AP:    3664876,
+
+		UniquePortalsVisited: 902,
+		XMCollected:          11199749,
+
+		DistanceWalked: 301,
+
+		ResonatorsDeployed:     4674,
+		LinksCreated:           886,
+		ControlFieldsCreated:   514,
+		MindUnitsCaptured:      6275,
+		LongestLinkEverCreated: 6,
+		LargestControlField:    838,
+		XMRecharged:            4494688,
+		PortalsCaptured:        423,
+		UniquePortalsCaptured:  240,
+		ModsDeployed:           112,
+
+		ResonatorsDestroyed:         3025,
+		PortalsNeutralized:          363,
+		EnemyLinksDestroyed:         695,
+		EnemyControlFieldsDestroyed: 364,
+
+		MaxTimePortalHeld:     14,
+		MaxTimeLinkMaintained: 14,
+		MaxLinkLengthXDays:    7,
+		MaxTimeFieldHeld:      14,
+		LargestFieldMUsXDays:  518,
+
+		Hacks: 3732,
+
+		InnovatorLevel: 3,
+	},
+
+	"mvnch_v0_iphone-1.jpeg": profile.Profile{
+		Nick:  "mvnch",
+		Level: 7,
+		AP:    606000,
+
+		UniquePortalsVisited: 134,
+		XMCollected:          1076570,
+
+		DistanceWalked: 61,
+
+		ResonatorsDeployed:     707,
+		LinksCreated:           272,
+		ControlFieldsCreated:   168,
+		MindUnitsCaptured:      613,
+		LongestLinkEverCreated: 4,
+		LargestControlField:    53,
+		XMRecharged:            351923,
+		PortalsCaptured:        67,
+		UniquePortalsCaptured:  39,
+
+		ResonatorsDestroyed:         272,
+		PortalsNeutralized:          35,
+		EnemyLinksDestroyed:         73,
+		EnemyControlFieldsDestroyed: 32,
+
+		MaxTimePortalHeld:     20,
+		MaxTimeLinkMaintained: 13,
+		MaxLinkLengthXDays:    35,
+		MaxTimeFieldHeld:      12,
+		LargestFieldMUsXDays:  531,
+
+		Hacks: 647,
+	},
+
+	"mvnch_v0_iphone-2.jpeg": profile.Profile{
+		Nick:  "mvnch",
+		Level: 5,
+		AP:    174137,
+
+		UniquePortalsVisited: 108,
+		XMCollected:          189816,
+
+		DistanceWalked: 28,
+
+		ResonatorsDeployed:     249,
+		LinksCreated:           109,
+		ControlFieldsCreated:   65,
+		MindUnitsCaptured:      232,
+		LongestLinkEverCreated: 4,
+		LargestControlField:    53,
+		XMRecharged:            28996,
+		PortalsCaptured:        19,
+		UniquePortalsCaptured:  16,
+
+		ResonatorsDestroyed:         30,
+		PortalsNeutralized:          4,
+		EnemyLinksDestroyed:         5,
+		EnemyControlFieldsDestroyed: 1,
+
+		MaxTimePortalHeld:     5,
+		MaxTimeLinkMaintained: 5,
+		MaxLinkLengthXDays:    4,
+		MaxTimeFieldHeld:      5,
+		LargestFieldMUsXDays:  36,
+
+		Hacks: 266,
+	},
 }
 
 var (
@@ -2286,6 +2834,74 @@ func TestOCR_640x_Tufte_v0_iphone_5(t *testing.T) {
 func TestOCR_640x_Tufte_v0_iphone_6(t *testing.T) {
 	// Invalid level, largest control field, max time link maintained
 	w(t, "tufte_v0_iphone-6.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_7(t *testing.T) {
+	// Invalid mind units captured, enemy links destroyed, max link length x days
+	w(t, "tufte_v0_iphone-7.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_8(t *testing.T) {
+	// Invalid hacks
+	w(t, "tufte_v0_iphone-8.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_9(t *testing.T) {
+	// Invalid unique portals visited, mind units captured, xm recharged, enemy
+	// control fields destroyed.
+	w(t, "tufte_v0_iphone-9.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_10(t *testing.T) {
+	// Invalid mind units captured
+	w(t, "tufte_v0_iphone-10.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_11(t *testing.T) {
+	// Invalid distance walked and glyph hack points.
+	w(t, "tufte_v0_iphone-11.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_12(t *testing.T) {
+	// Invalid mods deployed
+	w(t, "tufte_v0_iphone-12.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_13(t *testing.T) {
+	// Invalid unique portal visited, distance walked, control fields created,
+	// portals captured, mods deployed and hacks.
+	w(t, "tufte_v0_iphone-13.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_14(t *testing.T) {
+	// Invalid xm collected.
+	w(t, "tufte_v0_iphone-14.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_15(t *testing.T) {
+	// Invalid xm collected
+	w(t, "tufte_v0_iphone-15.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_16(t *testing.T) {
+	// Invalid portals neutralized.
+	w(t, "tufte_v0_iphone-16.jpeg")
+}
+
+func TestOCR_640x_Tufte_v0_iphone_17(t *testing.T) {
+	// Invalid max time portal held, max time link maintained, max link length
+	// x days.
+	w(t, "tufte_v0_iphone-17.jpeg")
+}
+
+func TestOCR_640x_mvnch_v0_iphone_1(t *testing.T) {
+	// Invalid enemy control fields destroyed.
+	w(t, "mvnch_v0_iphone-1.jpeg")
+}
+
+func TestOCR_640x_mvnch_v0_iphone_2(t *testing.T) {
+	// Invalid level.
+	w(t, "mvnch_v0_iphone-2.jpeg")
 }
 
 func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
