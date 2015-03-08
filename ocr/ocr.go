@@ -93,6 +93,7 @@ func sanitizeNum(input []byte) int64 {
 	n = strings.Replace(n, "n", "11", -1)
 	n = strings.Replace(n, "H", "11", -1)
 	n = strings.Replace(n, ",", "", -1)
+	n = strings.Replace(n, " ", "", -1)
 
 	un, _ := strconv.ParseInt(n, 10, 0)
 	return un
@@ -130,7 +131,7 @@ func genMatchNum(res []byte, s string) int64 {
 	s = strings.Replace(s, `r`, "[rt]", -1)
 	s = strings.Replace(s, `Hn`, "im", -1)
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIlJBOonHS|,\]]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9LIlJBOonHS|,\] ]+)`, -1)
 
 	return matchNum(res, s)
 }
@@ -231,18 +232,21 @@ func (ocr *OCR) tesseract(fileName string) []byte {
 
 func (ocr *OCR) replaces(in []byte) []byte {
 	// MaxTHnekajHem | MaxTHnekaiHem
-	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0]k[aecE8B9Cc0][ij]H[aecE8B9Cc0][mM]`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0]k[aecE8B9Cc0][ij]H[aecE8B9Cc0][mM]`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
 	// MaxTHnekamed
-	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0]k[aecE8B9Cc0]m[aecE8B9Cc0]d`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0]k[aecE8B9Cc0]m[aecE8B9Cc0]d`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
 	// MaxTHnePonalHdd | MaxTHnePonalHem
-	in = regexp.MustCompile(`M[aecE8B9Cc0]xTHn[aecE8B9Cc0][Pp]on[aecE8B9Cc0]lH[aecE8B9Cc0d][mMd]`).ReplaceAllLiteral(in, []byte("Max Time Portal Held"))
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0][Pp]on[aecE8B9Cc0]lH[aecE8B9Cc0d][mMd]`).ReplaceAllLiteral(in, []byte("Max Time Portal Held"))
 	// 131th Hack Points | 131th HaCk Points
 	in = regexp.MustCompile(`131th\s*H[aecE8B9Cc0][aecE8B9Cc0]k\s*[Pp]oin[l|1tI][Ss5]`).ReplaceAllLiteral(in, []byte("Glyph Hack Points"))
+	// MamekLengH1xDays
+	in = regexp.MustCompile(`M[aecE8B9Cc0]m[aecE8B9Cc0]kL[aecE8B9Cc0]ng[Hh]1xD[aecE8B9Cc0]y[Ss5]`).ReplaceAllLiteral(in, []byte("Max Link Length x Days"))
 
 	in = bytes.Replace(in, []byte("081310de"), []byte("Deployed"), -1)
 	in = bytes.Replace(in, []byte("Deonyed"), []byte("Destroyed"), -1)
 	in = bytes.Replace(in, []byte("08500de"), []byte("Destroyed"), -1)
 	in = bytes.Replace(in, []byte("M08"), []byte("MUs"), -1)
+	in = bytes.Replace(in, []byte("knrdays"), []byte("km-days"), -1)
 
 	return in
 }
@@ -293,8 +297,8 @@ func (ocr *OCR) buildProfileTop(top []byte) {
 	fmt.Printf("%s\n", top)
 
 	p.Nick = matchString(top, "([a-zA-Z0-9]+)[^\n]*\\s*[^\n]*LVL")
-	p.Level = int(genMatchNum(top, "LVL #"))
-	p.AP = genMatchNum(top, "# AP")
+	p.Level = int(genMatchNum(top, "L V L #"))
+	p.AP = genMatchNum(top, "# A P")
 }
 
 func (ocr *OCR) buildProfileBottom(bottom []byte) {
