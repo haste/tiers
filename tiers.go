@@ -106,11 +106,7 @@ func main() {
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
 
-	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("static/css"))))
-	r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("static/images"))))
-	r.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", http.FileServer(http.Dir("static/fonts"))))
-	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
-	r.PathPrefix("/vendor/").Handler(http.StripPrefix("/vendor/", http.FileServer(http.Dir("static/vendor"))))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 	r.PathPrefix("/secret_cache/").Handler(http.StripPrefix("/secret_cache/", http.FileServer(http.Dir("cache"))))
 
 	http.Handle("/", r)
