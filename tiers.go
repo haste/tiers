@@ -106,8 +106,8 @@ func main() {
 	r.HandleFunc("/upload", page.UploadViewHandler).Methods("GET")
 	r.HandleFunc("/upload", page.UploadHandler).Methods("POST")
 
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 	r.PathPrefix("/secret_cache/").Handler(http.StripPrefix("/secret_cache/", http.FileServer(http.Dir("cache"))))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
 	http.Handle("/", r)
 
