@@ -133,8 +133,6 @@ func genMatchNum(res []byte, s string) int64 {
 	s = strings.Replace(s, `-`, ".", -1)
 	s = strings.Replace(s, `#`, `([0-9LIlJBOonHS|,\] ]+)`, -1)
 
-	fmt.Println(s)
-
 	return matchNum(res, s)
 }
 
