@@ -3,24 +3,32 @@
 		"-resize",
 		"100%",
 		"-level",
-		"0%",
+		"15%",
 		"-colorspace",
 		"gray",
+		"-blur",
+		"1x65535",
 		"+dither",
 		"-colors",
 		"2",
-		"-negate"
+		"-negate",
+		"-sharpen",
+		"1x65535"
 	],
 	"bottom": [
 		"-resize",
 		"100%",
 		"-level",
-		"0%",
+		"40%",
 		"-colorspace",
 		"gray",
+		"-blur",
+		"1x65535",
 		"+dither",
 		"-colors",
 		"2",
-		"-negate"
+		"-negate",
+		"-sharpen",
+		"1x65535"
 	]
 }

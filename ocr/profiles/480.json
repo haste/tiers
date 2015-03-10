@@ -13,9 +13,9 @@
 	],
 	"bottom": [
 		"-resize",
-		"140%",
+		"100%",
 		"-level",
-		"30%",
+		"20%",
 		"-colorspace",
 		"gray",
 		"+dither",

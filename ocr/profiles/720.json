@@ -1,9 +1,9 @@
 {
 	"top": [
 		"-resize",
-		"175%",
+		"100%",
 		"-level",
-		"15%",
+		"20%",
 		"-colorspace",
 		"gray",
 		"+dither",
@@ -11,12 +11,11 @@
 		"2",
 		"-negate"
 	],
-
 	"bottom": [
 		"-resize",
-		"175%",
+		"100%",
 		"-level",
-		"15%",
+		"0%",
 		"-colorspace",
 		"gray",
 		"+dither",
