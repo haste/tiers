@@ -1,9 +1,9 @@
 {
 	"top": [
 		"-resize",
-		"100%",
+		"124%",
 		"-level",
-		"25%",
+		"15%",
 		"-colorspace",
 		"gray",
 		"-blur",
@@ -17,9 +17,9 @@
 	],
 	"bottom": [
 		"-resize",
-		"100%",
+		"105%",
 		"-level",
-		"50%",
+		"30%",
 		"-colorspace",
 		"gray",
 		"-blur",

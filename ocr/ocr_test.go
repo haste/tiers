@@ -3243,6 +3243,159 @@ var testData = map[string]profile.Profile{
 
 		Hacks: 49294,
 	},
+
+	"haste_v0_nexus5-14.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    18781682,
+
+		UniquePortalsVisited: 3089,
+		PortalsDiscovered:    32,
+		XMCollected:          86301856,
+
+		DistanceWalked: 1715,
+
+		ResonatorsDeployed:     42192,
+		LinksCreated:           4657,
+		ControlFieldsCreated:   2266,
+		MindUnitsCaptured:      32236,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            22861940,
+		PortalsCaptured:        5134,
+		UniquePortalsCaptured:  1334,
+
+		ResonatorsDestroyed:         36599,
+		PortalsNeutralized:          5394,
+		EnemyLinksDestroyed:         6386,
+		EnemyControlFieldsDestroyed: 2838,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 44036,
+	},
+
+	"haste_v0_nexus5-15.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    25575067,
+
+		UniquePortalsVisited: 3515,
+		PortalsDiscovered:    36,
+		XMCollected:          106888705,
+
+		DistanceWalked: 2021,
+
+		ResonatorsDeployed:     53825,
+		LinksCreated:           5264,
+		ControlFieldsCreated:   2546,
+		MindUnitsCaptured:      32799,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            26509239,
+		PortalsCaptured:        6249,
+		UniquePortalsCaptured:  1408,
+		ModsDeployed:           403,
+
+		ResonatorsDestroyed:         45095,
+		PortalsNeutralized:          6674,
+		EnemyLinksDestroyed:         8508,
+		EnemyControlFieldsDestroyed: 4006,
+
+		MaxTimePortalHeld:     114,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 52369,
+
+		InnovatorLevel: 13,
+	},
+
+	"haste_v0_nexus6-4.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    26707468,
+
+		UniquePortalsVisited: 3572,
+		PortalsDiscovered:    39,
+		XMCollected:          111924182,
+
+		DistanceWalked: 2098,
+
+		ResonatorsDeployed:     56636,
+		LinksCreated:           5374,
+		ControlFieldsCreated:   2593,
+		MindUnitsCaptured:      32903,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            27056201,
+		PortalsCaptured:        6498,
+		UniquePortalsCaptured:  1435,
+		ModsDeployed:           819,
+
+		ResonatorsDestroyed:         46737,
+		PortalsNeutralized:          6921,
+		EnemyLinksDestroyed:         9005,
+		EnemyControlFieldsDestroyed: 4324,
+
+		MaxTimePortalHeld:     137,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks:           54326,
+		GlyphHackPoints: 73,
+
+		InnovatorLevel: 13,
+	},
+
+	"haste_v0_nexus6-5.png": profile.Profile{
+		Nick:  "haste",
+		Level: 15,
+		AP:    28454788,
+
+		UniquePortalsVisited: 3687,
+		PortalsDiscovered:    40,
+		XMCollected:          118912429,
+
+		DistanceWalked: 2186,
+
+		ResonatorsDeployed:     60710,
+		LinksCreated:           5639,
+		ControlFieldsCreated:   2736,
+		MindUnitsCaptured:      33206,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            27608651,
+		PortalsCaptured:        6827,
+		UniquePortalsCaptured:  1470,
+		ModsDeployed:           1249,
+
+		ResonatorsDestroyed:         49323,
+		PortalsNeutralized:          7277,
+		EnemyLinksDestroyed:         9748,
+		EnemyControlFieldsDestroyed: 4738,
+
+		MaxTimePortalHeld:     154,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		UniqueMissionsCompleted: 10,
+
+		Hacks:           56411,
+		GlyphHackPoints: 4297,
+
+		InnovatorLevel: 13,
+	},
 }
 
 var (
@@ -3738,6 +3891,18 @@ func TestOCR_1080x_haste_v0_nexus5_13(t *testing.T) {
 	w(t, "haste_v0_nexus5-13.png")
 }
 
+func TestOCR_1080x_haste_v0_nexus5_14(t *testing.T) {
+	// Invalid AP.
+	w(t, "haste_v0_nexus5-14.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_15(t *testing.T) {
+	// Invalid AP. links created, control fields created, xm recharged, portals
+	// captured, portals neutralized, enemy control fields destroyed, max time
+	// link maintained, max time field held, largest field mus x days, hacks
+	w(t, "haste_v0_nexus5-15.png")
+}
+
 func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
 	w(t, "forferdet_v0_unknowntablet.png")
 }
@@ -3791,6 +3956,16 @@ func TestOCR_1440x_haste_v0_nexus6_2(t *testing.T) {
 func TestOCR_1440x_haste_v0_nexus6_3(t *testing.T) {
 	// Invalid glyph hack points.
 	w(t, "haste_v0_nexus6-3.png")
+}
+
+func TestOCR_1440x_haste_v0_nexus6_4(t *testing.T) {
+	// Invalid AP.
+	w(t, "haste_v0_nexus6-4.png")
+}
+
+func TestOCR_1440x_haste_v0_nexus6_5(t *testing.T) {
+	// Invalid AP.
+	w(t, "haste_v0_nexus6-5.png")
 }
 
 func TestOCR_1536x_Scissorhill_v0_ipad(t *testing.T) {
