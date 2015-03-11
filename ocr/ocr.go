@@ -88,6 +88,7 @@ func sanitizeNum(input []byte) int64 {
 	input = regexp.MustCompile(`[Oo]`).ReplaceAll(input, []byte("0"))
 
 	n := string(input)
+	n = strings.Replace(n, "Q", "9", -1)
 	n = strings.Replace(n, "B", "8", -1)
 	n = strings.Replace(n, "S", "5", -1)
 	n = strings.Replace(n, "n", "11", -1)
@@ -124,14 +125,14 @@ func genMatchNum(res []byte, s string) int64 {
 	s = regexp.MustCompile(`[aeCc]`).ReplaceAllLiteralString(s, "[aecE8B9Cc0]")
 	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
 	s = regexp.MustCompile(`[OoUu]`).ReplaceAllLiteralString(s, "[0OoUu]")
-	s = regexp.MustCompile(`[ltI]`).ReplaceAllLiteralString(s, "[l|1tI]")
+	s = regexp.MustCompile(`[ltIf]`).ReplaceAllLiteralString(s, "[l|1tIf]")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
 	s = strings.Replace(s, `D`, "[D00]", -1)
 	s = strings.Replace(s, `r`, "[rt]", -1)
 	s = strings.Replace(s, `Hn`, "im", -1)
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9LIlJBOonHS|,\] ]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9QLIlJBOonHS|,\] ]+)`, -1)
 
 	return matchNum(res, s)
 }
@@ -242,6 +243,7 @@ func (ocr *OCR) replaces(in []byte) []byte {
 	// MamekLengH1xDays
 	in = regexp.MustCompile(`M[aecE8B9Cc0]m[aecE8B9Cc0]kL[aecE8B9Cc0]ng[Hh]1xD[aecE8B9Cc0]y[Ss5]`).ReplaceAllLiteral(in, []byte("Max Link Length x Days"))
 
+	in = bytes.Replace(in, []byte("rn"), []byte("m"), -1)
 	in = bytes.Replace(in, []byte("081310de"), []byte("Deployed"), -1)
 	in = bytes.Replace(in, []byte("Deonyed"), []byte("Destroyed"), -1)
 	in = bytes.Replace(in, []byte("08500de"), []byte("Destroyed"), -1)

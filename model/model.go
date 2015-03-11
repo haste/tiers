@@ -15,7 +15,7 @@ var (
 	sdb squirrel.StatementBuilderType
 )
 
-func init() {
+func Init() {
 	var err error
 	db, err = sql.Open("mysql", conf.Config.Database)
 	if err != nil {

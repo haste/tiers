@@ -1,9 +1,9 @@
 {
 	"top": [
 		"-resize",
-		"100%",
+		"101%",
 		"-level",
-		"20%",
+		"0%",
 		"-colorspace",
 		"gray",
 		"+dither",

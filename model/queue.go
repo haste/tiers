@@ -76,6 +76,19 @@ func GetAllUserQueues() *sql.Rows {
 	return rows
 }
 
+func GetAllUserQueuesWithProfiles() *sql.Rows {
+	query := getQueueWithProfile()
+
+	// XXX: Handle errors.
+	rows, err := query.Query()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return rows
+}
+
 func GetAllQueuesWithProfileByUser(userId int) *sql.Rows {
 	query := getQueueWithProfile().
 		Where(squirrel.Eq{"p.user_id": userId})

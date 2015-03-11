@@ -78,6 +78,7 @@ func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	model.Init()
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", page.ProfileHandler)

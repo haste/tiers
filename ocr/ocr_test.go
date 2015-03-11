@@ -1,12 +1,24 @@
 package ocr
 
 import (
+	"database/sql"
 	"flag"
+	"fmt"
 	"testing"
 
 	"tiers/conf"
+	"tiers/model"
 	"tiers/profile"
 )
+
+type userQueueEntry struct {
+	Id          int
+	File        string
+	OCRProfile  int
+	Processed   int
+	Processtime int
+	Profile     profile.Profile
+}
 
 var testData = map[string]profile.Profile{
 	/*
@@ -3396,29 +3408,862 @@ var testData = map[string]profile.Profile{
 
 		InnovatorLevel: 13,
 	},
+
+	"haste_v0_nexus5-16.png": profile.Profile{
+		Nick:  "haste",
+		Level: 13,
+		AP:    16156376,
+
+		UniquePortalsVisited: 3032,
+		PortalsDiscovered:    24,
+		XMCollected:          76076011,
+
+		DistanceWalked: 1506,
+
+		ResonatorsDeployed:     37394,
+		LinksCreated:           3960,
+		ControlFieldsCreated:   1852,
+		MindUnitsCaptured:      31038,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            19877113,
+		PortalsCaptured:        4523,
+		UniquePortalsCaptured:  1274,
+
+		ResonatorsDestroyed:         32695,
+		PortalsNeutralized:          4758,
+		EnemyLinksDestroyed:         5527,
+		EnemyControlFieldsDestroyed: 2401,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 39515,
+	},
+
+	"haste_v0_nexus5-17.png": profile.Profile{
+		Nick:  "haste",
+		Level: 13,
+		AP:    16846515,
+
+		UniquePortalsVisited: 3048,
+		PortalsDiscovered:    24,
+		XMCollected:          78111812,
+
+		DistanceWalked: 1545,
+
+		ResonatorsDeployed:     38335,
+		LinksCreated:           4203,
+		ControlFieldsCreated:   2019,
+		MindUnitsCaptured:      31409,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            20403879,
+		PortalsCaptured:        4632,
+		UniquePortalsCaptured:  1288,
+
+		ResonatorsDestroyed:         33418,
+		PortalsNeutralized:          4876,
+		EnemyLinksDestroyed:         5747,
+		EnemyControlFieldsDestroyed: 2536,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 40419,
+	},
+
+	"haste_v0_nexus5-18.png": profile.Profile{
+		Nick:  "haste",
+		Level: 13,
+		AP:    15273144,
+
+		UniquePortalsVisited: 2980,
+		PortalsDiscovered:    20,
+		XMCollected:          72828849,
+
+		DistanceWalked: 1451,
+
+		ResonatorsDeployed:     36082,
+		LinksCreated:           3661,
+		ControlFieldsCreated:   1689,
+		MindUnitsCaptured:      30644,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            19057556,
+		PortalsCaptured:        4349,
+		UniquePortalsCaptured:  1250,
+
+		ResonatorsDestroyed:         31282,
+		PortalsNeutralized:          4559,
+		EnemyLinksDestroyed:         5213,
+		EnemyControlFieldsDestroyed: 2238,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 38343,
+	},
+
+	"viddy_v0_unknown.png": profile.Profile{
+		Nick:  "viddy",
+		Level: 14,
+		AP:    17115185,
+
+		UniquePortalsVisited: 3009,
+		PortalsDiscovered:    15,
+		XMCollected:          97394185,
+
+		DistanceWalked: 1353,
+
+		ResonatorsDeployed:     38722,
+		LinksCreated:           3470,
+		ControlFieldsCreated:   1467,
+		MindUnitsCaptured:      15179,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    1250,
+		XMRecharged:            30993663,
+		PortalsCaptured:        5782,
+		UniquePortalsCaptured:  1468,
+		ModsDeployed:           1468,
+
+		ResonatorsDestroyed:         37317,
+		PortalsNeutralized:          5211,
+		EnemyLinksDestroyed:         6135,
+		EnemyControlFieldsDestroyed: 2934,
+
+		MaxTimePortalHeld:     185,
+		MaxTimeLinkMaintained: 67,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      64,
+		LargestFieldMUsXDays:  5153,
+
+		Hacks: 37552,
+	},
+
+	"viddy_v0_unknown-1.png": profile.Profile{
+		Nick:  "viddy",
+		Level: 13,
+		AP:    15181213,
+
+		UniquePortalsVisited: 2789,
+		PortalsDiscovered:    15,
+		XMCollected:          89935217,
+
+		DistanceWalked: 1272,
+
+		ResonatorsDeployed:     34982,
+		LinksCreated:           3181,
+		ControlFieldsCreated:   1286,
+		MindUnitsCaptured:      14754,
+		LongestLinkEverCreated: 166,
+		LargestControlField:    1250,
+		XMRecharged:            29128903,
+		PortalsCaptured:        5089,
+		UniquePortalsCaptured:  1375,
+
+		ResonatorsDestroyed:         33275,
+		PortalsNeutralized:          4565,
+		EnemyLinksDestroyed:         5380,
+		EnemyControlFieldsDestroyed: 2570,
+
+		MaxTimePortalHeld:     155,
+		MaxTimeLinkMaintained: 67,
+		MaxLinkLengthXDays:    98,
+		MaxTimeFieldHeld:      64,
+		LargestFieldMUsXDays:  5153,
+
+		Hacks: 34808,
+	},
+
+	"haste_v0_nexus5-19.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    17709965,
+
+		UniquePortalsVisited: 3058,
+		PortalsDiscovered:    29,
+		XMCollected:          81346452,
+
+		DistanceWalked: 1617,
+
+		ResonatorsDeployed:     39980,
+		LinksCreated:           4466,
+		ControlFieldsCreated:   2167,
+		MindUnitsCaptured:      31943,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            21398558,
+		PortalsCaptured:        4797,
+		UniquePortalsCaptured:  1298,
+
+		ResonatorsDestroyed:         34694,
+		PortalsNeutralized:          5072,
+		EnemyLinksDestroyed:         6010,
+		EnemyControlFieldsDestroyed: 2664,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 41971,
+	},
+
+	"haste_v0_nexus5-20.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    17709965,
+
+		UniquePortalsVisited: 3058,
+		PortalsDiscovered:    29,
+		XMCollected:          81346452,
+
+		DistanceWalked: 1617,
+
+		ResonatorsDeployed:     39980,
+		LinksCreated:           4466,
+		ControlFieldsCreated:   2167,
+		MindUnitsCaptured:      31943,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            21398558,
+		PortalsCaptured:        4797,
+		UniquePortalsCaptured:  1298,
+
+		ResonatorsDestroyed:         34694,
+		PortalsNeutralized:          5072,
+		EnemyLinksDestroyed:         6010,
+		EnemyControlFieldsDestroyed: 2664,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 41971,
+	},
+
+	"haste_v0_nexus5-21.png": profile.Profile{
+		Nick:  "haste",
+		Level: 13,
+		AP:    16487110,
+
+		UniquePortalsVisited: 3036,
+		PortalsDiscovered:    24,
+		XMCollected:          77359545,
+
+		DistanceWalked: 1528,
+
+		ResonatorsDeployed:     37839,
+		LinksCreated:           4040,
+		ControlFieldsCreated:   1910,
+		MindUnitsCaptured:      31178,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            20335001,
+		PortalsCaptured:        4601,
+		UniquePortalsCaptured:  1284,
+
+		ResonatorsDestroyed:         33212,
+		PortalsNeutralized:          4849,
+		EnemyLinksDestroyed:         5664,
+		EnemyControlFieldsDestroyed: 2476,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 39964,
+	},
+
+	"haste_v0_nexus5-22.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    18571386,
+
+		UniquePortalsVisited: 3081,
+		PortalsDiscovered:    31,
+		XMCollected:          85417585,
+
+		DistanceWalked: 1692,
+
+		ResonatorsDeployed:     41826,
+		LinksCreated:           4593,
+		ControlFieldsCreated:   2232,
+		MindUnitsCaptured:      32146,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            22593900,
+		PortalsCaptured:        5089,
+		UniquePortalsCaptured:  1333,
+
+		ResonatorsDestroyed:         36340,
+		PortalsNeutralized:          5351,
+		EnemyLinksDestroyed:         6319,
+		EnemyControlFieldsDestroyed: 2799,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 43614,
+	},
+
+	"haste_v0_nexus5-23.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    17401066,
+
+		UniquePortalsVisited: 3052,
+		PortalsDiscovered:    28,
+		XMCollected:          79744982,
+
+		DistanceWalked: 1577,
+
+		ResonatorsDeployed:     39388,
+		LinksCreated:           4367,
+		ControlFieldsCreated:   2098,
+		MindUnitsCaptured:      31535,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            20786548,
+		PortalsCaptured:        4745,
+		UniquePortalsCaptured:  1293,
+
+		ResonatorsDestroyed:         34334,
+		PortalsNeutralized:          5017,
+		EnemyLinksDestroyed:         5944,
+		EnemyControlFieldsDestroyed: 2626,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 41119,
+	},
+
+	"haste_v0_nexus5-24.png": profile.Profile{
+		Nick:  "haste",
+		Level: 13,
+		AP:    16754299,
+
+		UniquePortalsVisited: 3048,
+		PortalsDiscovered:    24,
+		XMCollected:          77985729,
+
+		DistanceWalked: 1539,
+
+		ResonatorsDeployed:     38133,
+		LinksCreated:           4146,
+		ControlFieldsCreated:   1986,
+		MindUnitsCaptured:      31357,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            20403879,
+		PortalsCaptured:        4630,
+		UniquePortalsCaptured:  1288,
+
+		ResonatorsDestroyed:         33418,
+		PortalsNeutralized:          4876,
+		EnemyLinksDestroyed:         5747,
+		EnemyControlFieldsDestroyed: 2536,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 40259,
+	},
+
+	"haste_v0_nexus5-25.png": profile.Profile{
+		Nick:  "haste",
+		Level: 14,
+		AP:    17581951,
+
+		UniquePortalsVisited: 3053,
+		PortalsDiscovered:    28,
+		XMCollected:          80482237,
+
+		DistanceWalked: 1595,
+
+		ResonatorsDeployed:     39683,
+		LinksCreated:           4429,
+		ControlFieldsCreated:   2137,
+		MindUnitsCaptured:      31715,
+		LongestLinkEverCreated: 163,
+		LargestControlField:    19445,
+		XMRecharged:            21007953,
+		PortalsCaptured:        4767,
+		UniquePortalsCaptured:  1293,
+
+		ResonatorsDestroyed:         34519,
+		PortalsNeutralized:          5037,
+		EnemyLinksDestroyed:         6001,
+		EnemyControlFieldsDestroyed: 2663,
+
+		MaxTimePortalHeld:     109,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    15,
+		MaxTimeFieldHeld:      61,
+		LargestFieldMUsXDays:  11600,
+
+		Hacks: 41470,
+	},
+
+	"gnarfoz_v0_unknown.png": profile.Profile{
+		Nick:  "Gnarfoz",
+		Level: 10,
+		AP:    5114971,
+
+		UniquePortalsVisited: 1253,
+		PortalsDiscovered:    38,
+		XMCollected:          31181555,
+
+		DistanceWalked: 345,
+
+		ResonatorsDeployed:     11342,
+		LinksCreated:           2803,
+		ControlFieldsCreated:   725,
+		MindUnitsCaptured:      440607,
+		LongestLinkEverCreated: 94,
+		LargestControlField:    152278,
+		XMRecharged:            15887881,
+		PortalsCaptured:        901,
+		UniquePortalsCaptured:  402,
+
+		ResonatorsDestroyed:         7918,
+		PortalsNeutralized:          812,
+		EnemyLinksDestroyed:         1765,
+		EnemyControlFieldsDestroyed: 741,
+
+		MaxTimePortalHeld:     107,
+		MaxTimeLinkMaintained: 94,
+		MaxLinkLengthXDays:    111,
+		MaxTimeFieldHeld:      54,
+		LargestFieldMUsXDays:  12718,
+
+		Hacks: 15128,
+	},
+
+	// Monthly screenshot.
+	"gnarfoz_v0_unknown-1.png": profile.Profile{
+		Nick:  "Gnarfoz",
+		Level: 10,
+		AP:    6968731,
+
+		UniquePortalsVisited: 773,
+		PortalsDiscovered:    0,
+		XMCollected:          4720898,
+
+		DistanceWalked: 70,
+
+		ResonatorsDeployed:     1498,
+		LinksCreated:           316,
+		ControlFieldsCreated:   153,
+		MindUnitsCaptured:      1975,
+		LongestLinkEverCreated: 3,
+		LargestControlField:    327,
+		XMRecharged:            1410524,
+		PortalsCaptured:        169,
+		UniquePortalsCaptured:  132,
+		ModsDeployed:           445,
+
+		ResonatorsDestroyed:         1767,
+		PortalsNeutralized:          295,
+		EnemyLinksDestroyed:         288,
+		EnemyControlFieldsDestroyed: 162,
+
+		MaxTimePortalHeld:     187,
+		MaxTimeLinkMaintained: 24,
+		MaxLinkLengthXDays:    20,
+		MaxTimeFieldHeld:      24,
+		LargestFieldMUsXDays:  5428,
+
+		UniqueMissionsCompleted: 24,
+
+		Hacks: 1894,
+
+		InnovatorLevel: 9,
+	},
+
+	"arilds_v0_unknown.png": profile.Profile{
+		Nick:  "ArildS",
+		Level: 10,
+		AP:    15400656,
+
+		UniquePortalsVisited: 1590,
+		PortalsDiscovered:    54,
+		XMCollected:          83677640,
+
+		DistanceWalked: 814,
+
+		ResonatorsDeployed:     29195,
+		LinksCreated:           3613,
+		ControlFieldsCreated:   1608,
+		MindUnitsCaptured:      254349,
+		LongestLinkEverCreated: 207,
+		LargestControlField:    114599,
+		XMRecharged:            27971604,
+		PortalsCaptured:        3182,
+		UniquePortalsCaptured:  884,
+
+		ResonatorsDestroyed:         28549,
+		PortalsNeutralized:          3764,
+		EnemyLinksDestroyed:         6398,
+		EnemyControlFieldsDestroyed: 3351,
+
+		MaxTimePortalHeld:     306,
+		MaxTimeLinkMaintained: 89,
+		MaxLinkLengthXDays:    628,
+		MaxTimeFieldHeld:      89,
+		LargestFieldMUsXDays:  116533,
+
+		Hacks: 40960,
+	},
+
+	"forferdet_v0_unknown-1.png": profile.Profile{
+		Nick:  "forferdet",
+		Level: 11,
+		AP:    12750621,
+
+		UniquePortalsVisited: 1079,
+		XMCollected:          53925206,
+
+		DistanceWalked: 929,
+
+		ResonatorsDeployed:     22753,
+		LinksCreated:           5074,
+		ControlFieldsCreated:   2637,
+		MindUnitsCaptured:      18954,
+		LongestLinkEverCreated: 45,
+		LargestControlField:    692,
+		XMRecharged:            24629947,
+		PortalsCaptured:        2294,
+		UniquePortalsCaptured:  706,
+
+		ResonatorsDestroyed:         15851,
+		PortalsNeutralized:          2303,
+		EnemyLinksDestroyed:         3046,
+		EnemyControlFieldsDestroyed: 1451,
+
+		MaxTimePortalHeld:     37,
+		MaxTimeLinkMaintained: 55,
+		MaxLinkLengthXDays:    93,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  540,
+
+		Hacks: 21386,
+	},
+
+	"steino_v0_unknown-2.png": profile.Profile{
+		Nick:  "steino",
+		Level: 8,
+		AP:    1637518,
+
+		UniquePortalsVisited: 777,
+		PortalsDiscovered:    2,
+		XMCollected:          4073906,
+
+		DistanceWalked: 174,
+
+		ResonatorsDeployed:     3453,
+		LinksCreated:           696,
+		ControlFieldsCreated:   363,
+		MindUnitsCaptured:      10740,
+		LongestLinkEverCreated: 3,
+		LargestControlField:    378,
+		XMRecharged:            485829,
+		PortalsCaptured:        274,
+		UniquePortalsCaptured:  99,
+		ModsDeployed:           4,
+
+		ResonatorsDestroyed:         1762,
+		PortalsNeutralized:          277,
+		EnemyLinksDestroyed:         283,
+		EnemyControlFieldsDestroyed: 136,
+
+		MaxTimePortalHeld:     16,
+		MaxTimeLinkMaintained: 14,
+		MaxLinkLengthXDays:    5,
+		MaxTimeFieldHeld:      6,
+		LargestFieldMUsXDays:  760,
+
+		Hacks: 2849,
+
+		InnovatorLevel: 3,
+	},
+
+	"bentis_v0_unknown.png": profile.Profile{
+		Nick:  "Bentis",
+		Level: 16,
+		AP:    40795452,
+
+		UniquePortalsVisited: 7953,
+		PortalsDiscovered:    22,
+		XMCollected:          113750958,
+
+		DistanceWalked: 1965,
+
+		ResonatorsDeployed:     58346,
+		LinksCreated:           6374,
+		ControlFieldsCreated:   3084,
+		MindUnitsCaptured:      73932,
+		LongestLinkEverCreated: 99,
+		LargestControlField:    22944,
+		XMRecharged:            42141305,
+		PortalsCaptured:        14709,
+		UniquePortalsCaptured:  4609,
+		ModsDeployed:           547,
+
+		ResonatorsDestroyed:         75702,
+		PortalsNeutralized:          11971,
+		EnemyLinksDestroyed:         14331,
+		EnemyControlFieldsDestroyed: 6348,
+
+		MaxTimePortalHeld:     178,
+		MaxTimeLinkMaintained: 61,
+		MaxLinkLengthXDays:    1619,
+		MaxTimeFieldHeld:      51,
+		LargestFieldMUsXDays:  26317,
+
+		UniqueMissionsCompleted: 7,
+
+		Hacks: 39176,
+
+		InnovatorLevel: 13,
+	},
+
+	"forferdet_v0_unknown-2.png": profile.Profile{
+		Nick:  "forferdet",
+		Level: 15,
+		AP:    30157205,
+
+		UniquePortalsVisited: 1885,
+		PortalsDiscovered:    14,
+		XMCollected:          121396161,
+
+		DistanceWalked: 1601,
+
+		ResonatorsDeployed:     49864,
+		LinksCreated:           8215,
+		ControlFieldsCreated:   3901,
+		MindUnitsCaptured:      26106,
+		LongestLinkEverCreated: 156,
+		LargestControlField:    977,
+		XMRecharged:            40035020,
+		PortalsCaptured:        5393,
+		UniquePortalsCaptured:  1141,
+		ModsDeployed:           3030,
+
+		ResonatorsDestroyed:         45035,
+		PortalsNeutralized:          6219,
+		EnemyLinksDestroyed:         9436,
+		EnemyControlFieldsDestroyed: 4731,
+
+		MaxTimePortalHeld:     68,
+		MaxTimeLinkMaintained: 55,
+		MaxLinkLengthXDays:    2543,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  2632,
+
+		UniqueMissionsCompleted: 9,
+
+		Hacks:           44838,
+		GlyphHackPoints: 35239,
+	},
+
+	"forferdet_v0_unknown-3.png": profile.Profile{
+		Nick:  "forferdet",
+		Level: 15,
+		AP:    29044336,
+
+		UniquePortalsVisited: 1874,
+		PortalsDiscovered:    13,
+		XMCollected:          116276662,
+
+		DistanceWalked: 1560,
+
+		ResonatorsDeployed:     48179,
+		LinksCreated:           8033,
+		ControlFieldsCreated:   3843,
+		MindUnitsCaptured:      25903,
+		LongestLinkEverCreated: 156,
+		LargestControlField:    977,
+		XMRecharged:            38881810,
+		PortalsCaptured:        5184,
+		UniquePortalsCaptured:  1136,
+		ModsDeployed:           2658,
+
+		ResonatorsDestroyed:         42729,
+		PortalsNeutralized:          5912,
+		EnemyLinksDestroyed:         8910,
+		EnemyControlFieldsDestroyed: 4465,
+
+		MaxTimePortalHeld:     59,
+		MaxTimeLinkMaintained: 55,
+		MaxLinkLengthXDays:    2543,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  2632,
+
+		UniqueMissionsCompleted: 7,
+
+		Hacks:           43350,
+		GlyphHackPoints: 27254,
+
+		InnovatorLevel: 11,
+	},
+
+	"zyp_v0_unknown-2.png": profile.Profile{
+		Nick:  "zyp",
+		Level: 9,
+		AP:    2400020,
+
+		UniquePortalsVisited: 782,
+		XMCollected:          6440635,
+
+		DistanceWalked: 137,
+
+		ResonatorsDeployed:     3560,
+		LinksCreated:           1116,
+		ControlFieldsCreated:   528,
+		MindUnitsCaptured:      30116,
+		LongestLinkEverCreated: 97,
+		LargestControlField:    7221,
+		XMRecharged:            3259370,
+		PortalsCaptured:        471,
+		UniquePortalsCaptured:  322,
+
+		ResonatorsDestroyed:         3163,
+		PortalsNeutralized:          355,
+		EnemyLinksDestroyed:         866,
+		EnemyControlFieldsDestroyed: 371,
+
+		MaxTimePortalHeld:     32,
+		MaxTimeLinkMaintained: 25,
+		MaxLinkLengthXDays:    83,
+		MaxTimeFieldHeld:      15,
+		LargestFieldMUsXDays:  3117,
+
+		Hacks: 3077,
+	},
+
+	"wexp_v0_unknown-2.png": profile.Profile{
+		Nick:  "wexp",
+		Level: 8,
+		AP:    1788413,
+
+		UniquePortalsVisited: 271,
+		XMCollected:          9425170,
+
+		DistanceWalked: 195,
+
+		ResonatorsDeployed:     2685,
+		LinksCreated:           796,
+		ControlFieldsCreated:   424,
+		MindUnitsCaptured:      31119,
+		LongestLinkEverCreated: 31,
+		LargestControlField:    9875,
+		XMRecharged:            5257960,
+		PortalsCaptured:        246,
+		UniquePortalsCaptured:  125,
+
+		ResonatorsDestroyed:         1475,
+		PortalsNeutralized:          223,
+		EnemyLinksDestroyed:         345,
+		EnemyControlFieldsDestroyed: 175,
+
+		MaxTimePortalHeld:     26,
+		MaxTimeLinkMaintained: 19,
+		MaxLinkLengthXDays:    114,
+		MaxTimeFieldHeld:      16,
+		LargestFieldMUsXDays:  9695,
+
+		Hacks: 3299,
+	},
+
+	"greenduck_v0_unknown.png": profile.Profile{
+		Nick:  "Greenduck",
+		Level: 15,
+		AP:    41899205,
+
+		UniquePortalsVisited: 1439,
+		PortalsDiscovered:    84,
+		XMCollected:          128676839,
+
+		DistanceWalked: 2422,
+
+		ResonatorsDeployed:     65685,
+		LinksCreated:           22831,
+		ControlFieldsCreated:   9977,
+		MindUnitsCaptured:      149265,
+		LongestLinkEverCreated: 253,
+		LargestControlField:    851,
+		XMRecharged:            26909815,
+		PortalsCaptured:        5334,
+		UniquePortalsCaptured:  781,
+		ModsDeployed:           311,
+
+		ResonatorsDestroyed:         50650,
+		PortalsNeutralized:          6044,
+		EnemyLinksDestroyed:         9434,
+		EnemyControlFieldsDestroyed: 4665,
+
+		MaxTimePortalHeld:     84,
+		MaxTimeLinkMaintained: 52,
+		MaxLinkLengthXDays:    95,
+		MaxTimeFieldHeld:      52,
+		LargestFieldMUsXDays:  1873,
+
+		UniqueMissionsCompleted: 1,
+
+		Hacks: 66036,
+
+		InnovatorLevel: 13,
+	},
 }
 
 var (
 	onlyTop         bool
 	onlyBottom      bool
+	expensive       bool
 	overrideProfile int
 )
 
 func init() {
 	conf.Load("../config.json")
-	conf.Config.Cache = "testdata/"
 	InitConfig()
+
+	model.Init()
 
 	flag.BoolVar(&onlyTop, "top", false, "Only validate top part of OCR image.")
 	flag.BoolVar(&onlyBottom, "bottom", false, "Only validate bottom part of OCR image.")
+	flag.BoolVar(&expensive, "expensive", false, "Only run expensive tests.")
 	flag.IntVar(&overrideProfile, "profile", 0, "Profile to use.")
 
 	flag.Parse()
 }
 
-func validateTop(t *testing.T, file string, p profile.Profile) {
-	e := testData[file]
-
+func validateTop(t *testing.T, file string, e profile.Profile, p profile.Profile) {
 	if p.Nick != e.Nick {
 		t.Errorf("%s: .Nick: Got %v Expected %v", file, p.Nick, e.Nick)
 	}
@@ -3432,9 +4277,7 @@ func validateTop(t *testing.T, file string, p profile.Profile) {
 	}
 }
 
-func validateBottom(t *testing.T, file string, p profile.Profile) {
-	e := testData[file]
-
+func validateBottom(t *testing.T, file string, e profile.Profile, p profile.Profile) {
 	if p.UniquePortalsVisited != e.UniquePortalsVisited {
 		t.Errorf("%s: .UniquePortalsVisited: Got %v Expected %v", file, p.UniquePortalsVisited, e.UniquePortalsVisited)
 	}
@@ -3546,23 +4389,96 @@ func validateBottom(t *testing.T, file string, p profile.Profile) {
 
 // Test wrapper
 func w(t *testing.T, file string) {
+	if !testing.Short() {
+		t.Skip("skipping test in expensive mode.")
+	}
+
+	conf.Config.Cache = "testdata/"
+
 	t.Parallel()
 
 	p := New(file, overrideProfile)
 	p.Split()
 
+	e := testData[file]
 	if !onlyBottom {
 		p.ProcessTop()
-		validateTop(t, file, p.Profile)
+		validateTop(t, file, e, p.Profile)
 	}
 
 	if !onlyTop {
 		p.ProcessBottom()
 		p.ProcessInnovator()
-		validateBottom(t, file, p.Profile)
+		validateBottom(t, file, e, p.Profile)
 	}
 
 	p.CleanUp()
+}
+
+func rowToQueueProfile(rows *sql.Rows) userQueueEntry {
+	var e userQueueEntry
+	err := rows.Scan(
+		&e.Id, &e.File, &e.OCRProfile, &e.Processed, &e.Processtime,
+
+		&e.Profile.Id, &e.Profile.Timestamp, &e.Profile.Nick, &e.Profile.Level,
+		&e.Profile.AP,
+
+		&e.Profile.UniquePortalsVisited, &e.Profile.PortalsDiscovered,
+		&e.Profile.XMCollected,
+
+		&e.Profile.DistanceWalked,
+
+		&e.Profile.ResonatorsDeployed, &e.Profile.LinksCreated,
+		&e.Profile.ControlFieldsCreated, &e.Profile.MindUnitsCaptured,
+		&e.Profile.LongestLinkEverCreated, &e.Profile.LargestControlField,
+		&e.Profile.XMRecharged, &e.Profile.PortalsCaptured,
+		&e.Profile.UniquePortalsCaptured, &e.Profile.ModsDeployed,
+
+		&e.Profile.ResonatorsDestroyed, &e.Profile.PortalsNeutralized,
+		&e.Profile.EnemyLinksDestroyed, &e.Profile.EnemyControlFieldsDestroyed,
+
+		&e.Profile.MaxTimePortalHeld, &e.Profile.MaxTimeLinkMaintained,
+		&e.Profile.MaxLinkLengthXDays, &e.Profile.MaxTimeFieldHeld,
+		&e.Profile.LargestFieldMUsXDays,
+
+		&e.Profile.UniqueMissionsCompleted,
+
+		&e.Profile.Hacks, &e.Profile.GlyphHackPoints,
+		&e.Profile.ConsecutiveDaysHacking,
+
+		&e.Profile.AgentsSuccessfullyRecruited,
+
+		&e.Profile.InnovatorLevel,
+	)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return e
+}
+
+func TestOCRAllExpensive(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
+
+	rows := model.GetAllUserQueuesWithProfiles()
+
+	for rows.Next() {
+		e := rowToQueueProfile(rows)
+
+		fmt.Println("Testing ", e.File)
+
+		p := New(e.File, e.OCRProfile)
+		p.Split()
+		p.Process()
+
+		validateTop(t, e.File, e.Profile, p.Profile)
+		validateBottom(t, e.File, e.Profile, p.Profile)
+
+		p.CleanUp()
+	}
 }
 
 func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
@@ -3572,6 +4488,11 @@ func TestOCR_480x_wexp_v0_unknown(t *testing.T) {
 func TestOCR_480x_wexp_v0_unknown_1(t *testing.T) {
 	// Invalid Max Link Length x Days
 	w(t, "wexp_v0_unknown-1.png")
+}
+
+func TestOCR_480x_wexp_v0_unknown_2(t *testing.T) {
+	// Invalid ap
+	w(t, "wexp_v0_unknown-2.png")
 }
 
 func TestOCR_640x_mvnch_v1640_iphone5(t *testing.T) {
@@ -3718,6 +4639,10 @@ func TestOCR_720x_sockerdricka_v0_unknown(t *testing.T) {
 	w(t, "sockerdricka_v0_unknown.png")
 }
 
+func TestOCR_720x_arilds_v0_unknown(t *testing.T) {
+	w(t, "arilds_v0_unknown.png")
+}
+
 func TestOCR_768x_oteckeh_v1630_nexus4(t *testing.T) {
 	w(t, "oteckeh_v1630_nexus4.png")
 }
@@ -3755,6 +4680,11 @@ func TestOCR_768x_zyp_v0_unknown_1(t *testing.T) {
 	w(t, "zyp_v0_unknown-1.png")
 }
 
+func TestOCR_768x_zyp_v0_unknown_2(t *testing.T) {
+	// Invalid nick.
+	w(t, "zyp_v0_unknown-2.png")
+}
+
 func TestOCR_1080x_steino_v0_unknown(t *testing.T) {
 	// Invalid nick.
 	w(t, "steino_v0_unknown.png")
@@ -3765,12 +4695,29 @@ func TestOCR_1080x_steino_v0_unknown_1(t *testing.T) {
 	w(t, "steino_v0_unknown-1.png")
 }
 
+func TestOCR_1080x_Bentis_v0_unknown_1(t *testing.T) {
+	// Invalid nick
+	w(t, "bentis_v0_unknown.png")
+}
+
 func TestOCR_1080x_haste_v1620_nexus5(t *testing.T) {
 	w(t, "haste_v1620_nexus5.png")
 }
 
 func TestOCR_1080x_forferdet_v0_unknown(t *testing.T) {
 	w(t, "forferdet_v0_unknown.png")
+}
+
+func TestOCR_1080x_forferdet_v0_unknown_1(t *testing.T) {
+	w(t, "forferdet_v0_unknown-1.png")
+}
+
+func TestOCR_1080x_forferdet_v0_unknown_2(t *testing.T) {
+	w(t, "forferdet_v0_unknown-2.png")
+}
+
+func TestOCR_1080x_forferdet_v0_unknown_3(t *testing.T) {
+	w(t, "forferdet_v0_unknown-3.png")
 }
 
 func TestOCR_1080x_erebwain_v1620_s4active(t *testing.T) {
@@ -3903,12 +4850,101 @@ func TestOCR_1080x_haste_v0_nexus5_15(t *testing.T) {
 	w(t, "haste_v0_nexus5-15.png")
 }
 
+func TestOCR_1080x_haste_v0_nexus5_16(t *testing.T) {
+	// Invalid resonators destroyed.
+	w(t, "haste_v0_nexus5-16.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_17(t *testing.T) {
+	// Invalid enemy control fields destroyed.
+	w(t, "haste_v0_nexus5-17.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_18(t *testing.T) {
+	// Invalid mind units captured and largest field mus x days.
+	w(t, "haste_v0_nexus5-18.png")
+}
+
+func TestOCR_1080x_viddy_v0_unknown(t *testing.T) {
+	// Invalid control fields created.
+	w(t, "viddy_v0_unknown.png")
+}
+
+func TestOCR_1080x_viddy_v0_unknown_1(t *testing.T) {
+	// Invalid control fields created, portals neutralized, max time link
+	// maintained.
+	w(t, "viddy_v0_unknown-1.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_19(t *testing.T) {
+	// Invalid resonators destroyed.
+	w(t, "haste_v0_nexus5-19.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_20(t *testing.T) {
+	// Invalid level.
+	w(t, "haste_v0_nexus5-20.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_21(t *testing.T) {
+	// Invalid ap.
+	w(t, "haste_v0_nexus5-21.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_22(t *testing.T) {
+	// Invalid distance walked, resonators deployed, mind units captured,
+	// longest link ever created, resonators destroyed, enemy links destroyed,
+	// max time field held, largest field mus x days, hacks.
+	w(t, "haste_v0_nexus5-22.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_23(t *testing.T) {
+	// Invalid hacks.
+	w(t, "haste_v0_nexus5-23.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_24(t *testing.T) {
+	// Invalid links created, control fields created, portals captured, portals
+	// neutralized, enemy control fields destroyed, max time portal held,
+	// largest fieild mus x days.
+	w(t, "haste_v0_nexus5-24.png")
+}
+
+func TestOCR_1080x_haste_v0_nexus5_25(t *testing.T) {
+	// Invalid enemy links destroyed.
+	w(t, "haste_v0_nexus5-25.png")
+}
+
+func TestOCR_1080x_gnarfoz_v0_unknown(t *testing.T) {
+	// Invalid mind units captured.
+	w(t, "gnarfoz_v0_unknown.png")
+}
+
+func TestOCR_1080x_gnarfoz_v0_unknown_1(t *testing.T) {
+	// Invalid resonators destroyed.
+	w(t, "gnarfoz_v0_unknown-1.png")
+}
+
+func TestOCR_1080x_steino_v0_unknown_2(t *testing.T) {
+	// Invalid max time field held.
+	w(t, "steino_v0_unknown-2.png")
+}
+
+func TestOCR_1080x_Geenduck_v0_unknown(t *testing.T) {
+	// Invalid nick.
+	w(t, "greenduck_v0_unknown.png")
+}
+
 func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
 	w(t, "forferdet_v0_unknowntablet.png")
 }
 
 func TestOCR_1200x_viddy_v1640_nexus7_2013(t *testing.T) {
 	w(t, "viddy_v1640_nexus7_2013.png")
+}
+
+func TestOCR_1200x_forferdet_v0_unknown_1(t *testing.T) {
+	w(t, "forferdet_v0_unknown-1.png")
 }
 
 func TestOCR_1440x_haste_v1680_nexus6(t *testing.T) {
