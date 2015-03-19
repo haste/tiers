@@ -158,7 +158,7 @@ for cnt in contours:
 	r += 1
 	approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
 
-	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 7 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
+	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 7 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 1000:
 		fill_view(view, approx)
 	elif len(approx) == 6 and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
 		max_cosine = 0.0
