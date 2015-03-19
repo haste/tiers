@@ -278,7 +278,7 @@ for row in reversed(top):
 top = top[0:offset_bottom, :view.shape[1]]
 
 # cover up the share button
-cv2.rectangle(top, (top.shape[1] // 8 * 6, 0), (top.shape[1], top.shape[0]//2), (0, 0, 0), cv.CV_FILLED)
+cv2.rectangle(top, (top.shape[1] // 8 * 6, 0), (top.shape[1], top.shape[0] // 10 * 6), (0, 0, 0), cv.CV_FILLED)
 
 # Lines below
 bottom = view[achieve_bottom:, :view.shape[1]]
