@@ -1,0 +1,30 @@
+#!/bin/bash
+
+section=${1};
+width=${2};
+
+for (( resize = 100; resize <= 300; resize += 1 ))
+do
+	for (( level = 0; level <= 50; level += 5 ))
+	do
+		printf "%d %2d: " ${resize} ${level};
+
+		optCmd="go run utils/genConvert.go -${section}-resize ${resize} -${section}-level ${level} -base ${width} -output ${width}";
+		testCmd="go test -short -parallel 4 -test.run ${width}x ./ocr/... -${section}";
+
+		start=$(date +%s.%N)
+		eval $optCmd;
+		testReturn=$(eval $testCmd);
+		end=$(date +%s.%N)
+
+		numErrors=$(echo "${testReturn}" | grep -c Expected)
+		printf "%3d error(s) in %.4fs\n" ${numErrors} $(echo "${end} - ${start}" | bc -l);
+
+		if [ ${numErrors} -eq 0 ]
+		then
+			echo ${optCmd};
+			exit 0;
+			#echo ${testCmd};
+		fi
+	done
+done

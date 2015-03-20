@@ -27,7 +27,9 @@ type innovator struct {
 }
 
 type OCRProfile struct {
-	Top    []string `json:"top"`
+	Nick   []string `json:"nick"`
+	Level  []string `json:"level"`
+	AP     []string `json:"ap"`
 	Bottom []string `json:"bottom"`
 }
 
@@ -83,14 +85,25 @@ func InitConfig() {
 	}
 }
 
+func max(x, y int64) int64 {
+	if x > y {
+		return x
+	}
+
+	return y
+}
+
 func sanitizeNum(input []byte) int64 {
-	input = regexp.MustCompile(`[lL|\]JI]`).ReplaceAll(input, []byte("1"))
-	input = regexp.MustCompile(`[Oo]`).ReplaceAll(input, []byte("0"))
+	input = regexp.MustCompile(`[lL|\]IitJ]`).ReplaceAll(input, []byte("1"))
+	input = regexp.MustCompile(`[DOo]`).ReplaceAll(input, []byte("0"))
+	input = regexp.MustCompile(`[Ss]`).ReplaceAll(input, []byte("5"))
 
 	n := string(input)
 	n = strings.Replace(n, "Q", "9", -1)
 	n = strings.Replace(n, "B", "8", -1)
-	n = strings.Replace(n, "S", "5", -1)
+	n = strings.Replace(n, "Z", "7", -1)
+	n = strings.Replace(n, "G", "6", -1)
+	n = strings.Replace(n, "A", "4", -1)
 	n = strings.Replace(n, "n", "11", -1)
 	n = strings.Replace(n, "H", "11", -1)
 	n = strings.Replace(n, ",", "", -1)
@@ -120,21 +133,25 @@ func matchNum(res []byte, pattern string) int64 {
 	return sanitizeNum(r.FindSubmatch(res)[1])
 }
 
-func genMatchNum(res []byte, s string) int64 {
-	s = regexp.MustCompile(`[Ss]`).ReplaceAllLiteralString(s, "[Ss5]")
-	s = regexp.MustCompile(`[aeCc]`).ReplaceAllLiteralString(s, "[aecE8B9Cc0]")
-	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]")
-	s = regexp.MustCompile(`[OoUu]`).ReplaceAllLiteralString(s, "[0OoUu]")
-	s = regexp.MustCompile(`[ltIf]`).ReplaceAllLiteralString(s, "[l|1tIf]")
+func genMatch(s string) string {
+	s = regexp.MustCompile(`[Ss]`).ReplaceAllLiteralString(s, "[Ss5]+")
+	s = regexp.MustCompile(`[aeCcOoUu]`).ReplaceAllLiteralString(s, "[aecE8B9Cc0OoUu]+")
+	s = regexp.MustCompile(`[Pp]`).ReplaceAllLiteralString(s, "[Pp]+")
+	s = regexp.MustCompile(`[ltIfi]`).ReplaceAllLiteralString(s, "[l|1tIfi]+")
 	s = regexp.MustCompile(`\s+`).ReplaceAllLiteralString(s, `\s*`)
 
-	s = strings.Replace(s, `D`, "[D00]", -1)
-	s = strings.Replace(s, `r`, "[rt]", -1)
+	s = strings.Replace(s, "V", "[Vvu]", -1)
+	s = strings.Replace(s, `D`, "[D00]+", -1)
+	s = strings.Replace(s, `r`, "[rt]+", -1)
 	s = strings.Replace(s, `Hn`, "im", -1)
 	s = strings.Replace(s, `-`, ".", -1)
-	s = strings.Replace(s, `#`, `([0-9QLIlJBOonHS|,\] ]+)`, -1)
+	s = strings.Replace(s, `#`, `([0-9QLIiltJBZADOonHSsG|,\] ]+)`, -1)
 
-	return matchNum(res, s)
+	return s
+}
+
+func genMatchNum(res []byte, s string) int64 {
+	return matchNum(res, genMatch(s))
 }
 
 type OCR struct {
@@ -194,8 +211,12 @@ func (ocr *OCR) getArguments(part string, width int) []string {
 	}
 
 	switch part {
-	case "top":
-		args = append(args, profile.Top...)
+	case "nick":
+		args = append(args, profile.Nick...)
+	case "level":
+		args = append(args, profile.Level...)
+	case "ap":
+		args = append(args, profile.AP...)
 	case "bottom":
 		args = append(args, profile.Bottom...)
 	}
@@ -213,16 +234,23 @@ func (ocr *OCR) mogrify(kind string) {
 	}
 }
 
-func (ocr *OCR) tesseract(fileName string) []byte {
-	tesseract := exec.Command(conf.Config.TesseractBin, []string{
-		"-psm",
-		"4",
-		"-l", "eng+ing",
+func (ocr *OCR) tesseract(fileName, kind string) []byte {
+	args := []string{"-psm"}
+
+	if kind == "nick" {
+		args = append(args, "8")
+	} else {
+		args = append(args, "4")
+	}
+
+	args = append(args, []string{
+		"-l", "eng",
 		fileName,
 		"stdout",
 		"ingress",
 	}...)
 
+	tesseract := exec.Command(conf.Config.TesseractBin, args...)
 	res, err := tesseract.Output()
 	if err != nil {
 		log.Fatal("tesseract ", err)
@@ -232,23 +260,64 @@ func (ocr *OCR) tesseract(fileName string) []byte {
 }
 
 func (ocr *OCR) replaces(in []byte) []byte {
-	// MaxTHnekajHem | MaxTHnekaiHem
+	in = regexp.MustCompile(genMatch(`Enenwljnks`)).ReplaceAllLiteral(in, []byte("Enemy Links"))
+	in = regexp.MustCompile(genMatch(`Enenlenks`)).ReplaceAllLiteral(in, []byte("Enemy Links"))
+	in = regexp.MustCompile(genMatch(`EnmnyLmks`)).ReplaceAllLiteral(in, []byte("Enemy Links"))
+
+	in = regexp.MustCompile(genMatch(`Resonahus`)).ReplaceAllLiteral(in, []byte("Resonators"))
+	in = regexp.MustCompile(genMatch(`Resonauus`)).ReplaceAllLiteral(in, []byte("Resonators"))
+	in = regexp.MustCompile(genMatch(`ResonauHs`)).ReplaceAllLiteral(in, []byte("Resonators"))
+
+	in = regexp.MustCompile(genMatch(`MalemeLlnk`)).ReplaceAllLiteral(in, []byte("Max Time Link"))
+	in = regexp.MustCompile(genMatch(`Maleme`)).ReplaceAllLiteral(in, []byte("Max Time"))
+
+	// MaxThneLuutMaunamed
+	in = regexp.MustCompile(genMatch(`MaxThneLuutMaunamed`)).ReplaceAllLiteral(in, []byte("Max Time Link Maintained"))
+	// MaxThneLnntMannamed
+	in = regexp.MustCompile(genMatch(`MaxThneLnntMannamed`)).ReplaceAllLiteral(in, []byte("Max Time Link Maintained"))
+	// MaXTuneLhnrMaunmned
+	in = regexp.MustCompile(genMatch(`MaXTuneLhnrMaunmned`)).ReplaceAllLiteral(in, []byte("Max Time Link Maintained"))
+
+	// MaxTHnekajHem
+	// MaxTHnekaiHem
 	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0]k[aecE8B9Cc0][ij]H[aecE8B9Cc0][mM]`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
 	// MaxTHnekamed
 	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0]k[aecE8B9Cc0]m[aecE8B9Cc0]d`).ReplaceAllLiteral(in, []byte("Max Time Field Held"))
-	// MaxTHnePonalHdd | MaxTHnePonalHem
-	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[Hh]n[aecE8B9Cc0][Pp]on[aecE8B9Cc0]lH[aecE8B9Cc0d][mMd]`).ReplaceAllLiteral(in, []byte("Max Time Portal Held"))
-	// 131th Hack Points | 131th HaCk Points
+
+	// MaxTHnePonalHdd
+	// MaxTHnePonalHem
+	// MaxTnnePonalHem
+	// MaxTHnePonaled
+	// MaxTunePodalHdd
+	in = regexp.MustCompile(`M[aecE8B9Cc0]xT[HhnUu]*[aecE8B9Cc0][Pp]o[Nnd]*[aecE8B9Cc0]l[HhnaecE8B9Cc0d]*[mMd]*`).ReplaceAllLiteral(in, []byte("Max Time Portal Held"))
+
+	// 131th Hack Points
+	// 131th HaCk Points
 	in = regexp.MustCompile(`131th\s*H[aecE8B9Cc0][aecE8B9Cc0]k\s*[Pp]oin[l|1tI][Ss5]`).ReplaceAllLiteral(in, []byte("Glyph Hack Points"))
+
 	// MamekLengH1xDays
-	in = regexp.MustCompile(`M[aecE8B9Cc0]m[aecE8B9Cc0]kL[aecE8B9Cc0]ng[Hh]1xD[aecE8B9Cc0]y[Ss5]`).ReplaceAllLiteral(in, []byte("Max Link Length x Days"))
+	// MamekLengU1xDays
+	// MamekLengN1xDays
+	in = regexp.MustCompile(`M[aecE8B9Cc0]m[aecE8B9Cc0]kL[aecE8B9Cc0]ng[HhUuNn]1xD[aecE8B9Cc0]y[Ss5]`).ReplaceAllLiteral(in, []byte("Max Link Length x Days"))
+
+	// HBCKS
+	in = regexp.MustCompile(`[Hh][AaB][Cc][Kk][5Ss]`).ReplaceAllLiteral(in, []byte("Hacks"))
 
 	in = bytes.Replace(in, []byte("rn"), []byte("m"), -1)
+
 	in = bytes.Replace(in, []byte("081310de"), []byte("Deployed"), -1)
+
+	in = bytes.Replace(in, []byte("Desnoyed"), []byte("Destroyed"), -1)
 	in = bytes.Replace(in, []byte("Deonyed"), []byte("Destroyed"), -1)
 	in = bytes.Replace(in, []byte("08500de"), []byte("Destroyed"), -1)
+	in = bytes.Replace(in, []byte("Deshoyed"), []byte("Destroyed"), -1)
+	in = bytes.Replace(in, []byte("DesUOyed"), []byte("Destroyed"), -1)
+
 	in = bytes.Replace(in, []byte("M08"), []byte("MUs"), -1)
+
+	in = bytes.Replace(in, []byte("knbdays"), []byte("km-days"), -1)
 	in = bytes.Replace(in, []byte("knrdays"), []byte("km-days"), -1)
+	in = bytes.Replace(in, []byte("kanays"), []byte("km-days"), -1)
 
 	return in
 }
@@ -267,17 +336,37 @@ func (ocr *OCR) ProcessInnovator() {
 	}
 }
 
+func (ocr *OCR) ProcessNick() {
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_nick.png"
+	ocr.mogrify("nick")
+	nick := ocr.tesseract(fileName, "nick")
+	ocr.buildProfileNick(nick)
+}
+
+func (ocr *OCR) ProcessLevel() {
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_level.png"
+	ocr.mogrify("level")
+	level := ocr.tesseract(fileName, "level")
+	ocr.buildProfileLevel(level)
+}
+
+func (ocr *OCR) ProcessAP() {
+	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_ap.png"
+	ocr.mogrify("ap")
+	ap := ocr.tesseract(fileName, "ap")
+	ocr.buildProfileAP(ap)
+}
+
 func (ocr *OCR) ProcessTop() {
-	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_top.png"
-	ocr.mogrify("top")
-	top := ocr.tesseract(fileName)
-	ocr.buildProfileTop(top)
+	ocr.ProcessNick()
+	ocr.ProcessLevel()
+	ocr.ProcessAP()
 }
 
 func (ocr *OCR) ProcessBottom() {
 	fileName := conf.Config.Cache + "/" + ocr.tmpName + "_bottom.png"
 	ocr.mogrify("bottom")
-	bottom := ocr.tesseract(fileName)
+	bottom := ocr.tesseract(fileName, "bottom")
 	bottom = ocr.replaces(bottom)
 	ocr.buildProfileBottom(bottom)
 }
@@ -289,18 +378,28 @@ func (ocr *OCR) Process() {
 }
 
 func (ocr *OCR) CleanUp() {
-	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_top.png")
+	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_nick.png")
+	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_level.png")
+	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_ap.png")
 	os.Remove(conf.Config.Cache + "/" + ocr.tmpName + "_bottom.png")
 }
 
-func (ocr *OCR) buildProfileTop(top []byte) {
+func (ocr *OCR) buildProfileNick(nick []byte) {
 	p := &ocr.Profile
 
-	fmt.Printf("%s\n", top)
+	p.Nick = matchString(nick, "([a-zA-Z0-9]+)")
+}
 
-	p.Nick = matchString(top, "([a-zA-Z0-9]+)[^\n]*\\s*[^\n]*LVL")
-	p.Level = int(genMatchNum(top, "L V L #"))
-	p.AP = genMatchNum(top, "# A P")
+func (ocr *OCR) buildProfileLevel(level []byte) {
+	p := &ocr.Profile
+
+	p.Level = int(genMatchNum(level, "L V L #"))
+}
+
+func (ocr *OCR) buildProfileAP(ap []byte) {
+	p := &ocr.Profile
+
+	p.AP = genMatchNum(ap, "# A P")
 }
 
 func (ocr *OCR) buildProfileBottom(bottom []byte) {
@@ -347,7 +446,10 @@ func (ocr *OCR) buildProfileBottom(bottom []byte) {
 	// Resource Gathering
 	p.Hacks = genMatchNum(bottom, "Hacks #")
 	p.GlyphHackPoints = genMatchNum(bottom, "Glyph Hack Points #")
-	p.ConsecutiveDaysHacking = genMatchNum(bottom, "Consecutive Days Hacking #")
+	p.ConsecutiveDaysHacking = max(
+		genMatchNum(bottom, "Consecutive Days Hacking # days"),
+		genMatchNum(bottom, "Longest Hacking Streak # days"),
+	)
 
 	// Mentoring
 	p.AgentsSuccessfullyRecruited = genMatchNum(bottom, "Agents Successfully Recruited #")

@@ -1,27 +1,41 @@
 {
-	"top": [
+	"nick": [
 		"-resize",
-		"150%",
-		"-level",
-		"10%",
-		"-colorspace",
-		"gray",
-		"+dither",
-		"-colors",
-		"2",
-		"-negate"
+		"115%",
+		"-threshold",
+		"30%",
+		"-negate",
+		"-blur",
+		"1x100",
+		"+dither"
 	],
-
+	"level": [
+		"-resize",
+		"100%",
+		"-threshold",
+		"15%",
+		"-negate",
+		"-blur",
+		"1x100",
+		"+dither"
+	],
+	"ap": [
+		"-resize",
+		"300%",
+		"-threshold",
+		"50%",
+		"-negate",
+		"-blur",
+		"1x100",
+		"+dither"
+	],
 	"bottom": [
 		"-resize",
-		"150%",
-		"-level",
-		"10%",
-		"-colorspace",
-		"gray",
-		"+dither",
-		"-colors",
-		"2",
-		"-negate"
+		"106%",
+		"-threshold",
+		"30%",
+		"-negate",
+		"-blur",
+		"1x100"
 	]
 }

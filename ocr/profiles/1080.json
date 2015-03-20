@@ -1,9 +1,9 @@
 {
-	"top": [
+	"nick": [
 		"-resize",
-		"124%",
+		"100%",
 		"-level",
-		"15%",
+		"5%",
 		"-colorspace",
 		"gray",
 		"-blur",
@@ -14,6 +14,32 @@
 		"-negate",
 		"-sharpen",
 		"1x65535"
+	],
+	"level": [
+		"-resize",
+		"100%",
+		"-level",
+		"10%",
+		"-colorspace",
+		"gray",
+		"-blur",
+		"1x65535",
+		"+dither",
+		"-colors",
+		"2",
+		"-negate",
+		"-sharpen",
+		"1x65535"
+	],
+	"ap": [
+		"-resize",
+		"100%",
+		"-threshold",
+		"10%",
+		"-negate",
+		"-blur",
+		"1x100",
+		"+dither"
 	],
 	"bottom": [
 		"-resize",

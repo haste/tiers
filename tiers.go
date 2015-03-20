@@ -21,9 +21,9 @@ var templates *template.Template
 func requireAdmin(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, _ := session.Get(r, "tiers")
-		userid, _ := session.Values["user"]
+		userid, ok := session.Values["user"]
 
-		if userid.(int) != 1 {
+		if !ok || userid.(int) != 1 {
 			http.Error(w, "Not found", http.StatusNotFound)
 			return
 		}

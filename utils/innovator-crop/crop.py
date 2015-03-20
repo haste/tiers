@@ -158,14 +158,17 @@ for cnt in contours:
 	r += 1
 	approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
 
-	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 7 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 1000:
+	#if len(approx) == 2 and not cv2.isContourConvex(approx):
+	#	fill_view(view, approx)
+
+	if (len(approx) == 8 or len(approx) == 4 or len(approx) == 5) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 1000:
 		fill_view(view, approx)
-	elif len(approx) == 6 and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
+	elif (len(approx) == 6 or len(approx) == 7) and cv2.isContourConvex(approx) and cv2.contourArea(approx) > 2000:
 		max_cosine = 0.0
 		for r in range(2, len(approx) + 1):
 			max_cosine = max(max_cosine, math.fabs(angle_cos(approx[r%4], approx[r-2], approx[r-1])))
 
-		if max_cosine >= 0.65:
+		if len(approx) == 6 and max_cosine >= 0.65:
 			fill_view(view, approx)
 			continue
 
@@ -283,6 +286,39 @@ cv2.rectangle(top, (top.shape[1] // 8 * 6, 0), (top.shape[1], top.shape[0] // 10
 # cover menu.
 cv2.rectangle(top, (0, 0), (top.shape[1], top.shape[0] // 3), (0, 0, 0), cv.CV_FILLED)
 
+def findSwitch(arr, offset, wasBlack, meanThreshold, numSwitches):
+	switches = 0
+	i = 0
+	for x, row in enumerate(top[offset:]):
+		i += 1
+
+		mean = row.mean()
+		if mean < meanThreshold and wasBlack == False:
+			switches += 1
+			wasBlack = True
+		elif mean >= meanThreshold and wasBlack == True:
+			switches += 1
+			wasBlack = False
+
+		if switches == numSwitches:
+			break
+
+	return i+offset
+
+
+nickTop = findSwitch(top, 0, True, 2, 1)
+nickBottom = findSwitch(top, nickTop, False, .75, 1)
+nick = top[nickTop-15:nickBottom+10, :top.shape[1]]
+
+levelTop = findSwitch(top, nickBottom, True, 4, 1)
+levelBottom = findSwitch(top, levelTop, False, 4, 1)
+level = top[levelTop-10:levelBottom+5, :top.shape[1]]
+
+apTop = findSwitch(top, levelBottom+5, True, 4, 3)
+apBottom = findSwitch(top, apTop, False, 4, 1)
+# Extra padding due to ,.
+ap = top[apTop-5:apBottom+15, :top.shape[1]]
+
 # Lines below
 bottom = view[achieve_bottom:, :view.shape[1]]
 
@@ -312,5 +348,7 @@ for x, row in enumerate(bottom):
 bottom = bottom[i - 10:, :view.shape[1]]
 
 print(json.dumps(out))
-cv2.imwrite(cachePath + "/" + outName + "_top.png", top)
+cv2.imwrite(cachePath + "/" + outName + "_nick.png", nick)
+cv2.imwrite(cachePath + "/" + outName + "_level.png", level)
+cv2.imwrite(cachePath + "/" + outName + "_ap.png", ap)
 cv2.imwrite(cachePath + "/" + outName + "_bottom.png", bottom)
