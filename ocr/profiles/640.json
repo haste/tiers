@@ -43,18 +43,12 @@
 	],
 	"bottom": [
 		"-resize",
-		"100%",
-		"-level",
-		"0%",
-		"-colorspace",
-		"gray",
-		"-blur",
-		"1x65535",
-		"+dither",
-		"-colors",
-		"2",
+		"178%",
+		"-threshold",
+		"35%",
 		"-negate",
-		"-sharpen",
-		"1x65535"
+		"-blur",
+		"1x100",
+		"+dither"
 	]
 }
