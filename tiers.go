@@ -1,6 +1,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"fmt"
 	"html/template"
 	"log"
@@ -12,6 +13,8 @@ import (
 	"tiers/queue"
 	"tiers/session"
 
+	"github.com/carbocation/interpose"
+	"github.com/carbocation/interpose/middleware"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 )
@@ -79,7 +82,13 @@ func LogoutHandle(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	model.Init()
+
+	middle := interpose.New()
+	middle.Use(middleware.NegroniGzip(gzip.DefaultCompression))
+
 	r := mux.NewRouter()
+
+	middle.UseHandler(r)
 
 	r.HandleFunc("/", page.ProfileHandler)
 	r.HandleFunc("/profile", page.ProfileHandler)
@@ -110,7 +119,7 @@ func main() {
 	r.PathPrefix("/secret_cache/").Handler(http.StripPrefix("/secret_cache/", http.FileServer(http.Dir("cache"))))
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
-	http.Handle("/", r)
+	http.Handle("/", middle)
 
 	go queue.ProcessQueue()
 	queue.Queue <- true
