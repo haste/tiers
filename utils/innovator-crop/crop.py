@@ -168,7 +168,7 @@ for cnt in contours:
 		for r in range(2, len(approx) + 1):
 			max_cosine = max(max_cosine, math.fabs(angle_cos(approx[r%4], approx[r-2], approx[r-1])))
 
-		if len(approx) == 6 and max_cosine >= 0.65:
+		if max_cosine >= 0.65:
 			fill_view(view, approx)
 			continue
 
@@ -316,6 +316,7 @@ level = top[levelTop-10:levelBottom+5, :top.shape[1]]
 
 apTop = findSwitch(top, levelBottom+5, True, 4, 3)
 apBottom = findSwitch(top, apTop, False, 4, 1)
+
 # Extra padding due to ,.
 ap = top[apTop-5:apBottom+15, :top.shape[1]]
 
