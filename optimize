@@ -1,15 +1,16 @@
 #!/bin/bash
 
 section=${1};
-width=${2};
+kind=${2};
+width=${3};
 
 for (( resize = 100; resize <= 300; resize += 1 ))
 do
-	for (( level = 0; level <= 50; level += 5 ))
+	for (( value = 0; value <= 50; value += 5 ))
 	do
-		printf "%d %2d: " ${resize} ${level};
+		printf "%d %2d: " ${resize} ${threshold};
 
-		optCmd="go run utils/genConvert.go -${section}-resize ${resize} -${section}-level ${level} -base ${width} -output ${width}";
+		optCmd="go run utils/genConvert.go -${section}-resize ${resize} -${section}-${kind} ${value} -base ${width} -output ${width}";
 		testCmd="go test -short -parallel 4 -test.run ${width}x ./ocr/... -${section}";
 
 		start=$(date +%s.%N)

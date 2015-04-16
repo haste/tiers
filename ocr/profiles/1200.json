@@ -31,9 +31,9 @@
 	],
 	"bottom": [
 		"-resize",
-		"100%",
+		"255%",
 		"-threshold",
-		"25%",
+		"20%",
 		"-negate",
 		"-blur",
 		"1x100"

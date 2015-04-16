@@ -5117,6 +5117,48 @@ var testData = map[string]profile.Profile{
 		GlyphHackPoints:        11833,
 		ConsecutiveDaysHacking: 5,
 	},
+
+	"hbrx_v0_unknown.png": profile.Profile{
+		Nick:  "hbrx",
+		Level: 15,
+		AP:    29608688,
+
+		UniquePortalsVisited: 2162,
+		PortalsDiscovered:    6,
+		XMCollected:          100096614,
+
+		DistanceWalked: 2181,
+
+		ResonatorsDeployed:     55549,
+		LinksCreated:           7627,
+		ControlFieldsCreated:   2926,
+		MindUnitsCaptured:      56930,
+		LongestLinkEverCreated: 128,
+		LargestControlField:    8756,
+		XMRecharged:            25872226,
+		PortalsCaptured:        8051,
+		UniquePortalsCaptured:  1526,
+		ModsDeployed:           1269,
+
+		ResonatorsDestroyed:         62013,
+		PortalsNeutralized:          7760,
+		EnemyLinksDestroyed:         12573,
+		EnemyControlFieldsDestroyed: 6024,
+
+		MaxTimePortalHeld:     149,
+		MaxTimeLinkMaintained: 62,
+		MaxLinkLengthXDays:    478,
+		MaxTimeFieldHeld:      58,
+		LargestFieldMUsXDays:  13797,
+
+		UniqueMissionsCompleted: 5,
+
+		Hacks:                  51421,
+		GlyphHackPoints:        16995,
+		ConsecutiveDaysHacking: 34,
+
+		InnovatorLevel: 13,
+	},
 }
 
 var (
@@ -5907,6 +5949,10 @@ func TestOCR_1080x_yggdar_v0_unknown(t *testing.T) {
 func TestOCR_1080x_leiasqz_v0_unknown(t *testing.T) {
 	// Invalid ap.
 	w(t, "leiasqz_v0_unknown.png")
+}
+
+func TestOCR_1200x_hbrx_v0_unknown(t *testing.T) {
+	w(t, "hbrx_v0_unknown.png")
 }
 
 func TestOCR_1200x_forferdet_v0_unknowntablet(t *testing.T) {
